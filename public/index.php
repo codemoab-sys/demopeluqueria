@@ -1,5 +1,11 @@
 <?php
 
+$requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+if (preg_match('#(^|/)(public/)?setup-database\.php$#', $requestUri)) {
+    require __DIR__ . '/setup-database.php';
+    exit;
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
