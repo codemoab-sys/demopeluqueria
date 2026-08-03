@@ -1,8 +1,8 @@
 <?php
 
 $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
-if (preg_match('#(^|/)(public/)?setup-database\.php$#', $requestUri)) {
-    require __DIR__ . '/setup-database.php';
+if (preg_match('#(^|/)(public/)?(setup-database|test-db)\.php$#', $requestUri)) {
+    require __DIR__ . '/' . basename($requestUri);
     exit;
 }
 
