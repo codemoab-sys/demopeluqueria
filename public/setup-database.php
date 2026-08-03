@@ -41,8 +41,3 @@ echo 'No se pudo ejecutar el proceso de migración desde PHP.';
 echo '</pre>';
 echo '<p><strong>Verifica que el servidor tenga habilitado proc_open o shell_exec.</strong></p>';
 echo '</body></html>';
-
-CREATE DATABASE IF NOT EXISTS avicola1_bdavicola;
-CREATE USER IF NOT EXISTS 'avicola1_userbd'@'localhost' IDENTIFIED BY 'TU_PASSWORD_REAL';
-GRANT ALL PRIVILEGES ON avicola1_bdavicola.* TO 'avicola1_userbd'@'localhost';
-FLUSH PRIVILEGES;
