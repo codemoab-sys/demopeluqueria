@@ -100,13 +100,14 @@ class DashboardController extends Controller
         }
 
         // Top servicios del mes
+        $p = DB::getTablePrefix();
         $topServicios = DB::table('detalle_ventas')
             ->join('ventas', 'ventas.id', '=', 'detalle_ventas.venta_id')
             ->where('ventas.empresa_id', $empresaId)
             ->where('ventas.fecha', '>=', $inicioMes)
             ->where('detalle_ventas.tipo', 'servicio')
             ->whereNotIn('ventas.estado', ['anulada', 'devuelta'])
-            ->select('detalle_ventas.concepto', DB::raw('SUM(detalle_ventas.cantidad) as cantidad'), DB::raw('SUM(detalle_ventas.total) as total'))
+            ->select('detalle_ventas.concepto', DB::raw("SUM({$p}detalle_ventas.cantidad) as cantidad"), DB::raw("SUM({$p}detalle_ventas.total) as total"))
             ->groupBy('detalle_ventas.concepto')
             ->orderByDesc('total')
             ->limit(5)

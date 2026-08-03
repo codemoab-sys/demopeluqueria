@@ -1,26 +1,13 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Versión del servidor:         8.4.3 - MySQL Community Server - GPL
--- SO del servidor:              Win64
--- HeidiSQL Versión:             12.8.0.6908
--- --------------------------------------------------------
+-- TPV Peluquería - Backup generado el 2026-08-02 20:37:23
+-- Base de datos: tpv_peluqueria
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8mb4;
 
 
--- Volcando estructura de base de datos para tpv_peluqueria
-CREATE DATABASE IF NOT EXISTS `tpv_peluqueria` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `tpv_peluqueria`;
-
--- Volcando estructura para tabla tpv_peluqueria.backups
-CREATE TABLE IF NOT EXISTS `backups` (
+-- Tabla: pelu_backups
+DROP TABLE IF EXISTS `pelu_backups`;
+CREATE TABLE `pelu_backups` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned DEFAULT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
@@ -34,15 +21,14 @@ CREATE TABLE IF NOT EXISTS `backups` (
   PRIMARY KEY (`id`),
   KEY `backups_empresa_id_foreign` (`empresa_id`),
   KEY `backups_user_id_foreign` (`user_id`),
-  CONSTRAINT `backups_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `backups_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  CONSTRAINT `backups_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `backups_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelu_users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.backups: ~0 rows (aproximadamente)
-DELETE FROM `backups`;
 
--- Volcando estructura para tabla tpv_peluqueria.bonos
-CREATE TABLE IF NOT EXISTS `bonos` (
+-- Tabla: pelu_bonos
+DROP TABLE IF EXISTS `pelu_bonos`;
+CREATE TABLE `pelu_bonos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `cliente_id` bigint unsigned NOT NULL,
@@ -64,60 +50,46 @@ CREATE TABLE IF NOT EXISTS `bonos` (
   KEY `bonos_cliente_id_foreign` (`cliente_id`),
   KEY `bonos_tipo_bono_id_foreign` (`tipo_bono_id`),
   KEY `bonos_servicio_id_foreign` (`servicio_id`),
-  CONSTRAINT `bonos_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `bonos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `bonos_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `bonos_tipo_bono_id_foreign` FOREIGN KEY (`tipo_bono_id`) REFERENCES `tipos_bonos` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `bonos_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `pelu_clientes` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `bonos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `bonos_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `pelu_servicios` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `bonos_tipo_bono_id_foreign` FOREIGN KEY (`tipo_bono_id`) REFERENCES `pelu_tipos_bonos` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.bonos: ~20 rows (aproximadamente)
-DELETE FROM `bonos`;
-INSERT INTO `bonos` (`id`, `empresa_id`, `cliente_id`, `tipo_bono_id`, `servicio_id`, `codigo`, `sesiones_total`, `sesiones_usadas`, `precio`, `fecha_compra`, `fecha_caducidad`, `estado`, `notas`, `created_at`, `updated_at`) VALUES
-	(1, 1, 2, 2, 14, 'BONO-KBMMTJBT', 7, 0, 166.60, '2026-04-15', '2027-04-15', 'activo', NULL, '2026-04-15 19:21:09', '2026-04-15 19:21:09'),
-	(2, 1, 10, 3, 9, 'BONO-7RXHZYWM', 3, 0, 204.00, '2026-04-21', '2027-04-21', 'activo', NULL, '2026-04-21 19:21:09', '2026-04-21 19:21:09'),
-	(3, 1, 5, 2, 5, 'BONO-WFJMHB7R', 10, 3, 170.00, '2026-03-20', '2027-03-20', 'activo', NULL, '2026-03-20 19:21:09', '2026-03-20 19:21:09'),
-	(4, 1, 10, 1, 2, 'BONO-EL8H2RUS', 10, 4, 153.00, '2026-02-19', '2027-02-19', 'activo', NULL, '2026-02-19 19:21:09', '2026-02-19 19:21:09'),
-	(5, 1, 3, 3, 10, 'BONO-T8ISTGD2', 8, 2, 238.00, '2026-03-04', '2027-03-04', 'activo', NULL, '2026-03-04 19:21:09', '2026-03-04 19:21:09'),
-	(6, 1, 6, 2, 2, 'BONO-ZLI9TF6S', 9, 4, 137.70, '2026-03-07', '2027-03-07', 'activo', NULL, '2026-03-07 19:21:09', '2026-03-07 19:21:09'),
-	(7, 1, 6, 2, 7, 'BONO-AIDIIUOP', 5, 5, 318.75, '2026-02-23', '2027-02-23', 'agotado', NULL, '2026-02-23 19:21:09', '2026-02-23 19:21:09'),
-	(8, 1, 1, 1, 6, 'BONO-E2TDHUC3', 5, 1, 233.75, '2026-03-01', '2027-03-01', 'activo', NULL, '2026-03-01 19:21:09', '2026-03-01 19:21:09'),
-	(9, 1, 6, 3, 15, 'BONO-WGGQWPRU', 8, 7, 81.60, '2026-02-15', '2027-02-15', 'activo', NULL, '2026-02-15 19:21:09', '2026-02-15 19:21:09'),
-	(10, 1, 2, 2, 15, 'BONO-QC0YR8OP', 3, 3, 30.60, '2026-03-12', '2027-03-12', 'agotado', NULL, '2026-03-12 19:21:09', '2026-03-12 19:21:09'),
-	(11, 1, 7, 3, 5, 'BONO-ZOFMIGPY', 8, 8, 136.00, '2026-02-15', '2027-02-15', 'agotado', NULL, '2026-02-15 19:21:20', '2026-02-15 19:21:20'),
-	(12, 1, 4, 3, 4, 'BONO-JK2I05JO', 4, 2, 102.00, '2026-03-08', '2027-03-08', 'activo', NULL, '2026-03-08 19:21:20', '2026-03-08 19:21:20'),
-	(13, 1, 9, 3, 4, 'BONO-HOX23JZX', 4, 1, 102.00, '2026-02-25', '2027-02-25', 'activo', NULL, '2026-02-25 19:21:20', '2026-02-25 19:21:20'),
-	(14, 1, 2, 2, 9, 'BONO-T1FSCJBK', 4, 0, 272.00, '2026-02-16', '2027-02-16', 'activo', NULL, '2026-02-16 19:21:20', '2026-02-16 19:21:20'),
-	(15, 1, 8, 3, 10, 'BONO-J4EZCH6H', 4, 4, 119.00, '2026-04-05', '2027-04-05', 'agotado', NULL, '2026-04-05 19:21:20', '2026-04-05 19:21:20'),
-	(16, 1, 9, 1, 10, 'BONO-TUXYPOHO', 8, 6, 238.00, '2026-03-19', '2027-03-19', 'activo', NULL, '2026-03-19 19:21:20', '2026-03-19 19:21:20'),
-	(17, 1, 7, 2, 4, 'BONO-GJXACP4K', 6, 6, 153.00, '2026-04-23', '2027-04-23', 'agotado', NULL, '2026-04-23 19:21:20', '2026-04-23 19:21:20'),
-	(18, 1, 3, 2, 9, 'BONO-VO69FFXZ', 7, 5, 476.00, '2026-03-23', '2027-03-23', 'activo', NULL, '2026-03-23 19:21:20', '2026-03-23 19:21:20'),
-	(19, 1, 10, 3, 3, 'BONO-BTFRVJ8F', 8, 2, 95.20, '2026-03-25', '2027-03-25', 'activo', NULL, '2026-03-25 19:21:20', '2026-03-25 19:21:20'),
-	(20, 1, 1, 3, 11, 'BONO-QN4VUS9D', 8, 3, 816.00, '2026-04-09', '2027-04-09', 'activo', NULL, '2026-04-09 19:21:20', '2026-04-09 19:21:20');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (1,1,2,2,14,'BONO-VY0UUIX2',4,'0',95.20,'2026-06-01','2027-06-01','activo',NULL,'2026-06-01 00:40:23','2026-06-01 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (2,1,6,2,10,'BONO-9GAU2UGA',3,'0',89.25,'2026-06-23','2027-06-23','activo',NULL,'2026-06-23 00:40:23','2026-06-23 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (3,1,6,2,12,'BONO-RBSOHEPT',10,8,238.00,'2026-05-16','2027-05-16','activo',NULL,'2026-05-16 00:40:23','2026-05-16 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (4,1,1,2,6,'BONO-DX9O4WOV',10,10,467.50,'2026-05-25','2027-05-25','agotado',NULL,'2026-05-25 00:40:23','2026-05-25 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (5,1,10,3,2,'BONO-LGI4BF7J',6,6,91.80,'2026-07-27','2027-07-27','agotado',NULL,'2026-07-27 00:40:23','2026-08-03 01:41:55');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (6,1,10,2,10,'BONO-EU6AATEP',7,6,208.25,'2026-05-18','2027-05-18','activo',NULL,'2026-05-18 00:40:23','2026-05-18 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (7,1,3,3,5,'BONO-LRR9PQTF',5,2,85.00,'2026-05-22','2027-05-22','activo',NULL,'2026-05-22 00:40:23','2026-05-22 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (8,1,6,3,8,'BONO-WYJDPR7Y',10,6,807.50,'2026-06-19','2027-06-19','activo',NULL,'2026-06-19 00:40:23','2026-06-19 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (9,1,10,3,7,'BONO-MYPUG78O',8,4,510.00,'2026-06-06','2027-06-06','activo',NULL,'2026-06-06 00:40:23','2026-06-06 00:40:23');
+INSERT INTO `pelu_bonos` (`id`,`empresa_id`,`cliente_id`,`tipo_bono_id`,`servicio_id`,`codigo`,`sesiones_total`,`sesiones_usadas`,`precio`,`fecha_compra`,`fecha_caducidad`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (10,1,8,3,5,'BONO-HEE43AC5',6,'0',102.00,'2026-07-23','2027-07-23','activo',NULL,'2026-07-23 00:40:23','2026-07-23 00:40:23');
 
--- Volcando estructura para tabla tpv_peluqueria.cache
-CREATE TABLE IF NOT EXISTS `cache` (
+-- Tabla: pelu_cache
+DROP TABLE IF EXISTS `pelu_cache`;
+CREATE TABLE `pelu_cache` (
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.cache: ~0 rows (aproximadamente)
-DELETE FROM `cache`;
 
--- Volcando estructura para tabla tpv_peluqueria.cache_locks
-CREATE TABLE IF NOT EXISTS `cache_locks` (
+-- Tabla: pelu_cache_locks
+DROP TABLE IF EXISTS `pelu_cache_locks`;
+CREATE TABLE `pelu_cache_locks` (
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.cache_locks: ~0 rows (aproximadamente)
-DELETE FROM `cache_locks`;
 
--- Volcando estructura para tabla tpv_peluqueria.cajas
-CREATE TABLE IF NOT EXISTS `cajas` (
+-- Tabla: pelu_cajas
+DROP TABLE IF EXISTS `pelu_cajas`;
+CREATE TABLE `pelu_cajas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `user_apertura_id` bigint unsigned NOT NULL,
@@ -143,65 +115,39 @@ CREATE TABLE IF NOT EXISTS `cajas` (
   KEY `cajas_empresa_id_foreign` (`empresa_id`),
   KEY `cajas_user_apertura_id_foreign` (`user_apertura_id`),
   KEY `cajas_user_cierre_id_foreign` (`user_cierre_id`),
-  CONSTRAINT `cajas_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `cajas_user_apertura_id_foreign` FOREIGN KEY (`user_apertura_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `cajas_user_cierre_id_foreign` FOREIGN KEY (`user_cierre_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `cajas_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cajas_user_apertura_id_foreign` FOREIGN KEY (`user_apertura_id`) REFERENCES `pelu_users` (`id`),
+  CONSTRAINT `cajas_user_cierre_id_foreign` FOREIGN KEY (`user_cierre_id`) REFERENCES `pelu_users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.cajas: ~48 rows (aproximadamente)
-DELETE FROM `cajas`;
-INSERT INTO `cajas` (`id`, `empresa_id`, `user_apertura_id`, `user_cierre_id`, `fecha_apertura`, `fecha_cierre`, `importe_inicial`, `importe_final`, `importe_efectivo`, `importe_tarjeta`, `importe_transferencia`, `importe_otros`, `total_ventas`, `total_ingresos`, `total_gastos`, `descuadre`, `estado`, `notas_apertura`, `notas_cierre`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, 1, '2026-04-07 09:00:00', '2026-04-07 20:30:00', 100.00, 100.00, 100.00, 62.50, 78.00, 77.50, 218.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-07 14:00:00', '2026-05-07 19:21:09'),
-	(2, 1, 1, 1, '2026-04-09 09:00:00', '2026-04-09 20:30:00', 100.00, 100.00, 100.00, 24.00, 287.50, 0.00, 311.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-09 14:00:00', '2026-05-07 19:21:10'),
-	(3, 1, 1, 1, '2026-04-10 09:00:00', '2026-04-10 20:30:00', 100.00, 184.00, 184.00, 107.50, 0.00, 0.00, 191.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-10 14:00:00', '2026-05-07 19:21:10'),
-	(4, 1, 1, 1, '2026-04-11 09:00:00', '2026-04-11 20:30:00', 100.00, 233.00, 233.00, 147.50, 0.00, 81.50, 362.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-11 14:00:00', '2026-05-07 19:21:10'),
-	(5, 1, 1, 1, '2026-04-13 09:00:00', '2026-04-13 20:30:00', 100.00, 325.50, 325.50, 188.50, 0.00, 35.00, 449.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-13 14:00:00', '2026-05-07 19:21:10'),
-	(6, 1, 1, 1, '2026-04-14 09:00:00', '2026-04-14 20:30:00', 100.00, 235.00, 235.00, 178.50, 0.00, 62.00, 375.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-14 14:00:00', '2026-05-07 19:21:10'),
-	(7, 1, 1, 1, '2026-04-15 09:00:00', '2026-04-15 20:30:00', 100.00, 100.00, 100.00, 0.00, 136.50, 184.00, 320.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-15 14:00:00', '2026-05-07 19:21:10'),
-	(8, 1, 1, 1, '2026-04-16 09:00:00', '2026-04-16 20:30:00', 100.00, 116.50, 116.50, 258.50, 30.00, 55.00, 360.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-16 14:00:00', '2026-05-07 19:21:10'),
-	(9, 1, 1, 1, '2026-04-17 09:00:00', '2026-04-17 20:30:00', 100.00, 432.00, 432.00, 0.00, 14.00, 32.50, 378.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-17 14:00:00', '2026-05-07 19:21:10'),
-	(10, 1, 1, 1, '2026-04-18 09:00:00', '2026-04-18 20:30:00', 100.00, 100.00, 100.00, 199.00, 203.00, 0.00, 402.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-18 14:00:00', '2026-05-07 19:21:10'),
-	(11, 1, 1, 1, '2026-04-20 09:00:00', '2026-04-20 20:30:00', 100.00, 112.00, 112.00, 58.50, 0.00, 72.50, 143.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-20 14:00:00', '2026-05-07 19:21:10'),
-	(12, 1, 1, 1, '2026-04-21 09:00:00', '2026-04-21 20:30:00', 100.00, 180.00, 180.00, 262.00, 44.00, 0.00, 386.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-21 14:00:00', '2026-05-07 19:21:10'),
-	(13, 1, 1, 1, '2026-04-22 09:00:00', '2026-04-22 20:30:00', 100.00, 271.50, 271.50, 0.00, 0.00, 0.00, 171.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-22 14:00:00', '2026-05-07 19:21:10'),
-	(14, 1, 1, 1, '2026-04-23 09:00:00', '2026-04-23 20:30:00', 100.00, 281.50, 281.50, 0.00, 0.00, 0.00, 181.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-23 14:00:00', '2026-05-07 19:21:10'),
-	(15, 1, 1, 1, '2026-04-24 09:00:00', '2026-04-24 20:30:00', 100.00, 128.00, 128.00, 260.50, 154.00, 0.00, 442.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-24 14:00:00', '2026-05-07 19:21:10'),
-	(16, 1, 1, 1, '2026-04-25 09:00:00', '2026-04-25 20:30:00', 100.00, 298.00, 298.00, 262.50, 120.00, 0.00, 580.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-25 14:00:00', '2026-05-07 19:21:11'),
-	(17, 1, 1, 1, '2026-04-27 09:00:00', '2026-04-27 20:30:00', 100.00, 234.00, 234.00, 16.50, 0.00, 45.50, 196.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-27 14:00:00', '2026-05-07 19:21:11'),
-	(18, 1, 1, 1, '2026-04-28 09:00:00', '2026-04-28 20:30:00', 100.00, 100.00, 100.00, 174.50, 0.00, 54.50, 229.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-28 14:00:00', '2026-05-07 19:21:11'),
-	(19, 1, 1, 1, '2026-04-29 09:00:00', '2026-04-29 20:30:00', 100.00, 100.00, 100.00, 127.00, 0.00, 0.00, 127.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-29 14:00:00', '2026-05-07 19:21:11'),
-	(20, 1, 1, 1, '2026-04-30 09:00:00', '2026-04-30 20:30:00', 100.00, 100.00, 100.00, 14.00, 0.00, 95.00, 109.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-30 14:00:00', '2026-05-07 19:21:11'),
-	(21, 1, 1, 1, '2026-05-01 09:00:00', '2026-05-01 20:30:00', 100.00, 290.00, 290.00, 203.00, 0.00, 0.00, 393.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-01 14:00:00', '2026-05-07 19:21:11'),
-	(22, 1, 1, 1, '2026-05-02 09:00:00', '2026-05-02 20:30:00', 100.00, 213.50, 213.50, 209.00, 0.00, 14.00, 336.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-02 14:00:00', '2026-05-07 19:21:11'),
-	(23, 1, 1, 1, '2026-05-04 09:00:00', '2026-05-04 20:30:00', 100.00, 268.50, 268.50, 12.00, 123.00, 146.00, 449.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-04 14:00:00', '2026-05-07 19:21:11'),
-	(24, 1, 1, 1, '2026-05-05 09:00:00', '2026-05-05 20:30:00', 100.00, 283.50, 283.50, 0.00, 0.00, 71.00, 254.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-05 14:00:00', '2026-05-07 19:21:11'),
-	(25, 1, 1, 1, '2026-05-06 09:00:00', '2026-05-06 20:30:00', 100.00, 290.50, 290.50, 165.00, 94.00, 0.00, 449.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-06 14:00:00', '2026-05-07 19:21:11'),
-	(26, 1, 1, NULL, '2026-05-07 09:00:00', NULL, 100.00, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'abierta', 'Apertura de caja del día', NULL, '2026-05-07 14:00:00', '2026-05-07 14:00:00'),
-	(27, 1, 1, 1, '2026-04-07 09:00:00', '2026-04-07 20:30:00', 100.00, 100.00, 100.00, 28.00, 0.00, 154.50, 182.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-07 14:00:00', '2026-05-07 19:21:21'),
-	(28, 1, 1, 1, '2026-04-09 09:00:00', '2026-04-09 20:30:00', 100.00, 282.00, 282.00, 90.50, 0.00, 29.00, 301.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-09 14:00:00', '2026-05-07 19:21:21'),
-	(29, 1, 1, 1, '2026-04-10 09:00:00', '2026-04-10 20:30:00', 100.00, 116.50, 116.50, 272.00, 63.00, 0.00, 351.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-10 14:00:00', '2026-05-07 19:21:21'),
-	(30, 1, 1, 1, '2026-04-13 09:00:00', '2026-04-13 20:30:00', 100.00, 114.00, 114.00, 69.00, 55.00, 80.00, 218.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-13 14:00:00', '2026-05-07 19:21:21'),
-	(31, 1, 1, 1, '2026-04-15 09:00:00', '2026-04-15 20:30:00', 100.00, 247.50, 247.50, 163.00, 12.50, 0.00, 323.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-15 14:00:00', '2026-05-07 19:21:21'),
-	(32, 1, 1, 1, '2026-04-16 09:00:00', '2026-04-16 20:30:00', 100.00, 128.00, 128.00, 97.00, 0.00, 0.00, 125.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-16 14:00:00', '2026-05-07 19:21:21'),
-	(33, 1, 1, 1, '2026-04-17 09:00:00', '2026-04-17 20:30:00', 100.00, 100.00, 100.00, 218.50, 0.00, 43.00, 261.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-17 14:00:00', '2026-05-07 19:21:21'),
-	(34, 1, 1, 1, '2026-04-20 09:00:00', '2026-04-20 20:30:00', 100.00, 191.00, 191.00, 556.50, 0.00, 0.00, 647.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-20 14:00:00', '2026-05-07 19:21:21'),
-	(35, 1, 1, 1, '2026-04-21 09:00:00', '2026-04-21 20:30:00', 100.00, 158.00, 158.00, 44.00, 0.00, 120.00, 222.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-21 14:00:00', '2026-05-07 19:21:21'),
-	(36, 1, 1, 1, '2026-04-22 09:00:00', '2026-04-22 20:30:00', 100.00, 100.00, 100.00, 179.00, 22.00, 0.00, 201.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-22 14:00:00', '2026-05-07 19:21:21'),
-	(37, 1, 1, 1, '2026-04-23 09:00:00', '2026-04-23 20:30:00', 100.00, 128.00, 128.00, 120.00, 0.00, 0.00, 148.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-23 14:00:00', '2026-05-07 19:21:21'),
-	(38, 1, 1, 1, '2026-04-24 09:00:00', '2026-04-24 20:30:00', 100.00, 328.00, 328.00, 116.00, 115.00, 143.00, 602.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-24 14:00:00', '2026-05-07 19:21:21'),
-	(39, 1, 1, 1, '2026-04-25 09:00:00', '2026-04-25 20:30:00', 100.00, 100.00, 100.00, 211.00, 80.00, 0.00, 291.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-25 14:00:00', '2026-05-07 19:21:22'),
-	(40, 1, 1, 1, '2026-04-27 09:00:00', '2026-04-27 20:30:00', 100.00, 283.50, 283.50, 371.50, 0.00, 134.00, 689.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-27 14:00:00', '2026-05-07 19:21:22'),
-	(41, 1, 1, 1, '2026-04-28 09:00:00', '2026-04-28 20:30:00', 100.00, 402.00, 402.00, 19.50, 0.00, 0.00, 321.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-28 14:00:00', '2026-05-07 19:21:22'),
-	(42, 1, 1, 1, '2026-04-29 09:00:00', '2026-04-29 20:30:00', 100.00, 278.00, 278.00, 174.50, 0.00, 93.00, 445.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-29 14:00:00', '2026-05-07 19:21:22'),
-	(43, 1, 1, 1, '2026-04-30 09:00:00', '2026-04-30 20:30:00', 100.00, 119.50, 119.50, 28.00, 0.00, 0.00, 47.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-04-30 14:00:00', '2026-05-07 19:21:22'),
-	(44, 1, 1, 1, '2026-05-01 09:00:00', '2026-05-01 20:30:00', 100.00, 161.00, 161.00, 156.50, 120.00, 0.00, 337.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-01 14:00:00', '2026-05-07 19:21:22'),
-	(45, 1, 1, 1, '2026-05-02 09:00:00', '2026-05-02 20:30:00', 100.00, 100.00, 100.00, 170.00, 45.50, 0.00, 215.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-02 14:00:00', '2026-05-07 19:21:22'),
-	(46, 1, 1, 1, '2026-05-04 09:00:00', '2026-05-04 20:30:00', 100.00, 180.50, 180.50, 0.00, 0.00, 0.00, 80.50, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-04 14:00:00', '2026-05-07 19:21:22'),
-	(47, 1, 1, 1, '2026-05-06 09:00:00', '2026-05-06 20:30:00', 100.00, 112.00, 112.00, 138.00, 0.00, 267.00, 417.00, 0.00, 0.00, 0.00, 'cerrada', NULL, NULL, '2026-05-06 14:00:00', '2026-05-07 19:21:22'),
-	(48, 1, 1, NULL, '2026-05-07 09:00:00', NULL, 100.00, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'abierta', 'Apertura de caja del día', NULL, '2026-05-07 14:00:00', '2026-05-07 14:00:00');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (1,1,1,1,'2026-07-04 09:00:00','2026-07-04 20:30:00',100.00,112.50,112.50,195.50,'0.00','0.00',208.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-04 09:00:00','2026-08-03 00:40:26');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (2,1,1,1,'2026-07-06 09:00:00','2026-07-06 20:30:00',100.00,100.00,100.00,386.50,119.00,'0.00',505.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-06 09:00:00','2026-08-03 00:40:29');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (3,1,1,1,'2026-07-07 09:00:00','2026-07-07 20:30:00',100.00,100.00,100.00,141.00,'0.00',142.50,283.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-07 09:00:00','2026-08-03 00:40:29');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (4,1,1,1,'2026-07-08 09:00:00','2026-07-08 20:30:00',100.00,100.00,100.00,30.00,235.00,'0.00',265.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-08 09:00:00','2026-08-03 00:40:29');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (5,1,1,1,'2026-07-09 09:00:00','2026-07-09 20:30:00',100.00,210.00,210.00,158.50,'0.00',54.00,322.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-09 09:00:00','2026-08-03 00:40:30');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (6,1,1,1,'2026-07-10 09:00:00','2026-07-10 20:30:00',100.00,100.00,100.00,38.50,28.00,'0.00',66.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-10 09:00:00','2026-08-03 00:40:30');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (7,1,1,1,'2026-07-11 09:00:00','2026-07-11 20:30:00',100.00,181.50,181.50,74.00,'0.00',258.50,414.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-11 09:00:00','2026-08-03 00:40:31');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (8,1,1,1,'2026-07-13 09:00:00','2026-07-13 20:30:00',100.00,100.00,100.00,503.00,'0.00','0.00',503.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-13 09:00:00','2026-08-03 00:40:32');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (9,1,1,1,'2026-07-16 09:00:00','2026-07-16 20:30:00',100.00,172.00,172.00,'0.00','0.00','0.00',72.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-16 09:00:00','2026-08-03 00:40:32');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (10,1,1,1,'2026-07-17 09:00:00','2026-07-17 20:30:00',100.00,386.50,386.50,44.00,138.00,105.00,573.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-17 09:00:00','2026-08-03 00:40:33');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (11,1,1,1,'2026-07-18 09:00:00','2026-07-18 20:30:00',100.00,147.00,147.00,'0.00','0.00',19.50,66.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-18 09:00:00','2026-08-03 00:40:33');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (12,1,1,1,'2026-07-20 09:00:00','2026-07-20 20:30:00',100.00,185.00,185.00,'0.00',101.00,125.00,311.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-20 09:00:00','2026-08-03 00:40:34');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (13,1,1,1,'2026-07-21 09:00:00','2026-07-21 20:30:00',100.00,245.00,245.00,120.50,'0.00',107.00,372.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-21 09:00:00','2026-08-03 00:40:34');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (14,1,1,1,'2026-07-22 09:00:00','2026-07-22 20:30:00',100.00,240.00,240.00,185.50,'0.00','0.00',325.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-22 09:00:00','2026-08-03 00:40:35');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (15,1,1,1,'2026-07-23 09:00:00','2026-07-23 20:30:00',100.00,174.50,174.50,259.00,175.00,24.50,533.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-23 09:00:00','2026-08-03 00:40:35');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (16,1,1,1,'2026-07-24 09:00:00','2026-07-24 20:30:00',100.00,323.50,323.50,'0.00',47.50,'0.00',271.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-24 09:00:00','2026-08-03 00:40:36');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (17,1,1,1,'2026-07-25 09:00:00','2026-07-25 20:30:00',100.00,169.00,169.00,138.00,'0.00','0.00',207.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-25 09:00:00','2026-08-03 00:40:36');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (18,1,1,1,'2026-07-27 09:00:00','2026-07-27 20:30:00',100.00,144.50,144.50,46.00,14.00,'0.00',104.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-27 09:00:00','2026-08-03 00:40:37');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (19,1,1,1,'2026-07-28 09:00:00','2026-07-28 20:30:00',100.00,100.00,100.00,184.00,'0.00',64.00,248.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-28 09:00:00','2026-08-03 00:40:37');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (20,1,1,1,'2026-07-29 09:00:00','2026-07-29 20:30:00',100.00,209.50,209.50,38.00,169.00,'0.00',316.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-29 09:00:00','2026-08-03 00:40:38');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (21,1,1,1,'2026-07-30 09:00:00','2026-07-30 20:30:00',100.00,112.00,112.00,85.00,'0.00',113.00,210.00,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-30 09:00:00','2026-08-03 00:40:38');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (22,1,1,1,'2026-07-31 09:00:00','2026-07-31 20:30:00',100.00,232.50,232.50,'0.00',14.00,35.00,181.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-07-31 09:00:00','2026-08-03 00:40:39');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (23,1,1,1,'2026-08-01 09:00:00','2026-08-01 20:30:00',100.00,100.00,100.00,'0.00',94.50,148.00,242.50,'0.00','0.00','0.00','cerrada',NULL,NULL,'2026-08-01 09:00:00','2026-08-03 00:40:39');
+INSERT INTO `pelu_cajas` (`id`,`empresa_id`,`user_apertura_id`,`user_cierre_id`,`fecha_apertura`,`fecha_cierre`,`importe_inicial`,`importe_final`,`importe_efectivo`,`importe_tarjeta`,`importe_transferencia`,`importe_otros`,`total_ventas`,`total_ingresos`,`total_gastos`,`descuadre`,`estado`,`notas_apertura`,`notas_cierre`,`created_at`,`updated_at`) VALUES (24,1,1,NULL,'2026-08-03 09:00:00',NULL,100.00,NULL,'0.00','0.00','0.00','0.00','0.00','0.00','0.00','0.00','abierta','Apertura de caja del día',NULL,'2026-08-03 09:00:00','2026-08-03 09:00:00');
 
--- Volcando estructura para tabla tpv_peluqueria.categorias_productos
-CREATE TABLE IF NOT EXISTS `categorias_productos` (
+-- Tabla: pelu_categorias_productos
+DROP TABLE IF EXISTS `pelu_categorias_productos`;
+CREATE TABLE `pelu_categorias_productos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -212,18 +158,16 @@ CREATE TABLE IF NOT EXISTS `categorias_productos` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `categorias_productos_empresa_id_foreign` (`empresa_id`),
-  CONSTRAINT `categorias_productos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
+  CONSTRAINT `categorias_productos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.categorias_productos: ~3 rows (aproximadamente)
-DELETE FROM `categorias_productos`;
-INSERT INTO `categorias_productos` (`id`, `empresa_id`, `nombre`, `color`, `orden`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Cuidado capilar', '#a855f7', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, 'Coloración', '#ec4899', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 1, 'Estilismo', '#f59e0b', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_categorias_productos` (`id`,`empresa_id`,`nombre`,`color`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (1,1,'Cuidado capilar','#a855f7','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_categorias_productos` (`id`,`empresa_id`,`nombre`,`color`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (2,1,'Coloración','#ec4899','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_categorias_productos` (`id`,`empresa_id`,`nombre`,`color`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (3,1,'Estilismo','#f59e0b','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
 
--- Volcando estructura para tabla tpv_peluqueria.categorias_servicios
-CREATE TABLE IF NOT EXISTS `categorias_servicios` (
+-- Tabla: pelu_categorias_servicios
+DROP TABLE IF EXISTS `pelu_categorias_servicios`;
+CREATE TABLE `pelu_categorias_servicios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -235,19 +179,72 @@ CREATE TABLE IF NOT EXISTS `categorias_servicios` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `categorias_servicios_empresa_id_foreign` (`empresa_id`),
-  CONSTRAINT `categorias_servicios_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
+  CONSTRAINT `categorias_servicios_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.categorias_servicios: ~4 rows (aproximadamente)
-DELETE FROM `categorias_servicios`;
-INSERT INTO `categorias_servicios` (`id`, `empresa_id`, `nombre`, `color`, `icono`, `orden`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Corte y peinado', '#a855f7', 'bi-scissors', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, 'Color y mechas', '#ec4899', 'bi-palette', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 1, 'Tratamientos', '#06b6d4', 'bi-droplet', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(4, 1, 'Estética', '#f59e0b', 'bi-stars', 0, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_categorias_servicios` (`id`,`empresa_id`,`nombre`,`color`,`icono`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (1,1,'Corte y peinado','#a855f7','bi-scissors','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_categorias_servicios` (`id`,`empresa_id`,`nombre`,`color`,`icono`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (2,1,'Color y mechas','#ec4899','bi-palette','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_categorias_servicios` (`id`,`empresa_id`,`nombre`,`color`,`icono`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (3,1,'Tratamientos','#06b6d4','bi-droplet','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_categorias_servicios` (`id`,`empresa_id`,`nombre`,`color`,`icono`,`orden`,`activo`,`created_at`,`updated_at`) VALUES (4,1,'Estética','#f59e0b','bi-stars','0',1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
 
--- Volcando estructura para tabla tpv_peluqueria.citas
-CREATE TABLE IF NOT EXISTS `citas` (
+-- Tabla: pelu_cita_servicios
+DROP TABLE IF EXISTS `pelu_cita_servicios`;
+CREATE TABLE `pelu_cita_servicios` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `cita_id` bigint unsigned NOT NULL,
+  `servicio_id` bigint unsigned NOT NULL,
+  `empleado_id` bigint unsigned DEFAULT NULL,
+  `duracion` int NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `descuento` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `orden` int NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cita_servicios_cita_id_foreign` (`cita_id`),
+  KEY `cita_servicios_servicio_id_foreign` (`servicio_id`),
+  KEY `cita_servicios_empleado_id_foreign` (`empleado_id`),
+  CONSTRAINT `cita_servicios_cita_id_foreign` FOREIGN KEY (`cita_id`) REFERENCES `pelu_citas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cita_servicios_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `pelu_empleados` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `cita_servicios_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `pelu_servicios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (1,1,10,7,45,35.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (2,2,13,5,45,22.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (3,3,6,10,90,55.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (4,4,3,7,30,14.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (5,5,1,1,45,25.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (6,6,6,4,90,55.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (7,7,9,6,120,80.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (8,8,5,7,30,20.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (9,9,3,8,30,14.00,'0.00','0','2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (10,10,13,8,45,22.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (11,11,12,2,30,28.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (12,12,5,2,30,20.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (13,13,3,3,30,14.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (14,14,9,2,120,80.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (15,15,8,2,150,95.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (16,16,2,2,30,18.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (17,17,14,4,60,28.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (18,18,3,5,30,14.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (19,19,7,9,120,75.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (20,20,13,3,45,22.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (21,21,6,4,90,55.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (22,22,8,4,150,95.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (23,23,13,8,45,22.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (24,24,11,6,120,120.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (25,25,5,10,30,20.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (26,26,3,5,30,14.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (27,27,6,7,90,55.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (28,28,5,7,30,20.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (29,29,12,6,30,28.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (30,30,8,6,150,95.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (31,31,1,4,45,25.00,'0.00','0','2026-08-03 00:40:25','2026-08-03 00:40:25');
+INSERT INTO `pelu_cita_servicios` (`id`,`cita_id`,`servicio_id`,`empleado_id`,`duracion`,`precio`,`descuento`,`orden`,`created_at`,`updated_at`) VALUES (32,32,3,9,30,14.00,'0.00','0','2026-08-03 01:09:33','2026-08-03 01:09:33');
+
+-- Tabla: pelu_citas
+DROP TABLE IF EXISTS `pelu_citas`;
+CREATE TABLE `pelu_citas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `cliente_id` bigint unsigned DEFAULT NULL,
@@ -268,166 +265,47 @@ CREATE TABLE IF NOT EXISTS `citas` (
   KEY `citas_cliente_id_foreign` (`cliente_id`),
   KEY `citas_empresa_id_fecha_index` (`empresa_id`,`fecha`),
   KEY `citas_empleado_id_fecha_index` (`empleado_id`,`fecha`),
-  CONSTRAINT `citas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `citas_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `citas_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `citas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `pelu_clientes` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `citas_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `pelu_empleados` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `citas_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.citas: ~62 rows (aproximadamente)
-DELETE FROM `citas`;
-INSERT INTO `citas` (`id`, `empresa_id`, `cliente_id`, `empleado_id`, `fecha`, `hora_inicio`, `hora_fin`, `duracion_total`, `precio_total`, `estado`, `color`, `notas`, `recordatorio_enviado`, `origen`, `created_at`, `updated_at`) VALUES
-	(1, 1, 2, 6, '2026-04-30', '10:00:00', '10:45:00', 45, 30.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-30 19:21:09', '2026-04-30 19:21:09'),
-	(2, 1, 2, 4, '2026-04-12', '13:45:00', '14:30:00', 45, 30.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-12 19:21:09', '2026-04-12 19:21:09'),
-	(3, 1, 1, 4, '2026-04-18', '09:45:00', '12:15:00', 150, 95.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-18 19:21:09', '2026-04-18 19:21:09'),
-	(4, 1, 4, 9, '2026-04-13', '15:45:00', '16:30:00', 45, 22.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-13 19:21:09', '2026-04-13 19:21:09'),
-	(5, 1, 5, 7, '2026-04-12', '17:45:00', '18:30:00', 45, 22.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-12 19:21:09', '2026-04-12 19:21:09'),
-	(6, 1, 5, 3, '2026-04-18', '18:00:00', '18:30:00', 30, 14.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-18 19:21:09', '2026-04-18 19:21:09'),
-	(7, 1, 10, 2, '2026-04-17', '09:15:00', '10:00:00', 45, 35.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-17 19:21:09', '2026-04-17 19:21:09'),
-	(8, 1, 3, 7, '2026-05-06', '18:00:00', '20:30:00', 150, 95.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-05-06 19:21:09', '2026-05-06 19:21:09'),
-	(9, 1, 5, 6, '2026-04-29', '09:30:00', '10:00:00', 30, 18.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-29 19:21:09', '2026-04-29 19:21:09'),
-	(10, 1, 3, 10, '2026-04-21', '14:15:00', '14:45:00', 30, 20.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-21 19:21:09', '2026-04-21 19:21:09'),
-	(11, 1, 1, 1, '2026-04-18', '15:30:00', '16:15:00', 45, 25.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-18 19:21:09', '2026-04-18 19:21:09'),
-	(12, 1, 9, 4, '2026-04-27', '13:30:00', '15:30:00', 120, 120.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-27 19:21:09', '2026-04-27 19:21:09'),
-	(13, 1, 9, 5, '2026-04-21', '12:45:00', '14:45:00', 120, 80.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-21 19:21:09', '2026-04-21 19:21:09'),
-	(14, 1, 10, 9, '2026-04-18', '12:30:00', '13:15:00', 45, 25.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-18 19:21:09', '2026-04-18 19:21:09'),
-	(15, 1, 1, 6, '2026-05-03', '18:30:00', '19:00:00', 30, 14.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-05-03 19:21:09', '2026-05-03 19:21:09'),
-	(16, 1, 1, 6, '2026-05-02', '17:00:00', '19:00:00', 120, 120.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-05-02 19:21:09', '2026-05-02 19:21:09'),
-	(17, 1, 2, 4, '2026-04-22', '13:00:00', '13:30:00', 30, 28.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-22 19:21:09', '2026-04-22 19:21:09'),
-	(18, 1, 1, 6, '2026-04-23', '16:15:00', '18:45:00', 150, 95.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-23 19:21:09', '2026-04-23 19:21:09'),
-	(19, 1, 3, 9, '2026-05-07', '19:30:00', '21:00:00', 90, 55.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(20, 1, 2, 1, '2026-05-07', '17:45:00', '18:15:00', 30, 28.00, 'en_curso', NULL, NULL, 0, 'manual', '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(21, 1, 5, 6, '2026-05-07', '18:30:00', '19:00:00', 30, 14.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(22, 1, 9, 3, '2026-05-07', '15:30:00', '16:00:00', 30, 14.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(23, 1, 9, 6, '2026-05-07', '15:45:00', '16:45:00', 60, 28.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(24, 1, 7, 3, '2026-05-09', '13:00:00', '13:45:00', 45, 25.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-09 19:21:09', '2026-05-09 19:21:09'),
-	(25, 1, 7, 8, '2026-05-11', '15:45:00', '16:15:00', 30, 28.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-11 19:21:09', '2026-05-11 19:21:09'),
-	(26, 1, 9, 9, '2026-05-10', '11:00:00', '13:00:00', 120, 80.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-10 19:21:09', '2026-05-10 19:21:09'),
-	(27, 1, 9, 1, '2026-05-20', '09:30:00', '11:30:00', 120, 75.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-20 19:21:09', '2026-05-20 19:21:09'),
-	(28, 1, 10, 6, '2026-05-17', '17:45:00', '19:45:00', 120, 75.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-17 19:21:09', '2026-05-17 19:21:09'),
-	(29, 1, 4, 10, '2026-05-11', '18:30:00', '19:15:00', 45, 22.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-11 19:21:09', '2026-05-11 19:21:09'),
-	(30, 1, 3, 6, '2026-05-20', '09:30:00', '11:30:00', 120, 75.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-20 19:21:09', '2026-05-20 19:21:09'),
-	(31, 1, 9, 4, '2026-05-16', '18:30:00', '19:30:00', 60, 28.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-16 19:21:09', '2026-05-16 19:21:09'),
-	(32, 1, 3, 1, '2026-04-08', '16:15:00', '16:45:00', 30, 20.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-08 19:21:20', '2026-04-08 19:21:20'),
-	(33, 1, 4, 9, '2026-04-22', '18:15:00', '19:00:00', 45, 22.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-22 19:21:20', '2026-04-22 19:21:20'),
-	(34, 1, 8, 1, '2026-04-17', '14:00:00', '16:00:00', 120, 80.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-17 19:21:20', '2026-04-17 19:21:20'),
-	(35, 1, 7, 6, '2026-04-25', '13:45:00', '15:45:00', 120, 80.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-25 19:21:20', '2026-04-25 19:21:20'),
-	(36, 1, 6, 6, '2026-04-07', '12:15:00', '12:45:00', 30, 14.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-07 19:21:20', '2026-04-07 19:21:20'),
-	(37, 1, 2, 10, '2026-04-26', '13:45:00', '14:30:00', 45, 30.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-26 19:21:20', '2026-04-26 19:21:20'),
-	(38, 1, 2, 7, '2026-04-26', '10:45:00', '11:45:00', 60, 28.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-26 19:21:20', '2026-04-26 19:21:20'),
-	(39, 1, 8, 4, '2026-04-16', '12:15:00', '13:45:00', 90, 55.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-16 19:21:20', '2026-04-16 19:21:20'),
-	(40, 1, 4, 5, '2026-04-18', '14:45:00', '15:15:00', 30, 20.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-18 19:21:20', '2026-04-18 19:21:20'),
-	(41, 1, 8, 9, '2026-04-15', '10:45:00', '11:15:00', 30, 14.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-15 19:21:20', '2026-04-15 19:21:20'),
-	(42, 1, 8, 10, '2026-04-30', '14:15:00', '16:45:00', 150, 95.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-30 19:21:20', '2026-04-30 19:21:20'),
-	(43, 1, 5, 5, '2026-04-25', '12:00:00', '12:30:00', 30, 28.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-25 19:21:20', '2026-04-25 19:21:20'),
-	(44, 1, 10, 1, '2026-04-19', '17:00:00', '17:30:00', 30, 14.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-19 19:21:20', '2026-04-19 19:21:20'),
-	(45, 1, 10, 9, '2026-04-12', '10:30:00', '13:00:00', 150, 95.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-12 19:21:20', '2026-04-12 19:21:20'),
-	(46, 1, 6, 10, '2026-04-21', '12:15:00', '13:00:00', 45, 35.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-21 19:21:20', '2026-04-21 19:21:20'),
-	(47, 1, 5, 5, '2026-04-17', '09:15:00', '10:45:00', 90, 55.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-17 19:21:20', '2026-04-17 19:21:20'),
-	(48, 1, 6, 5, '2026-04-14', '09:00:00', '11:00:00', 120, 80.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-14 19:21:20', '2026-04-14 19:21:20'),
-	(49, 1, 1, 7, '2026-04-11', '18:45:00', '19:15:00', 30, 20.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-04-11 19:21:20', '2026-04-11 19:21:20'),
-	(50, 1, 8, 2, '2026-05-07', '17:45:00', '18:45:00', 60, 28.00, 'en_curso', NULL, NULL, 0, 'manual', '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(51, 1, 1, 8, '2026-05-07', '17:30:00', '18:00:00', 30, 28.00, 'finalizada', NULL, NULL, 0, 'manual', '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(52, 1, 10, 4, '2026-05-07', '14:30:00', '16:30:00', 120, 120.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(53, 1, 4, 5, '2026-05-07', '12:15:00', '12:45:00', 30, 14.00, 'en_curso', NULL, NULL, 0, 'manual', '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(54, 1, 3, 3, '2026-05-07', '14:00:00', '16:30:00', 150, 95.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(55, 1, 8, 8, '2026-05-21', '09:00:00', '11:00:00', 120, 120.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-21 19:21:20', '2026-05-21 19:21:20'),
-	(56, 1, 6, 5, '2026-05-16', '18:45:00', '20:45:00', 120, 75.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-16 19:21:20', '2026-05-16 19:21:20'),
-	(57, 1, 3, 2, '2026-05-09', '09:00:00', '09:45:00', 45, 30.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-09 19:21:20', '2026-05-09 19:21:20'),
-	(58, 1, 8, 5, '2026-05-08', '10:45:00', '11:15:00', 30, 20.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-08 19:21:20', '2026-05-08 19:21:20'),
-	(59, 1, 8, 10, '2026-05-09', '12:00:00', '14:30:00', 150, 95.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-09 19:21:20', '2026-05-09 19:21:20'),
-	(60, 1, 9, 4, '2026-05-16', '11:15:00', '12:00:00', 45, 35.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-16 19:21:20', '2026-05-16 19:21:20'),
-	(61, 1, 1, 10, '2026-05-14', '10:00:00', '12:00:00', 120, 75.00, 'confirmada', NULL, NULL, 0, 'manual', '2026-05-14 19:21:20', '2026-05-14 19:21:20'),
-	(62, 1, 3, 1, '2026-05-16', '17:30:00', '18:00:00', 30, 18.00, 'pendiente', NULL, NULL, 0, 'manual', '2026-05-16 19:21:20', '2026-05-16 19:21:20');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (1,1,2,7,'2026-07-16','11:45:00','12:30:00',45,35.00,'finalizada',NULL,NULL,'0','manual','2026-07-16 00:40:23','2026-07-16 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (2,1,6,5,'2026-07-21','11:15:00','12:00:00',45,22.00,'finalizada',NULL,NULL,'0','manual','2026-07-21 00:40:23','2026-07-21 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (3,1,9,10,'2026-07-05','10:45:00','12:15:00',90,55.00,'finalizada',NULL,NULL,'0','manual','2026-07-05 00:40:23','2026-07-05 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (4,1,8,7,'2026-07-14','11:45:00','12:15:00',30,14.00,'finalizada',NULL,NULL,'0','manual','2026-07-14 00:40:23','2026-07-14 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (5,1,4,1,'2026-08-02','09:00:00','09:45:00',45,25.00,'cancelada',NULL,NULL,'0','manual','2026-08-02 00:40:23','2026-08-02 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (6,1,5,4,'2026-07-18','13:00:00','14:30:00',90,55.00,'finalizada',NULL,NULL,'0','manual','2026-07-18 00:40:23','2026-07-18 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (7,1,2,6,'2026-07-18','09:15:00','11:15:00',120,80.00,'finalizada',NULL,NULL,'0','manual','2026-07-18 00:40:23','2026-07-18 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (8,1,6,7,'2026-07-30','13:00:00','13:30:00',30,20.00,'finalizada',NULL,NULL,'0','manual','2026-07-30 00:40:23','2026-07-30 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (9,1,3,8,'2026-07-30','16:15:00','16:45:00',30,14.00,'finalizada',NULL,NULL,'0','manual','2026-07-30 00:40:23','2026-07-30 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (10,1,6,8,'2026-07-13','12:45:00','13:30:00',45,22.00,'finalizada',NULL,NULL,'0','manual','2026-07-13 00:40:23','2026-07-13 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (11,1,3,2,'2026-07-29','12:15:00','12:45:00',30,28.00,'finalizada',NULL,NULL,'0','manual','2026-07-30 00:40:23','2026-08-03 00:46:44');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (12,1,8,2,'2026-07-22','13:00:00','13:30:00',30,20.00,'finalizada',NULL,NULL,'0','manual','2026-07-22 00:40:23','2026-07-22 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (13,1,8,3,'2026-07-25','09:30:00','10:00:00',30,14.00,'finalizada',NULL,NULL,'0','manual','2026-07-25 00:40:23','2026-07-25 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (14,1,10,2,'2026-07-20','09:45:00','11:45:00',120,80.00,'finalizada',NULL,NULL,'0','manual','2026-07-20 00:40:23','2026-07-20 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (15,1,2,2,'2026-08-02','13:45:00','16:15:00',150,95.00,'finalizada',NULL,NULL,'0','manual','2026-08-02 00:40:23','2026-08-02 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (16,1,10,2,'2026-07-18','13:00:00','13:30:00',30,18.00,'finalizada',NULL,NULL,'0','manual','2026-07-18 00:40:23','2026-07-18 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (17,1,2,4,'2026-07-17','16:00:00','17:00:00',60,28.00,'finalizada',NULL,NULL,'0','manual','2026-07-17 00:40:23','2026-07-17 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (18,1,8,5,'2026-07-12','15:45:00','16:15:00',30,14.00,'finalizada',NULL,NULL,'0','manual','2026-07-12 00:40:23','2026-07-12 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (19,1,6,9,'2026-08-03','15:45:00','17:45:00',120,75.00,'confirmada',NULL,NULL,'0','manual','2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (20,1,4,3,'2026-08-03','13:30:00','14:15:00',45,22.00,'confirmada',NULL,NULL,'0','manual','2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (21,1,6,4,'2026-08-03','11:45:00','13:15:00',90,55.00,'confirmada',NULL,NULL,'0','manual','2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (22,1,8,4,'2026-08-03','12:15:00','14:45:00',150,95.00,'finalizada',NULL,NULL,'0','manual','2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (23,1,9,8,'2026-08-03','10:45:00','11:30:00',45,22.00,'confirmada',NULL,NULL,'0','manual','2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (24,1,10,6,'2026-08-07','09:15:00','11:15:00',120,120.00,'confirmada',NULL,NULL,'0','manual','2026-08-07 00:40:23','2026-08-07 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (25,1,5,10,'2026-08-04','17:00:00','17:30:00',30,20.00,'confirmada',NULL,NULL,'0','manual','2026-08-04 00:40:23','2026-08-04 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (26,1,4,5,'2026-08-05','19:30:00','20:00:00',30,14.00,'confirmada',NULL,NULL,'0','manual','2026-08-05 00:40:23','2026-08-05 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (27,1,9,7,'2026-08-04','17:15:00','18:45:00',90,55.00,'pendiente',NULL,NULL,'0','manual','2026-08-04 00:40:23','2026-08-04 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (28,1,8,7,'2026-08-10','16:15:00','16:45:00',30,20.00,'confirmada',NULL,NULL,'0','manual','2026-08-10 00:40:23','2026-08-10 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (29,1,7,6,'2026-08-10','11:45:00','12:15:00',30,28.00,'confirmada',NULL,NULL,'0','manual','2026-08-10 00:40:23','2026-08-10 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (30,1,9,6,'2026-08-15','11:30:00','14:00:00',150,95.00,'confirmada',NULL,NULL,'0','manual','2026-08-15 00:40:23','2026-08-15 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (31,1,5,4,'2026-08-06','15:30:00','16:15:00',45,25.00,'confirmada',NULL,NULL,'0','manual','2026-08-06 00:40:23','2026-08-06 00:40:23');
+INSERT INTO `pelu_citas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`fecha`,`hora_inicio`,`hora_fin`,`duracion_total`,`precio_total`,`estado`,`color`,`notas`,`recordatorio_enviado`,`origen`,`created_at`,`updated_at`) VALUES (32,1,5,9,'2026-08-02','11:00:00','11:30:00',30,14.00,'confirmada',NULL,NULL,'0','manual','2026-08-03 01:09:33','2026-08-03 01:09:33');
 
--- Volcando estructura para tabla tpv_peluqueria.cita_servicios
-CREATE TABLE IF NOT EXISTS `cita_servicios` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `cita_id` bigint unsigned NOT NULL,
-  `servicio_id` bigint unsigned NOT NULL,
-  `empleado_id` bigint unsigned DEFAULT NULL,
-  `duracion` int NOT NULL,
-  `precio` decimal(10,2) NOT NULL,
-  `descuento` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `orden` int NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cita_servicios_cita_id_foreign` (`cita_id`),
-  KEY `cita_servicios_servicio_id_foreign` (`servicio_id`),
-  KEY `cita_servicios_empleado_id_foreign` (`empleado_id`),
-  CONSTRAINT `cita_servicios_cita_id_foreign` FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `cita_servicios_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `cita_servicios_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Volcando datos para la tabla tpv_peluqueria.cita_servicios: ~62 rows (aproximadamente)
-DELETE FROM `cita_servicios`;
-INSERT INTO `cita_servicios` (`id`, `cita_id`, `servicio_id`, `empleado_id`, `duracion`, `precio`, `descuento`, `orden`, `created_at`, `updated_at`) VALUES
-	(1, 1, 4, 6, 45, 30.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 2, 4, 4, 45, 30.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 3, 8, 4, 150, 95.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(4, 4, 13, 9, 45, 22.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(5, 5, 13, 7, 45, 22.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(6, 6, 3, 3, 30, 14.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(7, 7, 10, 2, 45, 35.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(8, 8, 8, 7, 150, 95.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(9, 9, 2, 6, 30, 18.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(10, 10, 5, 10, 30, 20.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(11, 11, 1, 1, 45, 25.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(12, 12, 11, 4, 120, 120.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(13, 13, 9, 5, 120, 80.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(14, 14, 1, 9, 45, 25.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(15, 15, 3, 6, 30, 14.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(16, 16, 11, 6, 120, 120.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(17, 17, 12, 4, 30, 28.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(18, 18, 8, 6, 150, 95.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(19, 19, 6, 9, 90, 55.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(20, 20, 12, 1, 30, 28.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(21, 21, 3, 6, 30, 14.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(22, 22, 3, 3, 30, 14.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(23, 23, 14, 6, 60, 28.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(24, 24, 1, 3, 45, 25.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(25, 25, 12, 8, 30, 28.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(26, 26, 9, 9, 120, 80.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(27, 27, 7, 1, 120, 75.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(28, 28, 7, 6, 120, 75.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(29, 29, 13, 10, 45, 22.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(30, 30, 7, 6, 120, 75.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(31, 31, 14, 4, 60, 28.00, 0.00, 0, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(32, 32, 5, 1, 30, 20.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(33, 33, 13, 9, 45, 22.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(34, 34, 9, 1, 120, 80.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(35, 35, 9, 6, 120, 80.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(36, 36, 3, 6, 30, 14.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(37, 37, 4, 10, 45, 30.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(38, 38, 14, 7, 60, 28.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(39, 39, 6, 4, 90, 55.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(40, 40, 5, 5, 30, 20.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(41, 41, 3, 9, 30, 14.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(42, 42, 8, 10, 150, 95.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(43, 43, 12, 5, 30, 28.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(44, 44, 3, 1, 30, 14.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(45, 45, 8, 9, 150, 95.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(46, 46, 10, 10, 45, 35.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(47, 47, 6, 5, 90, 55.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(48, 48, 9, 5, 120, 80.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(49, 49, 5, 7, 30, 20.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(50, 50, 14, 2, 60, 28.00, 0.00, 0, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(51, 51, 12, 8, 30, 28.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(52, 52, 11, 4, 120, 120.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(53, 53, 3, 5, 30, 14.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(54, 54, 8, 3, 150, 95.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(55, 55, 11, 8, 120, 120.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(56, 56, 7, 5, 120, 75.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(57, 57, 4, 2, 45, 30.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(58, 58, 5, 5, 30, 20.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(59, 59, 8, 10, 150, 95.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(60, 60, 10, 4, 45, 35.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(61, 61, 7, 10, 120, 75.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21'),
-	(62, 62, 2, 1, 30, 18.00, 0.00, 0, '2026-05-07 19:21:21', '2026-05-07 19:21:21');
-
--- Volcando estructura para tabla tpv_peluqueria.clientes
-CREATE TABLE IF NOT EXISTS `clientes` (
+-- Tabla: pelu_clientes
+DROP TABLE IF EXISTS `pelu_clientes`;
+CREATE TABLE `pelu_clientes` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `codigo` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -457,25 +335,23 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   PRIMARY KEY (`id`),
   KEY `clientes_empresa_id_nombre_index` (`empresa_id`,`nombre`),
   KEY `clientes_empresa_id_telefono_index` (`empresa_id`,`telefono`),
-  CONSTRAINT `clientes_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
+  CONSTRAINT `clientes_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.clientes: ~10 rows (aproximadamente)
-DELETE FROM `clientes`;
-INSERT INTO `clientes` (`id`, `empresa_id`, `codigo`, `nombre`, `apellidos`, `dni`, `telefono`, `email`, `fecha_nacimiento`, `genero`, `direccion`, `ciudad`, `codigo_postal`, `foto`, `notas`, `alergias`, `preferencias`, `puntos_fidelidad`, `saldo`, `acepta_marketing`, `acepta_rgpd`, `fecha_alta`, `ultima_visita`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'C-0001', 'Carmen', 'Jiménez Ortiz', NULL, '+34 666 010 101', 'carmen.jimenez@example.com', '1985-03-12', 'femenino', NULL, 'Madrid', NULL, NULL, NULL, NULL, NULL, 213, 35.00, 1, 1, '2025-11-18', '2026-05-01', 1, '2025-11-18 19:21:09', '2025-11-18 19:21:09'),
-	(2, 1, 'C-0002', 'Patricia', 'Moreno Díaz', NULL, '+34 666 020 202', 'patricia.moreno@example.com', '1992-07-25', 'femenino', NULL, 'Madrid', NULL, NULL, NULL, NULL, NULL, 50, 0.00, 1, 1, '2026-01-10', '2026-04-19', 1, '2026-01-10 19:21:09', '2026-01-10 19:21:09'),
-	(3, 1, 'C-0003', 'Andrea', 'Soler Mas', NULL, '+34 666 030 303', 'andrea.soler@example.com', '1978-11-04', 'femenino', NULL, 'Barcelona', NULL, NULL, NULL, NULL, NULL, 229, 0.00, 1, 1, '2026-02-07', '2026-04-01', 1, '2026-02-07 19:21:09', '2026-02-07 19:21:09'),
-	(4, 1, 'C-0004', 'Miguel', 'Torres Navarro', NULL, '+34 666 040 404', 'miguel.torres@example.com', '1989-05-18', 'masculino', NULL, 'Madrid', NULL, NULL, NULL, NULL, NULL, 137, 23.00, 1, 1, '2026-01-06', '2026-04-09', 1, '2026-01-06 19:21:09', '2026-01-06 19:21:09'),
-	(5, 1, 'C-0005', 'Beatriz', 'Reyes Santos', NULL, '+34 666 050 505', 'bea.reyes@example.com', '1995-01-30', 'femenino', NULL, 'Valencia', NULL, NULL, NULL, NULL, NULL, 26, 0.00, 1, 1, '2025-12-07', '2026-04-01', 1, '2025-12-07 19:21:09', '2025-12-07 19:21:09'),
-	(6, 1, 'C-0006', 'Roberto', 'Iglesias Vidal', NULL, '+34 666 060 606', 'roberto.iglesias@example.com', '1980-09-09', 'masculino', NULL, 'Madrid', NULL, NULL, NULL, NULL, NULL, 233, 46.00, 1, 1, '2026-01-30', '2026-04-05', 1, '2026-01-30 19:21:09', '2026-01-30 19:21:09'),
-	(7, 1, 'C-0007', 'Cristina', 'Marín Cabrera', NULL, '+34 666 070 707', 'cristina.marin@example.com', '1990-04-22', 'femenino', NULL, 'Sevilla', NULL, NULL, NULL, NULL, NULL, 11, 46.00, 1, 1, '2026-02-09', '2026-05-01', 1, '2026-02-09 19:21:09', '2026-02-09 19:21:09'),
-	(8, 1, 'C-0008', 'Daniel', 'Herrera Bravo', NULL, '+34 666 080 808', 'daniel.herrera@example.com', '1987-12-15', 'masculino', NULL, 'Madrid', NULL, NULL, NULL, NULL, NULL, 79, 0.00, 1, 1, '2026-03-10', '2026-04-27', 1, '2026-03-10 19:21:09', '2026-03-10 19:21:09'),
-	(9, 1, 'C-0009', 'Isabel', 'Núñez Ramos', NULL, '+34 666 090 909', 'isabel.nunez@example.com', '1975-06-08', 'femenino', NULL, 'Madrid', NULL, NULL, NULL, NULL, NULL, 243, 35.00, 1, 1, '2026-01-04', '2026-05-05', 1, '2026-01-04 19:21:09', '2026-01-04 19:21:09'),
-	(10, 1, 'C-0010', 'Sergio', 'Blanco Pascual', NULL, '+34 666 100 100', 'sergio.blanco@example.com', '1993-08-19', 'masculino', NULL, 'Bilbao', NULL, NULL, NULL, NULL, NULL, 4, 0.00, 1, 1, '2025-11-20', '2026-05-01', 1, '2025-11-20 19:21:09', '2025-11-20 19:21:09');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (1,1,'C-0001','Carmen','Jiménez Ortiz',NULL,666010101,'carmen.jimenez@example.com','1985-03-12','femenino',NULL,'Lima',NULL,NULL,NULL,NULL,NULL,159,'0.00',1,1,'2026-03-16','2026-07-27',1,'2026-03-16 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (2,1,'C-0002','Patricia','Moreno Díaz',NULL,666020202,'patricia.moreno@example.com','1992-07-25','femenino',NULL,'Lima',NULL,NULL,NULL,NULL,NULL,60,'0.00',1,1,'2026-03-04','2026-07-12',1,'2026-03-04 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (3,1,'C-0003','Andrea','Soler Mas',NULL,666030303,'andrea.soler@example.com','1978-11-04','femenino',NULL,'Arequipa',NULL,NULL,NULL,NULL,NULL,29,'0.00',1,1,'2026-06-18','2026-07-19',1,'2026-06-18 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (4,1,'C-0004','Miguel','Torres Navarro',NULL,666040404,'miguel.torres@example.com','1989-05-18','masculino',NULL,'Lima',NULL,NULL,NULL,NULL,NULL,110,9.00,1,1,'2026-05-24','2026-07-05',1,'2026-05-24 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (5,1,'C-0005','Beatriz','Reyes Santos',NULL,666050505,'bea.reyes@example.com','1995-01-30','femenino',NULL,'Trujillo',NULL,NULL,NULL,NULL,NULL,141,'0.00',1,1,'2026-07-06','2026-07-27',1,'2026-07-06 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (6,1,'C-0006','Roberto','Iglesias Vidal',NULL,666060606,'roberto.iglesias@example.com','1980-09-09','masculino',NULL,'Lima',NULL,NULL,NULL,NULL,NULL,149,11.00,1,1,'2026-06-25','2026-07-22',1,'2026-06-25 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (7,1,'C-0007','Cristina','Marín Cabrera',NULL,666070707,'cristina.marin@example.com','1990-04-22','femenino',NULL,'Cusco',NULL,NULL,NULL,NULL,NULL,136,'0.00',1,1,'2026-02-26','2026-07-16',1,'2026-02-26 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (8,1,'C-0008','Daniel','Herrera Bravo',NULL,666080808,'daniel.herrera@example.com','1987-12-15','masculino',NULL,'Lima',NULL,NULL,NULL,NULL,NULL,99,13.00,1,1,'2026-03-02','2026-07-14',1,'2026-03-02 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (9,1,'C-0009','Isabel','Núñez Ramos',NULL,666090909,'isabel.nunez@example.com','1975-06-08','femenino',NULL,'Lima',NULL,NULL,NULL,NULL,NULL,121,23.00,1,1,'2026-05-31','2026-07-22',1,'2026-05-31 00:40:23','2026-08-03 01:51:04');
+INSERT INTO `pelu_clientes` (`id`,`empresa_id`,`codigo`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`fecha_nacimiento`,`genero`,`direccion`,`ciudad`,`codigo_postal`,`foto`,`notas`,`alergias`,`preferencias`,`puntos_fidelidad`,`saldo`,`acepta_marketing`,`acepta_rgpd`,`fecha_alta`,`ultima_visita`,`activo`,`created_at`,`updated_at`) VALUES (10,1,'C-0010','Sergio','Blanco Pascual',NULL,666100100,'sergio.blanco@example.com','1993-08-19','masculino',NULL,'Chiclayo',NULL,NULL,NULL,NULL,NULL,250,'0.00',1,1,'2026-02-16','2026-08-01',1,'2026-02-16 00:40:23','2026-08-03 01:51:04');
 
--- Volcando estructura para tabla tpv_peluqueria.configuraciones
-CREATE TABLE IF NOT EXISTS `configuraciones` (
+-- Tabla: pelu_configuraciones
+DROP TABLE IF EXISTS `pelu_configuraciones`;
+CREATE TABLE `pelu_configuraciones` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `clave` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -487,14 +363,13 @@ CREATE TABLE IF NOT EXISTS `configuraciones` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `configuraciones_empresa_id_clave_unique` (`empresa_id`,`clave`),
-  CONSTRAINT `configuraciones_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
+  CONSTRAINT `configuraciones_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.configuraciones: ~0 rows (aproximadamente)
-DELETE FROM `configuraciones`;
 
--- Volcando estructura para tabla tpv_peluqueria.detalle_ventas
-CREATE TABLE IF NOT EXISTS `detalle_ventas` (
+-- Tabla: pelu_detalle_ventas
+DROP TABLE IF EXISTS `pelu_detalle_ventas`;
+CREATE TABLE `pelu_detalle_ventas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `venta_id` bigint unsigned NOT NULL,
   `tipo` enum('servicio','producto','bono','otro') COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -504,7 +379,7 @@ CREATE TABLE IF NOT EXISTS `detalle_ventas` (
   `cantidad` decimal(10,2) NOT NULL DEFAULT '1.00',
   `precio_unitario` decimal(10,2) NOT NULL,
   `descuento` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `impuesto_porcentaje` decimal(5,2) NOT NULL DEFAULT '21.00',
+  `impuesto_porcentaje` decimal(5,2) NOT NULL DEFAULT '18.00',
   `subtotal` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -512,397 +387,262 @@ CREATE TABLE IF NOT EXISTS `detalle_ventas` (
   PRIMARY KEY (`id`),
   KEY `detalle_ventas_venta_id_foreign` (`venta_id`),
   KEY `detalle_ventas_empleado_id_foreign` (`empleado_id`),
-  CONSTRAINT `detalle_ventas_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `detalle_ventas_venta_id_foreign` FOREIGN KEY (`venta_id`) REFERENCES `ventas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=382 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `detalle_ventas_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `pelu_empleados` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `detalle_ventas_venta_id_foreign` FOREIGN KEY (`venta_id`) REFERENCES `pelu_ventas` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.detalle_ventas: ~381 rows (aproximadamente)
-DELETE FROM `detalle_ventas`;
-INSERT INTO `detalle_ventas` (`id`, `venta_id`, `tipo`, `referencia_id`, `empleado_id`, `concepto`, `cantidad`, `precio_unitario`, `descuento`, `impuesto_porcentaje`, `subtotal`, `total`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'servicio', 3, 10, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-07 20:46:00', '2026-04-07 20:46:00'),
-	(2, 1, 'servicio', 12, 10, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-07 20:46:00', '2026-04-07 20:46:00'),
-	(3, 1, 'servicio', 13, 10, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-07 20:46:00', '2026-04-07 20:46:00'),
-	(4, 2, 'producto', 2, 7, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(5, 2, 'producto', 1, 7, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(6, 2, 'servicio', 15, 7, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(7, 3, 'servicio', 13, 4, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(8, 3, 'producto', 2, 4, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(9, 3, 'producto', 7, 4, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(10, 4, 'producto', 10, 1, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-07 23:51:00', '2026-04-07 23:51:00'),
-	(11, 5, 'producto', 4, 1, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-07 23:07:00', '2026-04-07 23:07:00'),
-	(12, 6, 'servicio', 3, 9, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-09 15:04:00', '2026-04-09 15:04:00'),
-	(13, 6, 'servicio', 2, 9, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-09 15:04:00', '2026-04-09 15:04:00'),
-	(14, 6, 'servicio', 7, 9, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-09 15:04:00', '2026-04-09 15:04:00'),
-	(15, 7, 'producto', 5, 5, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(16, 7, 'producto', 4, 5, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(17, 8, 'producto', 6, 9, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(18, 8, 'servicio', 15, 9, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(19, 9, 'servicio', 4, 5, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-09 19:00:00', '2026-04-09 19:00:00'),
-	(20, 9, 'servicio', 11, 5, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-09 19:00:00', '2026-04-09 19:00:00'),
-	(21, 10, 'servicio', 3, 6, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-10 15:33:00', '2026-04-10 15:33:00'),
-	(22, 10, 'servicio', 10, 6, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-10 15:33:00', '2026-04-10 15:33:00'),
-	(23, 10, 'servicio', 10, 6, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-10 15:33:00', '2026-04-10 15:33:00'),
-	(24, 11, 'producto', 5, 2, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(25, 11, 'producto', 7, 2, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(26, 11, 'servicio', 6, 2, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(27, 12, 'servicio', 5, 4, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-12 00:15:00', '2026-04-12 00:15:00'),
-	(28, 13, 'producto', 5, 7, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-12 00:08:00', '2026-04-12 00:08:00'),
-	(29, 14, 'producto', 3, 10, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(30, 14, 'producto', 6, 10, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(31, 14, 'servicio', 8, 10, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(32, 15, 'producto', 10, 1, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(33, 15, 'servicio', 6, 1, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(34, 15, 'servicio', 3, 1, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(35, 16, 'servicio', 13, 10, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-11 22:53:00', '2026-04-11 22:53:00'),
-	(36, 17, 'servicio', 7, 10, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-11 23:40:00', '2026-04-11 23:40:00'),
-	(37, 17, 'servicio', 3, 10, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-11 23:40:00', '2026-04-11 23:40:00'),
-	(38, 18, 'servicio', 11, 5, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-13 16:26:00', '2026-04-13 16:26:00'),
-	(39, 19, 'servicio', 3, 2, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(40, 19, 'producto', 5, 2, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(41, 19, 'servicio', 7, 2, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(42, 20, 'producto', 3, 8, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(43, 20, 'servicio', 7, 8, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(44, 20, 'servicio', 4, 8, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(45, 21, 'producto', 9, 6, 'Champú anticaspa 400ml', 1.00, 15.50, 0.00, 21.00, 12.81, 15.50, '2026-04-13 17:20:00', '2026-04-13 17:20:00'),
-	(46, 22, 'servicio', 15, 10, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-13 17:46:00', '2026-04-13 17:46:00'),
-	(47, 23, 'servicio', 15, 9, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-13 18:34:00', '2026-04-13 18:34:00'),
-	(48, 23, 'producto', 11, 9, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-13 18:34:00', '2026-04-13 18:34:00'),
-	(49, 24, 'servicio', 13, 5, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-13 21:26:00', '2026-04-13 21:26:00'),
-	(50, 24, 'servicio', 5, 5, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-13 21:26:00', '2026-04-13 21:26:00'),
-	(51, 25, 'producto', 7, 9, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(52, 25, 'producto', 3, 9, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(53, 26, 'servicio', 14, 2, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-14 19:53:00', '2026-04-14 19:53:00'),
-	(54, 26, 'servicio', 1, 2, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-14 19:53:00', '2026-04-14 19:53:00'),
-	(55, 27, 'servicio', 6, 4, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-14 16:29:00', '2026-04-14 16:29:00'),
-	(56, 27, 'servicio', 9, 4, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-14 16:29:00', '2026-04-14 16:29:00'),
-	(57, 28, 'servicio', 7, 9, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(58, 28, 'producto', 9, 9, 'Champú anticaspa 400ml', 1.00, 15.50, 0.00, 21.00, 12.81, 15.50, '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(59, 28, 'servicio', 10, 9, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(60, 29, 'servicio', 3, 10, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-15 17:00:00', '2026-04-15 17:00:00'),
-	(61, 29, 'servicio', 7, 10, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-15 17:00:00', '2026-04-15 17:00:00'),
-	(62, 29, 'servicio', 8, 10, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-15 17:00:00', '2026-04-15 17:00:00'),
-	(63, 30, 'producto', 5, 3, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-15 20:53:00', '2026-04-15 20:53:00'),
-	(64, 30, 'servicio', 11, 3, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-15 20:53:00', '2026-04-15 20:53:00'),
-	(65, 31, 'servicio', 7, 9, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-17 00:32:00', '2026-04-17 00:32:00'),
-	(66, 31, 'servicio', 6, 9, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-17 00:32:00', '2026-04-17 00:32:00'),
-	(67, 32, 'servicio', 6, 7, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-16 15:12:00', '2026-04-16 15:12:00'),
-	(68, 33, 'servicio', 4, 7, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-16 22:31:00', '2026-04-16 22:31:00'),
-	(69, 34, 'producto', 2, 3, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-16 21:55:00', '2026-04-16 21:55:00'),
-	(70, 34, 'servicio', 3, 3, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-16 21:55:00', '2026-04-16 21:55:00'),
-	(71, 35, 'producto', 5, 1, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-16 20:59:00', '2026-04-16 20:59:00'),
-	(72, 36, 'servicio', 8, 4, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-16 20:28:00', '2026-04-16 20:28:00'),
-	(73, 37, 'producto', 1, 6, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-17 15:19:00', '2026-04-17 15:19:00'),
-	(74, 37, 'servicio', 3, 6, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-17 15:19:00', '2026-04-17 15:19:00'),
-	(75, 38, 'servicio', 12, 2, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-17 19:27:00', '2026-04-17 19:27:00'),
-	(76, 38, 'servicio', 8, 2, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-17 19:27:00', '2026-04-17 19:27:00'),
-	(77, 38, 'servicio', 15, 2, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-17 19:27:00', '2026-04-17 19:27:00'),
-	(78, 39, 'servicio', 6, 2, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-17 20:11:00', '2026-04-17 20:11:00'),
-	(79, 39, 'servicio', 13, 2, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-17 20:11:00', '2026-04-17 20:11:00'),
-	(80, 39, 'servicio', 11, 2, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-17 20:11:00', '2026-04-17 20:11:00'),
-	(81, 40, 'servicio', 3, 5, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-17 18:36:00', '2026-04-17 18:36:00'),
-	(82, 41, 'producto', 5, 1, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-18 15:30:00', '2026-04-18 15:30:00'),
-	(83, 42, 'servicio', 10, 3, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-18 21:28:00', '2026-04-18 21:28:00'),
-	(84, 42, 'servicio', 6, 3, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-18 21:28:00', '2026-04-18 21:28:00'),
-	(85, 43, 'servicio', 6, 9, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-18 16:39:00', '2026-04-18 16:39:00'),
-	(86, 43, 'servicio', 11, 9, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-18 16:39:00', '2026-04-18 16:39:00'),
-	(87, 43, 'servicio', 14, 9, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-18 16:39:00', '2026-04-18 16:39:00'),
-	(88, 44, 'producto', 10, 8, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-18 16:40:00', '2026-04-18 16:40:00'),
-	(89, 44, 'servicio', 9, 8, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-18 16:40:00', '2026-04-18 16:40:00'),
-	(90, 45, 'servicio', 5, 7, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(91, 45, 'servicio', 3, 7, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(92, 45, 'producto', 10, 7, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(93, 46, 'servicio', 2, 9, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-20 21:53:00', '2026-04-20 21:53:00'),
-	(94, 47, 'producto', 6, 5, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-20 14:55:00', '2026-04-20 14:55:00'),
-	(95, 48, 'producto', 1, 3, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-21 00:42:00', '2026-04-21 00:42:00'),
-	(96, 48, 'servicio', 13, 3, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-21 00:42:00', '2026-04-21 00:42:00'),
-	(97, 49, 'producto', 3, 6, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-21 00:24:00', '2026-04-21 00:24:00'),
-	(98, 50, 'producto', 4, 7, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(99, 50, 'servicio', 8, 7, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(100, 50, 'servicio', 12, 7, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(101, 51, 'servicio', 12, 7, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-21 16:34:00', '2026-04-21 16:34:00'),
-	(102, 51, 'servicio', 7, 7, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-21 16:34:00', '2026-04-21 16:34:00'),
-	(103, 51, 'servicio', 13, 7, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-21 16:34:00', '2026-04-21 16:34:00'),
-	(104, 52, 'servicio', 9, 8, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-21 14:00:00', '2026-04-21 14:00:00'),
-	(105, 53, 'servicio', 4, 1, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-21 19:27:00', '2026-04-21 19:27:00'),
-	(106, 53, 'producto', 4, 1, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-21 19:27:00', '2026-04-21 19:27:00'),
-	(107, 54, 'producto', 3, 6, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-23 00:41:00', '2026-04-23 00:41:00'),
-	(108, 55, 'producto', 9, 10, 'Champú anticaspa 400ml', 1.00, 15.50, 0.00, 21.00, 12.81, 15.50, '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(109, 55, 'servicio', 10, 10, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(110, 55, 'servicio', 8, 10, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(111, 56, 'servicio', 13, 3, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-23 14:27:00', '2026-04-23 14:27:00'),
-	(112, 56, 'producto', 2, 3, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-23 14:27:00', '2026-04-23 14:27:00'),
-	(113, 57, 'servicio', 5, 9, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-23 15:30:00', '2026-04-23 15:30:00'),
-	(114, 57, 'servicio', 11, 9, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-23 15:30:00', '2026-04-23 15:30:00'),
-	(115, 58, 'servicio', 12, 8, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-24 23:23:00', '2026-04-24 23:23:00'),
-	(116, 59, 'producto', 11, 1, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(117, 59, 'producto', 5, 1, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(118, 59, 'servicio', 4, 1, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(119, 60, 'servicio', 5, 5, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-24 15:54:00', '2026-04-24 15:54:00'),
-	(120, 60, 'servicio', 11, 5, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-24 15:54:00', '2026-04-24 15:54:00'),
-	(121, 60, 'servicio', 3, 5, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-24 15:54:00', '2026-04-24 15:54:00'),
-	(122, 61, 'servicio', 8, 3, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-24 17:33:00', '2026-04-24 17:33:00'),
-	(123, 61, 'servicio', 9, 3, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-24 17:33:00', '2026-04-24 17:33:00'),
-	(124, 61, 'servicio', 12, 3, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-24 17:33:00', '2026-04-24 17:33:00'),
-	(125, 62, 'servicio', 11, 7, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(126, 62, 'producto', 10, 7, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(127, 62, 'servicio', 5, 7, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(128, 63, 'servicio', 15, 10, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-25 15:17:00', '2026-04-25 15:17:00'),
-	(129, 64, 'servicio', 8, 8, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(130, 64, 'servicio', 12, 8, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(131, 65, 'producto', 2, 9, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-25 22:36:00', '2026-04-25 22:36:00'),
-	(132, 65, 'servicio', 14, 9, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-25 22:36:00', '2026-04-25 22:36:00'),
-	(133, 66, 'servicio', 9, 6, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-25 14:38:00', '2026-04-25 14:38:00'),
-	(134, 67, 'servicio', 11, 1, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-25 14:23:00', '2026-04-25 14:23:00'),
-	(135, 68, 'producto', 3, 3, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(136, 68, 'producto', 2, 3, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(137, 69, 'producto', 8, 4, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(138, 69, 'producto', 9, 4, 'Champú anticaspa 400ml', 1.00, 15.50, 0.00, 21.00, 12.81, 15.50, '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(139, 70, 'servicio', 11, 4, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-27 18:56:00', '2026-04-27 18:56:00'),
-	(140, 71, 'producto', 5, 2, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-28 00:31:00', '2026-04-28 00:31:00'),
-	(141, 72, 'servicio', 3, 7, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-27 19:00:00', '2026-04-27 19:00:00'),
-	(142, 73, 'servicio', 5, 7, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(143, 73, 'producto', 4, 7, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(144, 73, 'producto', 7, 7, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(145, 74, 'servicio', 10, 2, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-28 14:12:00', '2026-04-28 14:12:00'),
-	(146, 74, 'producto', 2, 2, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-28 14:12:00', '2026-04-28 14:12:00'),
-	(147, 75, 'servicio', 4, 7, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(148, 75, 'servicio', 13, 7, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(149, 75, 'producto', 5, 7, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(150, 76, 'producto', 7, 1, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-28 14:54:00', '2026-04-28 14:54:00'),
-	(151, 77, 'producto', 3, 3, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(152, 77, 'servicio', 5, 3, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(153, 77, 'servicio', 6, 3, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(154, 78, 'producto', 3, 5, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-30 00:28:00', '2026-04-30 00:28:00'),
-	(155, 79, 'servicio', 3, 4, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-30 23:55:00', '2026-04-30 23:55:00'),
-	(156, 80, 'servicio', 8, 1, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-30 17:33:00', '2026-04-30 17:33:00'),
-	(157, 81, 'servicio', 12, 7, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-01 22:04:00', '2026-05-01 22:04:00'),
-	(158, 81, 'producto', 8, 7, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-05-01 22:04:00', '2026-05-01 22:04:00'),
-	(159, 82, 'servicio', 8, 8, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-01 23:04:00', '2026-05-01 23:04:00'),
-	(160, 82, 'servicio', 8, 8, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-01 23:04:00', '2026-05-01 23:04:00'),
-	(161, 83, 'servicio', 8, 6, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-01 18:13:00', '2026-05-01 18:13:00'),
-	(162, 83, 'producto', 6, 6, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-05-01 18:13:00', '2026-05-01 18:13:00'),
-	(163, 84, 'producto', 6, 7, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(164, 84, 'producto', 3, 7, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(165, 85, 'producto', 8, 10, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-05-02 16:54:00', '2026-05-02 16:54:00'),
-	(166, 86, 'producto', 4, 5, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(167, 86, 'producto', 8, 5, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(168, 87, 'producto', 3, 3, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(169, 87, 'servicio', 1, 3, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(170, 87, 'producto', 1, 3, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(171, 88, 'servicio', 1, 2, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-05-02 18:53:00', '2026-05-02 18:53:00'),
-	(172, 88, 'servicio', 11, 2, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-05-02 18:53:00', '2026-05-02 18:53:00'),
-	(173, 89, 'producto', 4, 9, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-02 15:01:00', '2026-05-02 15:01:00'),
-	(174, 90, 'servicio', 5, 2, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-05-02 21:20:00', '2026-05-02 21:20:00'),
-	(175, 91, 'servicio', 3, 7, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-03 00:18:00', '2026-05-03 00:18:00'),
-	(176, 92, 'servicio', 15, 2, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-05-04 22:52:00', '2026-05-04 22:52:00'),
-	(177, 93, 'servicio', 8, 8, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-04 18:16:00', '2026-05-04 18:16:00'),
-	(178, 93, 'servicio', 12, 8, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-04 18:16:00', '2026-05-04 18:16:00'),
-	(179, 94, 'producto', 2, 10, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(180, 94, 'producto', 3, 10, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(181, 95, 'servicio', 11, 1, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(182, 95, 'servicio', 3, 1, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(183, 95, 'producto', 6, 1, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(184, 96, 'servicio', 8, 3, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-04 15:30:00', '2026-05-04 15:30:00'),
-	(185, 96, 'servicio', 14, 3, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-04 15:30:00', '2026-05-04 15:30:00'),
-	(186, 97, 'servicio', 10, 6, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-05-05 23:30:00', '2026-05-05 23:30:00'),
-	(187, 97, 'producto', 7, 6, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-05-05 23:30:00', '2026-05-05 23:30:00'),
-	(188, 98, 'producto', 7, 1, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(189, 98, 'servicio', 8, 1, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(190, 98, 'producto', 4, 1, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(191, 99, 'producto', 11, 9, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-05-05 18:02:00', '2026-05-05 18:02:00'),
-	(192, 100, 'producto', 11, 3, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(193, 100, 'producto', 5, 3, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(194, 101, 'servicio', 3, 6, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(195, 101, 'producto', 1, 6, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(196, 101, 'servicio', 6, 6, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(197, 102, 'servicio', 9, 9, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-05-06 21:43:00', '2026-05-06 21:43:00'),
-	(198, 103, 'servicio', 3, 10, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-06 18:28:00', '2026-05-06 18:28:00'),
-	(199, 104, 'producto', 4, 3, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(200, 104, 'producto', 7, 3, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(201, 104, 'producto', 4, 3, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(202, 105, 'servicio', 2, 2, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-05-06 16:55:00', '2026-05-06 16:55:00'),
-	(203, 106, 'servicio', 12, 1, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-06 21:40:00', '2026-05-06 21:40:00'),
-	(204, 106, 'servicio', 6, 1, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-05-06 21:40:00', '2026-05-06 21:40:00'),
-	(205, 106, 'servicio', 5, 1, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-05-06 21:40:00', '2026-05-06 21:40:00'),
-	(206, 107, 'servicio', 12, 2, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-06 20:54:00', '2026-05-06 20:54:00'),
-	(207, 107, 'servicio', 6, 2, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-05-06 20:54:00', '2026-05-06 20:54:00'),
-	(208, 108, 'servicio', 10, 9, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-05-07 16:58:00', '2026-05-07 16:58:00'),
-	(209, 109, 'servicio', 5, 3, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-05-07 17:09:00', '2026-05-07 17:09:00'),
-	(210, 110, 'servicio', 13, 4, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-05-07 15:30:00', '2026-05-07 15:30:00'),
-	(211, 111, 'servicio', 14, 8, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-07 15:51:00', '2026-05-07 15:51:00'),
-	(212, 112, 'producto', 1, 3, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(213, 112, 'servicio', 8, 3, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(214, 112, 'producto', 8, 3, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(215, 113, 'servicio', 14, 2, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-07 23:53:00', '2026-04-07 23:53:00'),
-	(216, 114, 'producto', 11, 2, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-07 23:17:00', '2026-04-07 23:17:00'),
-	(217, 115, 'producto', 11, 6, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-09 15:44:00', '2026-04-09 15:44:00'),
-	(218, 115, 'servicio', 2, 6, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-09 15:44:00', '2026-04-09 15:44:00'),
-	(219, 116, 'servicio', 12, 9, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-09 17:09:00', '2026-04-09 17:09:00'),
-	(220, 116, 'servicio', 1, 9, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-09 17:09:00', '2026-04-09 17:09:00'),
-	(221, 116, 'servicio', 3, 9, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-09 17:09:00', '2026-04-09 17:09:00'),
-	(222, 117, 'producto', 6, 9, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-09 17:07:00', '2026-04-09 17:07:00'),
-	(223, 118, 'producto', 7, 9, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(224, 119, 'producto', 3, 10, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(225, 119, 'producto', 5, 10, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(226, 120, 'servicio', 7, 3, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-09 19:13:00', '2026-04-09 19:13:00'),
-	(227, 120, 'servicio', 2, 3, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-09 19:13:00', '2026-04-09 19:13:00'),
-	(228, 120, 'servicio', 13, 3, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-09 19:13:00', '2026-04-09 19:13:00'),
-	(229, 121, 'servicio', 1, 5, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(230, 121, 'producto', 2, 5, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(231, 121, 'producto', 1, 5, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(232, 122, 'servicio', 7, 6, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-10 20:17:00', '2026-04-10 20:17:00'),
-	(233, 122, 'servicio', 11, 6, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-10 20:17:00', '2026-04-10 20:17:00'),
-	(234, 122, 'servicio', 10, 6, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-10 20:17:00', '2026-04-10 20:17:00'),
-	(235, 123, 'servicio', 3, 4, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-10 14:52:00', '2026-04-10 14:52:00'),
-	(236, 123, 'servicio', 14, 4, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-10 14:52:00', '2026-04-10 14:52:00'),
-	(237, 124, 'producto', 5, 6, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-10 20:47:00', '2026-04-10 20:47:00'),
-	(238, 125, 'servicio', 6, 9, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-13 23:32:00', '2026-04-13 23:32:00'),
-	(239, 126, 'servicio', 12, 3, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(240, 126, 'producto', 11, 3, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(241, 126, 'producto', 8, 3, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(242, 127, 'producto', 4, 6, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-13 14:40:00', '2026-04-13 14:40:00'),
-	(243, 128, 'servicio', 5, 6, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-13 18:47:00', '2026-04-13 18:47:00'),
-	(244, 128, 'servicio', 15, 6, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-13 18:47:00', '2026-04-13 18:47:00'),
-	(245, 129, 'servicio', 4, 8, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-13 14:24:00', '2026-04-13 14:24:00'),
-	(246, 129, 'servicio', 2, 8, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-13 14:24:00', '2026-04-13 14:24:00'),
-	(247, 130, 'producto', 10, 7, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-15 14:47:00', '2026-04-15 14:47:00'),
-	(248, 131, 'servicio', 7, 9, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-15 14:45:00', '2026-04-15 14:45:00'),
-	(249, 131, 'servicio', 1, 9, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-15 14:45:00', '2026-04-15 14:45:00'),
-	(250, 131, 'servicio', 12, 9, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-15 14:45:00', '2026-04-15 14:45:00'),
-	(251, 132, 'servicio', 11, 1, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-15 19:33:00', '2026-04-15 19:33:00'),
-	(252, 132, 'servicio', 1, 1, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-15 19:33:00', '2026-04-15 19:33:00'),
-	(253, 132, 'servicio', 2, 1, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-15 19:33:00', '2026-04-15 19:33:00'),
-	(254, 133, 'producto', 2, 5, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-15 20:22:00', '2026-04-15 20:22:00'),
-	(255, 134, 'servicio', 14, 2, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(256, 134, 'servicio', 1, 2, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(257, 134, 'producto', 8, 2, 'Aceite de argán 100ml', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(258, 135, 'servicio', 12, 3, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-17 00:18:00', '2026-04-17 00:18:00'),
-	(259, 136, 'producto', 4, 3, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-16 16:12:00', '2026-04-16 16:12:00'),
-	(260, 137, 'producto', 1, 1, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(261, 137, 'producto', 6, 1, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(262, 137, 'producto', 10, 1, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(263, 138, 'producto', 1, 9, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(264, 138, 'servicio', 11, 9, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(265, 138, 'servicio', 9, 9, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(266, 139, 'servicio', 8, 8, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-20 19:31:00', '2026-04-20 19:31:00'),
-	(267, 139, 'servicio', 7, 8, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-20 19:31:00', '2026-04-20 19:31:00'),
-	(268, 140, 'servicio', 11, 3, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-20 15:36:00', '2026-04-20 15:36:00'),
-	(269, 141, 'producto', 11, 7, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-20 22:52:00', '2026-04-20 22:52:00'),
-	(270, 141, 'servicio', 9, 7, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-20 22:52:00', '2026-04-20 22:52:00'),
-	(271, 142, 'servicio', 9, 9, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-20 14:49:00', '2026-04-20 14:49:00'),
-	(272, 142, 'servicio', 5, 9, 'Brushing', 1.00, 20.00, 0.00, 21.00, 16.53, 20.00, '2026-04-20 14:49:00', '2026-04-20 14:49:00'),
-	(273, 142, 'servicio', 3, 9, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-20 14:49:00', '2026-04-20 14:49:00'),
-	(274, 143, 'producto', 1, 6, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-21 00:00:00', '2026-04-21 00:00:00'),
-	(275, 143, 'servicio', 14, 6, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-21 00:00:00', '2026-04-21 00:00:00'),
-	(276, 144, 'producto', 3, 8, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-20 18:14:00', '2026-04-20 18:14:00'),
-	(277, 144, 'servicio', 9, 8, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-20 18:14:00', '2026-04-20 18:14:00'),
-	(278, 145, 'servicio', 11, 2, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-21 15:01:00', '2026-04-21 15:01:00'),
-	(279, 146, 'producto', 7, 7, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-21 21:01:00', '2026-04-21 21:01:00'),
-	(280, 146, 'servicio', 13, 7, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-21 21:01:00', '2026-04-21 21:01:00'),
-	(281, 147, 'servicio', 13, 8, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-21 23:16:00', '2026-04-21 23:16:00'),
-	(282, 147, 'servicio', 13, 8, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-21 23:16:00', '2026-04-21 23:16:00'),
-	(283, 148, 'servicio', 13, 6, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-22 19:20:00', '2026-04-22 19:20:00'),
-	(284, 149, 'servicio', 12, 4, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(285, 149, 'producto', 7, 4, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(286, 149, 'servicio', 13, 4, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(287, 150, 'servicio', 12, 4, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-22 19:06:00', '2026-04-22 19:06:00'),
-	(288, 150, 'servicio', 10, 4, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-22 19:06:00', '2026-04-22 19:06:00'),
-	(289, 150, 'servicio', 4, 4, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-04-22 19:06:00', '2026-04-22 19:06:00'),
-	(290, 151, 'servicio', 14, 7, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-23 18:53:00', '2026-04-23 18:53:00'),
-	(291, 152, 'servicio', 11, 4, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-23 23:32:00', '2026-04-23 23:32:00'),
-	(292, 153, 'producto', 2, 2, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-24 18:22:00', '2026-04-24 18:22:00'),
-	(293, 154, 'servicio', 13, 10, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-24 14:42:00', '2026-04-24 14:42:00'),
-	(294, 154, 'servicio', 2, 10, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-24 14:42:00', '2026-04-24 14:42:00'),
-	(295, 154, 'servicio', 7, 10, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-24 14:42:00', '2026-04-24 14:42:00'),
-	(296, 155, 'producto', 7, 3, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-25 00:59:00', '2026-04-25 00:59:00'),
-	(297, 155, 'servicio', 9, 3, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-25 00:59:00', '2026-04-25 00:59:00'),
-	(298, 156, 'servicio', 10, 8, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-24 16:45:00', '2026-04-24 16:45:00'),
-	(299, 156, 'servicio', 2, 8, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-24 16:45:00', '2026-04-24 16:45:00'),
-	(300, 156, 'servicio', 11, 8, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-24 16:45:00', '2026-04-24 16:45:00'),
-	(301, 157, 'servicio', 6, 6, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-24 22:33:00', '2026-04-24 22:33:00'),
-	(302, 158, 'servicio', 15, 9, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-24 20:50:00', '2026-04-24 20:50:00'),
-	(303, 158, 'producto', 3, 9, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-24 20:50:00', '2026-04-24 20:50:00'),
-	(304, 159, 'servicio', 6, 10, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(305, 159, 'producto', 5, 10, 'Cera moldeadora 100ml', 1.00, 16.50, 0.00, 21.00, 13.64, 16.50, '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(306, 159, 'servicio', 3, 10, 'Corte niño/a', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(307, 160, 'producto', 3, 10, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(308, 160, 'servicio', 1, 10, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(309, 160, 'servicio', 13, 10, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(310, 161, 'servicio', 9, 6, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-04-25 14:17:00', '2026-04-25 14:17:00'),
-	(311, 162, 'servicio', 10, 5, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-25 15:35:00', '2026-04-25 15:35:00'),
-	(312, 162, 'servicio', 14, 5, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-25 15:35:00', '2026-04-25 15:35:00'),
-	(313, 163, 'servicio', 7, 2, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-26 00:58:00', '2026-04-26 00:58:00'),
-	(314, 164, 'producto', 2, 9, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-27 18:14:00', '2026-04-27 18:14:00'),
-	(315, 164, 'servicio', 8, 9, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-27 18:14:00', '2026-04-27 18:14:00'),
-	(316, 165, 'servicio', 8, 6, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-27 16:43:00', '2026-04-27 16:43:00'),
-	(317, 165, 'servicio', 12, 6, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-27 16:43:00', '2026-04-27 16:43:00'),
-	(318, 166, 'producto', 4, 3, 'Spray fijador fuerte', 1.00, 14.00, 0.00, 21.00, 11.57, 14.00, '2026-04-27 17:36:00', '2026-04-27 17:36:00'),
-	(319, 166, 'servicio', 6, 3, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-04-27 17:36:00', '2026-04-27 17:36:00'),
-	(320, 167, 'servicio', 7, 4, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(321, 167, 'servicio', 11, 4, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(322, 167, 'producto', 1, 4, 'Champú hidratante 500ml', 1.00, 18.50, 0.00, 21.00, 15.29, 18.50, '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(323, 168, 'servicio', 10, 2, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-04-27 14:32:00', '2026-04-27 14:32:00'),
-	(324, 169, 'producto', 2, 3, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(325, 169, 'servicio', 12, 3, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(326, 169, 'servicio', 14, 3, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(327, 170, 'producto', 11, 5, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(328, 170, 'producto', 2, 5, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(329, 170, 'servicio', 14, 5, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(330, 171, 'producto', 7, 4, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(331, 171, 'servicio', 11, 4, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(332, 171, 'servicio', 12, 4, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(333, 172, 'producto', 2, 8, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-28 14:20:00', '2026-04-28 14:20:00'),
-	(334, 173, 'servicio', 7, 7, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-28 16:44:00', '2026-04-28 16:44:00'),
-	(335, 173, 'servicio', 2, 7, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-28 16:44:00', '2026-04-28 16:44:00'),
-	(336, 173, 'servicio', 1, 7, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-04-28 16:44:00', '2026-04-28 16:44:00'),
-	(337, 174, 'servicio', 8, 5, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-04-29 20:26:00', '2026-04-29 20:26:00'),
-	(338, 174, 'servicio', 2, 5, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-29 20:26:00', '2026-04-29 20:26:00'),
-	(339, 175, 'servicio', 2, 9, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-29 18:59:00', '2026-04-29 18:59:00'),
-	(340, 176, 'servicio', 11, 1, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-04-29 20:36:00', '2026-04-29 20:36:00'),
-	(341, 177, 'producto', 6, 8, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-29 22:36:00', '2026-04-29 22:36:00'),
-	(342, 178, 'servicio', 13, 9, 'Manicura', 1.00, 22.00, 0.00, 21.00, 18.18, 22.00, '2026-04-29 22:49:00', '2026-04-29 22:49:00'),
-	(343, 178, 'producto', 7, 9, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-04-29 22:49:00', '2026-04-29 22:49:00'),
-	(344, 179, 'producto', 6, 6, 'Tinte rubio platino 60ml', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(345, 179, 'producto', 2, 6, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(346, 180, 'servicio', 7, 3, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-04-30 00:35:00', '2026-04-30 00:35:00'),
-	(347, 180, 'servicio', 2, 3, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-04-30 00:35:00', '2026-04-30 00:35:00'),
-	(348, 181, 'servicio', 12, 5, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-04-30 20:22:00', '2026-04-30 20:22:00'),
-	(349, 182, 'producto', 2, 9, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-04-30 21:05:00', '2026-04-30 21:05:00'),
-	(350, 183, 'servicio', 2, 8, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-05-01 21:02:00', '2026-05-01 21:02:00'),
-	(351, 183, 'servicio', 12, 8, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-01 21:02:00', '2026-05-01 21:02:00'),
-	(352, 184, 'producto', 10, 9, 'Spray protector calor', 1.00, 12.50, 0.00, 21.00, 10.33, 12.50, '2026-05-01 20:47:00', '2026-05-01 20:47:00'),
-	(353, 184, 'servicio', 4, 9, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-05-01 20:47:00', '2026-05-01 20:47:00'),
-	(354, 185, 'servicio', 2, 9, 'Corte hombre', 1.00, 18.00, 0.00, 21.00, 14.88, 18.00, '2026-05-01 15:22:00', '2026-05-01 15:22:00'),
-	(355, 186, 'servicio', 1, 9, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-05-01 19:21:00', '2026-05-01 19:21:00'),
-	(356, 187, 'servicio', 1, 10, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-05-01 18:17:00', '2026-05-01 18:17:00'),
-	(357, 188, 'servicio', 11, 7, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-05-01 21:20:00', '2026-05-01 21:20:00'),
-	(358, 189, 'producto', 3, 3, 'Mascarilla nutritiva 250ml', 1.00, 26.00, 0.00, 21.00, 21.49, 26.00, '2026-05-01 23:13:00', '2026-05-01 23:13:00'),
-	(359, 189, 'servicio', 10, 3, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-05-01 23:13:00', '2026-05-01 23:13:00'),
-	(360, 190, 'servicio', 12, 6, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-02 19:30:00', '2026-05-02 19:30:00'),
-	(361, 190, 'servicio', 14, 6, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-02 19:30:00', '2026-05-02 19:30:00'),
-	(362, 191, 'producto', 9, 2, 'Champú anticaspa 400ml', 1.00, 15.50, 0.00, 21.00, 12.81, 15.50, '2026-05-02 20:24:00', '2026-05-02 20:24:00'),
-	(363, 192, 'servicio', 7, 8, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(364, 192, 'servicio', 14, 8, 'Pedicura', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(365, 192, 'producto', 11, 8, 'Crema definidora rizos', 1.00, 11.00, 0.00, 21.00, 9.09, 11.00, '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(366, 193, 'servicio', 4, 9, 'Peinado / recogido', 1.00, 30.00, 0.00, 21.00, 24.79, 30.00, '2026-05-02 15:47:00', '2026-05-02 15:47:00'),
-	(367, 194, 'servicio', 1, 3, 'Corte mujer', 1.00, 25.00, 0.00, 21.00, 20.66, 25.00, '2026-05-04 22:14:00', '2026-05-04 22:14:00'),
-	(368, 194, 'producto', 2, 3, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-05-04 22:14:00', '2026-05-04 22:14:00'),
-	(369, 195, 'producto', 7, 7, 'Sérum reparador 50ml', 1.00, 36.00, 0.00, 21.00, 29.75, 36.00, '2026-05-04 17:28:00', '2026-05-04 17:28:00'),
-	(370, 196, 'servicio', 15, 6, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-05-06 18:48:00', '2026-05-06 18:48:00'),
-	(371, 197, 'servicio', 9, 9, 'Decoloración', 1.00, 80.00, 0.00, 21.00, 66.12, 80.00, '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(372, 197, 'servicio', 6, 9, 'Tinte completo', 1.00, 55.00, 0.00, 21.00, 45.45, 55.00, '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(373, 198, 'servicio', 15, 4, 'Diseño de cejas', 1.00, 12.00, 0.00, 21.00, 9.92, 12.00, '2026-05-07 00:37:00', '2026-05-07 00:37:00'),
-	(374, 199, 'servicio', 12, 6, 'Tratamiento anticaída', 1.00, 28.00, 0.00, 21.00, 23.14, 28.00, '2026-05-06 20:53:00', '2026-05-06 20:53:00'),
-	(375, 199, 'producto', 2, 6, 'Acondicionador 500ml', 1.00, 19.50, 0.00, 21.00, 16.12, 19.50, '2026-05-06 20:53:00', '2026-05-06 20:53:00'),
-	(376, 200, 'producto', 9, 6, 'Champú anticaspa 400ml', 1.00, 15.50, 0.00, 21.00, 12.81, 15.50, '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(377, 200, 'servicio', 7, 6, 'Mechas', 1.00, 75.00, 0.00, 21.00, 61.98, 75.00, '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(378, 201, 'servicio', 11, 5, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-05-06 15:33:00', '2026-05-06 15:33:00'),
-	(379, 202, 'servicio', 11, 10, 'Keratina', 1.00, 120.00, 0.00, 21.00, 99.17, 120.00, '2026-05-07 18:51:00', '2026-05-07 18:51:00'),
-	(380, 203, 'servicio', 8, 5, 'Balayage', 1.00, 95.00, 0.00, 21.00, 78.51, 95.00, '2026-05-07 15:09:00', '2026-05-07 15:09:00'),
-	(381, 204, 'servicio', 10, 6, 'Hidratación profunda', 1.00, 35.00, 0.00, 21.00, 28.93, 35.00, '2026-05-07 15:00:00', '2026-05-07 15:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (1,1,'producto',10,6,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-04 18:52:00','2026-07-04 18:52:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (2,2,'producto',2,4,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-04 10:29:00','2026-07-04 10:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (3,2,'servicio',11,4,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-04 10:29:00','2026-07-04 10:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (4,3,'producto',7,8,'Sérum reparador 50ml',1.00,36.00,'0.00',18.00,30.51,36.00,'2026-07-04 13:35:00','2026-07-04 13:35:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (5,4,'servicio',5,7,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-04 19:03:00','2026-07-04 19:03:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (6,5,'servicio',11,1,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-06 19:41:00','2026-07-06 19:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (7,5,'servicio',1,1,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-06 19:41:00','2026-07-06 19:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (8,6,'servicio',3,6,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-06 15:24:00','2026-07-06 15:24:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (9,6,'servicio',7,6,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-06 15:24:00','2026-07-06 15:24:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (10,6,'servicio',4,6,'Peinado / recogido',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-06 15:24:00','2026-07-06 15:24:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (11,7,'servicio',11,5,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-06 18:49:00','2026-07-06 18:49:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (12,7,'servicio',1,5,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-06 18:49:00','2026-07-06 18:49:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (13,8,'servicio',3,9,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-06 16:06:00','2026-07-06 16:06:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (14,9,'servicio',12,2,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-06 12:24:00','2026-07-06 12:24:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (15,9,'producto',11,2,'Crema definidora rizos',1.00,11.00,'0.00',18.00,9.32,11.00,'2026-07-06 12:24:00','2026-07-06 12:24:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (16,10,'servicio',14,6,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-06 10:48:00','2026-07-06 10:48:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (17,10,'producto',9,6,'Champú anticaspa 400ml',1.00,15.50,'0.00',18.00,13.14,15.50,'2026-07-06 10:48:00','2026-07-06 10:48:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (18,11,'producto',7,8,'Sérum reparador 50ml',1.00,36.00,'0.00',18.00,30.51,36.00,'2026-07-07 18:30:00','2026-07-07 18:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (19,12,'servicio',1,6,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-07 19:31:00','2026-07-07 19:31:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (20,12,'servicio',9,6,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-07 19:31:00','2026-07-07 19:31:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (21,13,'servicio',8,5,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (22,13,'servicio',14,5,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (23,13,'producto',2,5,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (24,14,'producto',8,10,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-08 19:12:00','2026-07-08 19:12:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (25,15,'servicio',5,7,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-08 12:37:00','2026-07-08 12:37:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (26,15,'servicio',8,7,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-08 12:37:00','2026-07-08 12:37:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (27,15,'servicio',11,7,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-08 12:37:00','2026-07-08 12:37:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (28,16,'producto',8,2,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-09 09:38:00','2026-07-09 09:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (29,16,'servicio',9,2,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-09 09:38:00','2026-07-09 09:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (30,17,'servicio',7,5,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (31,17,'servicio',14,5,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (32,17,'producto',6,5,'Tinte rubio platino 60ml',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (33,18,'producto',9,6,'Champú anticaspa 400ml',1.00,15.50,'0.00',18.00,13.14,15.50,'2026-07-09 09:41:00','2026-07-09 09:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (34,18,'servicio',12,6,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-09 09:41:00','2026-07-09 09:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (35,19,'servicio',13,5,'Manicura',1.00,22.00,'0.00',18.00,18.64,22.00,'2026-07-09 14:19:00','2026-07-09 14:19:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (36,19,'servicio',15,5,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-09 14:19:00','2026-07-09 14:19:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (37,19,'servicio',5,5,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-09 14:19:00','2026-07-09 14:19:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (38,20,'servicio',12,7,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-10 18:45:00','2026-07-10 18:45:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (39,21,'producto',1,3,'Champú hidratante 500ml',1.00,18.50,'0.00',18.00,15.68,18.50,'2026-07-10 12:45:00','2026-07-10 12:45:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (40,21,'servicio',5,3,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-10 12:45:00','2026-07-10 12:45:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (41,22,'servicio',14,1,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-11 16:23:00','2026-07-11 16:23:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (42,22,'producto',5,1,'Cera moldeadora 100ml',1.00,16.50,'0.00',18.00,13.98,16.50,'2026-07-11 16:23:00','2026-07-11 16:23:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (43,23,'servicio',10,7,'Hidratación profunda',1.00,35.00,'0.00',18.00,29.66,35.00,'2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (44,23,'servicio',12,7,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (45,23,'producto',11,7,'Crema definidora rizos',1.00,11.00,'0.00',18.00,9.32,11.00,'2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (46,24,'servicio',14,5,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-11 14:03:00','2026-07-11 14:03:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (47,24,'servicio',7,5,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-11 14:03:00','2026-07-11 14:03:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (48,24,'servicio',4,5,'Peinado / recogido',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-11 14:03:00','2026-07-11 14:03:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (49,25,'servicio',10,6,'Hidratación profunda',1.00,35.00,'0.00',18.00,29.66,35.00,'2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (50,25,'servicio',5,6,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (51,25,'producto',3,6,'Mascarilla nutritiva 250ml',1.00,26.00,'0.00',18.00,22.03,26.00,'2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (52,26,'servicio',6,10,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-11 10:14:00','2026-07-11 10:14:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (53,26,'producto',10,10,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-11 10:14:00','2026-07-11 10:14:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (54,27,'producto',4,10,'Spray fijador fuerte',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-11 10:17:00','2026-07-11 10:17:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (55,28,'servicio',11,9,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (56,28,'producto',10,9,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (57,28,'servicio',15,9,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (58,29,'servicio',6,7,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (59,29,'servicio',11,7,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (60,29,'producto',10,7,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (61,30,'producto',11,5,'Crema definidora rizos',1.00,11.00,'0.00',18.00,9.32,11.00,'2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (62,30,'servicio',14,5,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (63,30,'servicio',6,5,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (64,31,'servicio',6,8,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-13 09:00:00','2026-07-13 09:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (65,31,'servicio',13,8,'Manicura',1.00,22.00,'0.00',18.00,18.64,22.00,'2026-07-13 09:00:00','2026-07-13 09:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (66,32,'servicio',14,7,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-16 16:59:00','2026-07-16 16:59:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (67,32,'servicio',3,7,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-16 16:59:00','2026-07-16 16:59:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (68,33,'servicio',4,3,'Peinado / recogido',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-16 14:58:00','2026-07-16 14:58:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (69,34,'producto',8,6,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-17 14:11:00','2026-07-17 14:11:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (70,34,'servicio',7,6,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-17 14:11:00','2026-07-17 14:11:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (71,35,'producto',2,10,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (72,35,'servicio',10,10,'Hidratación profunda',1.00,35.00,'0.00',18.00,29.66,35.00,'2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (73,35,'servicio',7,10,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (74,36,'servicio',6,10,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-17 10:09:00','2026-07-17 10:09:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (75,36,'servicio',6,10,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-17 10:09:00','2026-07-17 10:09:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (76,36,'servicio',12,10,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-17 10:09:00','2026-07-17 10:09:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (77,37,'servicio',11,3,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (78,37,'producto',6,3,'Tinte rubio platino 60ml',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (79,37,'servicio',1,3,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (80,38,'servicio',3,5,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-17 17:06:00','2026-07-17 17:06:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (81,38,'servicio',4,5,'Peinado / recogido',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-17 17:06:00','2026-07-17 17:06:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (82,39,'servicio',13,7,'Manicura',1.00,22.00,'0.00',18.00,18.64,22.00,'2026-07-18 15:44:00','2026-07-18 15:44:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (83,39,'servicio',1,7,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-18 15:44:00','2026-07-18 15:44:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (84,40,'producto',2,10,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-18 19:07:00','2026-07-18 19:07:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (85,41,'servicio',7,8,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-20 17:29:00','2026-07-20 17:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (86,41,'producto',3,8,'Mascarilla nutritiva 250ml',1.00,26.00,'0.00',18.00,22.03,26.00,'2026-07-20 17:29:00','2026-07-20 17:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (87,42,'servicio',2,2,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-07-20 15:56:00','2026-07-20 15:56:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (88,43,'producto',8,4,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-20 09:59:00','2026-07-20 09:59:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (89,43,'servicio',8,4,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-20 09:59:00','2026-07-20 09:59:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (90,44,'servicio',10,1,'Hidratación profunda',1.00,35.00,'0.00',18.00,29.66,35.00,'2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (91,44,'servicio',2,1,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (92,44,'producto',4,1,'Spray fijador fuerte',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (93,45,'servicio',9,6,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-21 11:27:00','2026-07-21 11:27:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (94,45,'producto',9,6,'Champú anticaspa 400ml',1.00,15.50,'0.00',18.00,13.14,15.50,'2026-07-21 11:27:00','2026-07-21 11:27:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (95,46,'producto',4,8,'Spray fijador fuerte',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-21 17:39:00','2026-07-21 17:39:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (96,46,'servicio',4,8,'Peinado / recogido',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-21 17:39:00','2026-07-21 17:39:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (97,47,'producto',3,2,'Mascarilla nutritiva 250ml',1.00,26.00,'0.00',18.00,22.03,26.00,'2026-07-21 09:37:00','2026-07-21 09:37:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (98,47,'servicio',7,2,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-21 09:37:00','2026-07-21 09:37:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (99,48,'servicio',15,7,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-21 19:56:00','2026-07-21 19:56:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (100,48,'servicio',8,7,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-21 19:56:00','2026-07-21 19:56:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (101,49,'servicio',1,8,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-21 14:40:00','2026-07-21 14:40:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (102,50,'producto',4,9,'Spray fijador fuerte',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-22 09:17:00','2026-07-22 09:17:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (103,51,'servicio',12,7,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-22 14:51:00','2026-07-22 14:51:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (104,52,'producto',7,7,'Sérum reparador 50ml',1.00,36.00,'0.00',18.00,30.51,36.00,'2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (105,52,'producto',10,7,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (106,52,'servicio',8,7,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (107,53,'servicio',5,5,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-22 13:40:00','2026-07-22 13:40:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (108,53,'servicio',11,5,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-22 13:40:00','2026-07-22 13:40:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (109,54,'servicio',4,3,'Peinado / recogido',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-23 14:18:00','2026-07-23 14:18:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (110,55,'producto',10,8,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-23 15:45:00','2026-07-23 15:45:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (111,55,'servicio',15,8,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-23 15:45:00','2026-07-23 15:45:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (112,56,'servicio',3,7,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-23 11:54:00','2026-07-23 11:54:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (113,56,'servicio',8,7,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-23 11:54:00','2026-07-23 11:54:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (114,56,'servicio',11,7,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-23 11:54:00','2026-07-23 11:54:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (115,57,'producto',1,8,'Champú hidratante 500ml',1.00,18.50,'0.00',18.00,15.68,18.50,'2026-07-23 16:48:00','2026-07-23 16:48:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (116,57,'servicio',3,8,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-23 16:48:00','2026-07-23 16:48:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (117,58,'producto',4,7,'Spray fijador fuerte',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-23 13:33:00','2026-07-23 13:33:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (118,58,'servicio',14,7,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-23 13:33:00','2026-07-23 13:33:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (119,59,'servicio',9,6,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-23 13:30:00','2026-07-23 13:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (120,59,'servicio',8,6,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-23 13:30:00','2026-07-23 13:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (121,60,'producto',9,5,'Champú anticaspa 400ml',1.00,15.50,'0.00',18.00,13.14,15.50,'2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (122,60,'servicio',2,5,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (123,60,'servicio',3,5,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (124,61,'producto',2,9,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (125,61,'servicio',9,9,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (126,61,'producto',11,9,'Crema definidora rizos',1.00,11.00,'0.00',18.00,9.32,11.00,'2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (127,62,'servicio',9,2,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (128,62,'producto',11,2,'Crema definidora rizos',1.00,11.00,'0.00',18.00,9.32,11.00,'2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (129,62,'servicio',13,2,'Manicura',1.00,22.00,'0.00',18.00,18.64,22.00,'2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (130,63,'servicio',6,9,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-25 12:29:00','2026-07-25 12:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (131,63,'servicio',6,9,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-25 12:29:00','2026-07-25 12:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (132,63,'servicio',14,9,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-25 12:29:00','2026-07-25 12:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (133,64,'producto',8,1,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (134,64,'producto',2,1,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (135,64,'producto',2,1,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (136,65,'servicio',14,3,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-27 18:47:00','2026-07-27 18:47:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (137,66,'producto',10,10,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-27 14:29:00','2026-07-27 14:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (138,66,'servicio',5,10,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-27 14:29:00','2026-07-27 14:29:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (139,67,'producto',6,5,'Tinte rubio platino 60ml',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-27 16:31:00','2026-07-27 16:31:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (140,68,'servicio',3,3,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-27 16:45:00','2026-07-27 16:45:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (141,69,'servicio',2,6,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-07-27 19:08:00','2026-07-27 19:08:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (142,70,'servicio',8,7,'Balayage',1.00,95.00,'0.00',18.00,80.51,95.00,'2026-07-28 18:43:00','2026-07-28 18:43:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (143,70,'servicio',6,7,'Tinte completo',1.00,55.00,'0.00',18.00,46.61,55.00,'2026-07-28 18:43:00','2026-07-28 18:43:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (144,71,'servicio',14,1,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-28 13:12:00','2026-07-28 13:12:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (145,71,'servicio',13,1,'Manicura',1.00,22.00,'0.00',18.00,18.64,22.00,'2026-07-28 13:12:00','2026-07-28 13:12:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (146,71,'servicio',3,1,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-28 13:12:00','2026-07-28 13:12:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (147,72,'servicio',15,3,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-28 14:12:00','2026-07-28 14:12:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (148,72,'servicio',13,3,'Manicura',1.00,22.00,'0.00',18.00,18.64,22.00,'2026-07-28 14:12:00','2026-07-28 14:12:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (149,73,'producto',3,8,'Mascarilla nutritiva 250ml',1.00,26.00,'0.00',18.00,22.03,26.00,'2026-07-29 18:32:00','2026-07-29 18:32:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (150,74,'servicio',15,1,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-29 12:00:00','2026-07-29 12:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (151,74,'servicio',14,1,'Pedicura',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-07-29 12:00:00','2026-07-29 12:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (152,75,'servicio',7,7,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-29 12:26:00','2026-07-29 12:26:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (153,75,'producto',5,7,'Cera moldeadora 100ml',1.00,16.50,'0.00',18.00,13.98,16.50,'2026-07-29 12:26:00','2026-07-29 12:26:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (154,76,'producto',11,3,'Crema definidora rizos',1.00,11.00,'0.00',18.00,9.32,11.00,'2026-07-29 17:11:00','2026-07-29 17:11:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (155,77,'servicio',15,5,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-29 16:44:00','2026-07-29 16:44:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (156,78,'producto',10,8,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-29 15:46:00','2026-07-29 15:46:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (157,78,'servicio',1,8,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-29 15:46:00','2026-07-29 15:46:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (158,79,'servicio',9,8,'Decoloración',1.00,80.00,'0.00',18.00,67.80,80.00,'2026-07-29 16:49:00','2026-07-29 16:49:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (159,79,'producto',1,8,'Champú hidratante 500ml',1.00,18.50,'0.00',18.00,15.68,18.50,'2026-07-29 16:49:00','2026-07-29 16:49:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (160,80,'servicio',1,8,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (161,80,'producto',8,8,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (162,80,'producto',8,8,'Aceite de argán 100ml',1.00,30.00,'0.00',18.00,25.42,30.00,'2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (163,81,'servicio',15,6,'Diseño de cejas',1.00,12.00,'0.00',18.00,10.17,12.00,'2026-07-30 14:59:00','2026-07-30 14:59:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (164,82,'servicio',5,9,'Brushing',1.00,20.00,'0.00',18.00,16.95,20.00,'2026-07-30 18:38:00','2026-07-30 18:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (165,82,'servicio',2,9,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-07-30 18:38:00','2026-07-30 18:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (166,82,'servicio',7,9,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-07-30 18:38:00','2026-07-30 18:38:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (167,83,'servicio',3,1,'Corte niño/a',1.00,14.00,'0.00',18.00,11.86,14.00,'2026-07-31 10:40:00','2026-07-31 10:40:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (168,84,'servicio',11,2,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-07-31 18:19:00','2026-07-31 18:19:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (169,84,'producto',10,2,'Spray protector calor',1.00,12.50,'0.00',18.00,10.59,12.50,'2026-07-31 18:19:00','2026-07-31 18:19:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (170,85,'producto',5,5,'Cera moldeadora 100ml',1.00,16.50,'0.00',18.00,13.98,16.50,'2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (171,85,'producto',1,5,'Champú hidratante 500ml',1.00,18.50,'0.00',18.00,15.68,18.50,'2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (172,86,'servicio',11,10,'Keratina',1.00,120.00,'0.00',18.00,101.69,120.00,'2026-08-01 14:22:00','2026-08-01 14:22:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (173,87,'servicio',12,10,'Tratamiento anticaída',1.00,28.00,'0.00',18.00,23.73,28.00,'2026-08-01 09:00:00','2026-08-01 09:00:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (174,88,'servicio',7,9,'Mechas',1.00,75.00,'0.00',18.00,63.56,75.00,'2026-08-01 17:40:00','2026-08-01 17:40:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (175,88,'producto',2,9,'Acondicionador 500ml',1.00,19.50,'0.00',18.00,16.53,19.50,'2026-08-01 17:40:00','2026-08-01 17:40:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (176,89,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:10','2026-08-03 01:16:10');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (177,90,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:18','2026-08-03 01:16:18');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (178,91,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:20','2026-08-03 01:16:20');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (179,92,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:40','2026-08-03 01:16:40');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (180,93,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (181,94,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (182,95,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:16:55','2026-08-03 01:16:55');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (183,96,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:05','2026-08-03 01:17:05');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (184,97,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:07','2026-08-03 01:17:07');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (185,98,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (186,99,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (187,100,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:09','2026-08-03 01:17:09');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (188,101,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (189,102,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (190,103,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:11','2026-08-03 01:17:11');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (191,104,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:12','2026-08-03 01:17:12');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (192,105,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:13','2026-08-03 01:17:13');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (193,106,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:14','2026-08-03 01:17:14');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (194,107,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:15','2026-08-03 01:17:15');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (195,108,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (196,109,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (197,110,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:17','2026-08-03 01:17:17');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (198,111,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:18','2026-08-03 01:17:18');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (199,112,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:51','2026-08-03 01:17:51');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (200,113,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:52','2026-08-03 01:17:52');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (201,114,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:53','2026-08-03 01:17:53');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (202,115,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:54','2026-08-03 01:17:54');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (203,116,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:55','2026-08-03 01:17:55');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (204,117,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:56','2026-08-03 01:17:56');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (205,118,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (206,119,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (207,120,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:58','2026-08-03 01:17:58');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (208,121,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:17:59','2026-08-03 01:17:59');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (209,122,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:00','2026-08-03 01:18:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (210,123,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:01','2026-08-03 01:18:01');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (211,124,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:02','2026-08-03 01:18:02');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (212,125,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (213,126,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (214,127,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:08','2026-08-03 01:18:08');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (215,128,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:09','2026-08-03 01:18:09');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (216,129,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:12','2026-08-03 01:18:12');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (217,130,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (218,131,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (219,132,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:14','2026-08-03 01:18:14');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (220,133,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:15','2026-08-03 01:18:15');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (221,134,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:16','2026-08-03 01:18:16');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (222,135,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (223,136,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (224,137,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:18','2026-08-03 01:18:18');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (225,138,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:19','2026-08-03 01:18:19');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (226,139,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:20','2026-08-03 01:18:20');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (227,140,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (228,141,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (229,142,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:22','2026-08-03 01:18:22');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (230,143,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:23','2026-08-03 01:18:23');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (231,144,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:24','2026-08-03 01:18:24');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (232,145,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:25','2026-08-03 01:18:25');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (233,146,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:26','2026-08-03 01:18:26');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (234,147,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:27','2026-08-03 01:18:27');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (235,148,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:18:28','2026-08-03 01:18:28');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (236,149,'servicio',1,5,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:20:49','2026-08-03 01:20:49');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (237,150,'servicio',1,NULL,'Corte mujer',1.00,36.00,'0.00',18.00,30.51,36.00,'2026-08-03 01:20:57','2026-08-03 01:20:57');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (238,151,'servicio',1,5,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:20:58','2026-08-03 01:20:58');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (239,152,'servicio',1,4,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:22:10','2026-08-03 01:22:10');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (240,153,'servicio',1,NULL,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:23:41','2026-08-03 01:23:41');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (241,154,'servicio',2,NULL,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-08-03 01:26:01','2026-08-03 01:26:01');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (242,154,'servicio',1,NULL,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:26:01','2026-08-03 01:26:01');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (243,155,'servicio',1,NULL,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:28:00','2026-08-03 01:28:00');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (244,156,'servicio',1,2,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:28:11','2026-08-03 01:28:11');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (245,157,'servicio',1,6,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:28:51','2026-08-03 01:28:51');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (246,158,'servicio',1,6,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:31:04','2026-08-03 01:31:04');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (247,159,'servicio',2,6,'Corte hombre',1.00,18.00,'0.00',18.00,15.25,18.00,'2026-08-03 01:31:55','2026-08-03 01:31:55');
+INSERT INTO `pelu_detalle_ventas` (`id`,`venta_id`,`tipo`,`referencia_id`,`empleado_id`,`concepto`,`cantidad`,`precio_unitario`,`descuento`,`impuesto_porcentaje`,`subtotal`,`total`,`created_at`,`updated_at`) VALUES (248,160,'servicio',1,NULL,'Corte mujer',1.00,25.00,'0.00',18.00,21.19,25.00,'2026-08-03 01:38:30','2026-08-03 01:38:30');
 
--- Volcando estructura para tabla tpv_peluqueria.empleados
-CREATE TABLE IF NOT EXISTS `empleados` (
+-- Tabla: pelu_empleados
+DROP TABLE IF EXISTS `pelu_empleados`;
+CREATE TABLE `pelu_empleados` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
@@ -926,26 +666,24 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   PRIMARY KEY (`id`),
   KEY `empleados_empresa_id_foreign` (`empresa_id`),
   KEY `empleados_user_id_foreign` (`user_id`),
-  CONSTRAINT `empleados_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `empleados_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  CONSTRAINT `empleados_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `empleados_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelu_users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.empleados: ~10 rows (aproximadamente)
-DELETE FROM `empleados`;
-INSERT INTO `empleados` (`id`, `empresa_id`, `user_id`, `nombre`, `apellidos`, `dni`, `telefono`, `email`, `cargo`, `color`, `foto`, `comision`, `salario`, `fecha_alta`, `fecha_baja`, `horario`, `notas`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, NULL, 'María', 'García', NULL, NULL, NULL, 'Estilista senior', '#ec4899', NULL, 12.00, NULL, '2026-05-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, NULL, 'Laura', 'Martínez', NULL, NULL, NULL, 'Colorista', '#a855f7', NULL, 10.00, NULL, '2026-05-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 1, NULL, 'Carlos', 'Pérez', NULL, NULL, NULL, 'Barbero', '#06b6d4', NULL, 10.00, NULL, '2026-05-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(4, 1, NULL, 'Ana', 'López', NULL, NULL, NULL, 'Esteticista', '#f59e0b', NULL, 8.00, NULL, '2026-05-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(5, 1, NULL, 'Sofía', 'Ruiz', NULL, '+34 612 345 001', NULL, 'Estilista', '#10b981', NULL, 11.00, NULL, '2025-07-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(6, 1, NULL, 'Pablo', 'Sánchez', NULL, '+34 612 345 002', NULL, 'Barbero', '#8b5cf6', NULL, 9.00, NULL, '2025-11-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(7, 1, NULL, 'Lucía', 'Fernández', NULL, '+34 612 345 003', NULL, 'Colorista', '#f43f5e', NULL, 12.00, NULL, '2025-03-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(8, 1, NULL, 'Diego', 'Romero', NULL, '+34 612 345 004', NULL, 'Estilista', '#0ea5e9', NULL, 10.00, NULL, '2025-04-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(9, 1, NULL, 'Elena', 'Castro', NULL, '+34 612 345 005', NULL, 'Esteticista', '#d946ef', NULL, 8.00, NULL, '2025-06-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(10, 1, NULL, 'Javier', 'Vega', NULL, '+34 612 345 006', NULL, 'Recepcionista', '#64748b', NULL, 0.00, NULL, '2025-10-07', NULL, NULL, NULL, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (1,1,NULL,'María','García',NULL,NULL,NULL,'Estilista senior','#ec4899',NULL,12.00,NULL,'2026-08-03',NULL,NULL,NULL,1,'2026-08-03 00:40:22','2026-08-03 01:07:24');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (2,1,NULL,'Laura','Martínez',NULL,NULL,NULL,'Colorista','#a855f7',NULL,10.00,NULL,'2026-08-03',NULL,NULL,NULL,1,'2026-08-03 00:40:22','2026-08-03 01:07:24');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (3,1,NULL,'Carlos','Pérez',NULL,NULL,NULL,'Barbero','#06b6d4',NULL,10.00,NULL,'2026-08-03',NULL,NULL,NULL,1,'2026-08-03 00:40:22','2026-08-03 01:07:24');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (4,1,NULL,'Ana','López',NULL,NULL,NULL,'Esteticista','#f59e0b',NULL,8.00,NULL,'2026-08-03',NULL,NULL,NULL,1,'2026-08-03 00:40:22','2026-08-03 01:07:24');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (5,1,NULL,'Sofía','Ruiz',NULL,612345001,NULL,'Estilista','#10b981',NULL,11.00,NULL,'2025-06-03',NULL,NULL,NULL,1,'2026-08-03 00:40:23','2026-08-03 01:07:44');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (6,1,NULL,'Pablo','Sánchez',NULL,612345002,NULL,'Barbero','#8b5cf6',NULL,9.00,NULL,'2025-09-03',NULL,NULL,NULL,1,'2026-08-03 00:40:23','2026-08-03 01:07:44');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (7,1,NULL,'Lucía','Fernández',NULL,612345003,NULL,'Colorista','#f43f5e',NULL,12.00,NULL,'2026-04-03',NULL,NULL,NULL,1,'2026-08-03 00:40:23','2026-08-03 01:07:44');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (8,1,NULL,'Diego','Romero',NULL,612345004,NULL,'Estilista','#0ea5e9',NULL,10.00,NULL,'2026-04-03',NULL,NULL,NULL,1,'2026-08-03 00:40:23','2026-08-03 01:07:44');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (9,1,NULL,'Elena','Castro',NULL,612345005,NULL,'Esteticista','#d946ef',NULL,8.00,NULL,'2025-06-03',NULL,NULL,NULL,1,'2026-08-03 00:40:23','2026-08-03 01:07:44');
+INSERT INTO `pelu_empleados` (`id`,`empresa_id`,`user_id`,`nombre`,`apellidos`,`dni`,`telefono`,`email`,`cargo`,`color`,`foto`,`comision`,`salario`,`fecha_alta`,`fecha_baja`,`horario`,`notas`,`activo`,`created_at`,`updated_at`) VALUES (10,1,NULL,'Javier','Vega',NULL,612345006,NULL,'Recepcionista','#64748b',NULL,'0.00',NULL,'2025-04-03',NULL,NULL,NULL,1,'2026-08-03 00:40:23','2026-08-03 01:07:44');
 
--- Volcando estructura para tabla tpv_peluqueria.empresas
-CREATE TABLE IF NOT EXISTS `empresas` (
+-- Tabla: pelu_empresas
+DROP TABLE IF EXISTS `pelu_empresas`;
+CREATE TABLE `pelu_empresas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cif` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -953,15 +691,15 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   `ciudad` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `codigo_postal` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `provincia` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pais` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'España',
+  `pais` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Perú',
   `telefono` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `web` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `simbolo_moneda` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '€',
-  `codigo_moneda` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'EUR',
-  `impuesto_default` decimal(5,2) NOT NULL DEFAULT '21.00',
-  `zona_horaria` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Europe/Madrid',
+  `simbolo_moneda` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'S/.',
+  `codigo_moneda` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PEN',
+  `impuesto_default` decimal(5,2) NOT NULL DEFAULT '18.00',
+  `zona_horaria` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'America/Lima',
   `idioma` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'es',
   `formato_fecha` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'd/m/Y',
   `hora_apertura` time NOT NULL DEFAULT '09:00:00',
@@ -975,13 +713,11 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.empresas: ~0 rows (aproximadamente)
-DELETE FROM `empresas`;
-INSERT INTO `empresas` (`id`, `nombre`, `cif`, `direccion`, `ciudad`, `codigo_postal`, `provincia`, `pais`, `telefono`, `email`, `web`, `logo`, `simbolo_moneda`, `codigo_moneda`, `impuesto_default`, `zona_horaria`, `idioma`, `formato_fecha`, `hora_apertura`, `hora_cierre`, `dias_laborables`, `intervalo_citas`, `mensaje_ticket`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 'Salón de Belleza Glow', 'B12345678', 'Calle Mayor 12', 'Madrid', '28001', 'Madrid', 'España', '+34 911 234 567', 'hola@glowsalon.es', NULL, NULL, 'S/.', 'PEN', 21.00, 'America/Lima', 'es', 'd/m/Y', '09:00:00', '20:00:00', '["lun", "mar", "mie", "jue", "vie", "sab"]', 15, '¡Gracias por tu visita! Te esperamos pronto.', 1, '2026-05-07 19:21:08', '2026-05-07 19:22:13');
+INSERT INTO `pelu_empresas` (`id`,`nombre`,`cif`,`direccion`,`ciudad`,`codigo_postal`,`provincia`,`pais`,`telefono`,`email`,`web`,`logo`,`simbolo_moneda`,`codigo_moneda`,`impuesto_default`,`zona_horaria`,`idioma`,`formato_fecha`,`hora_apertura`,`hora_cierre`,`dias_laborables`,`intervalo_citas`,`mensaje_ticket`,`activo`,`created_at`,`updated_at`) VALUES (1,'Salón de Belleza',20600000001,'Av. Principal 123','Trujillo',13001,'Trujillo','Perú','+51 999 123 456','hola@hola.pe',NULL,NULL,'S/.','PEN',18.00,'America/Lima','es','d/m/Y','09:00:00','20:00:00','["lun", "mar", "mie", "jue", "vie", "sab"]',15,'¡Gracias por tu visita! Te esperamos pronto.',1,'2026-08-03 00:39:03','2026-08-03 01:25:41');
 
--- Volcando estructura para tabla tpv_peluqueria.logs_actividad
-CREATE TABLE IF NOT EXISTS `logs_actividad` (
+-- Tabla: pelu_logs_actividad
+DROP TABLE IF EXISTS `pelu_logs_actividad`;
+CREATE TABLE `pelu_logs_actividad` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned DEFAULT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
@@ -994,46 +730,44 @@ CREATE TABLE IF NOT EXISTS `logs_actividad` (
   PRIMARY KEY (`id`),
   KEY `logs_actividad_empresa_id_foreign` (`empresa_id`),
   KEY `logs_actividad_user_id_foreign` (`user_id`),
-  CONSTRAINT `logs_actividad_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `logs_actividad_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  CONSTRAINT `logs_actividad_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `logs_actividad_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelu_users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.logs_actividad: ~0 rows (aproximadamente)
-DELETE FROM `logs_actividad`;
 
--- Volcando estructura para tabla tpv_peluqueria.migrations
-CREATE TABLE IF NOT EXISTS `migrations` (
+-- Tabla: pelu_migrations
+DROP TABLE IF EXISTS `pelu_migrations`;
+CREATE TABLE `pelu_migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.migrations: ~0 rows (aproximadamente)
-DELETE FROM `migrations`;
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-	(1, '0001_01_01_000000_create_empresas_table', 1),
-	(2, '0001_01_01_000001_create_users_table', 1),
-	(3, '0001_01_01_000002_create_cache_table', 1),
-	(4, '2026_01_01_100000_create_empleados_table', 1),
-	(5, '2026_01_01_100001_create_categorias_servicios_table', 1),
-	(6, '2026_01_01_100002_create_servicios_table', 1),
-	(7, '2026_01_01_100003_create_clientes_table', 1),
-	(8, '2026_01_01_100004_create_citas_table', 1),
-	(9, '2026_01_01_100005_create_bonos_table', 1),
-	(10, '2026_01_01_100006_create_productos_table', 1),
-	(11, '2026_01_01_100007_create_caja_table', 1),
-	(12, '2026_01_01_100008_create_ventas_table', 1),
-	(13, '2026_01_01_100009_create_configuracion_table', 1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (1,'0001_01_01_000000_create_empresas_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (2,'0001_01_01_000001_create_users_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (3,'0001_01_01_000002_create_cache_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (4,'2026_01_01_100000_create_empleados_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (5,'2026_01_01_100001_create_categorias_servicios_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (6,'2026_01_01_100002_create_servicios_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (7,'2026_01_01_100003_create_clientes_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (8,'2026_01_01_100004_create_citas_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (9,'2026_01_01_100005_create_bonos_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (10,'2026_01_01_100006_create_productos_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (11,'2026_01_01_100007_create_caja_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (12,'2026_01_01_100008_create_ventas_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (13,'2026_01_01_100009_create_configuracion_table',1);
+INSERT INTO `pelu_migrations` (`id`,`migration`,`batch`) VALUES (14,'2026_08_02_000001_rename_bizum_to_yapeplin',2);
 
--- Volcando estructura para tabla tpv_peluqueria.movimientos_caja
-CREATE TABLE IF NOT EXISTS `movimientos_caja` (
+-- Tabla: pelu_movimientos_caja
+DROP TABLE IF EXISTS `pelu_movimientos_caja`;
+CREATE TABLE `pelu_movimientos_caja` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `caja_id` bigint unsigned NOT NULL,
   `user_id` bigint unsigned NOT NULL,
   `tipo` enum('ingreso','gasto','venta','devolucion','apertura','cierre') COLLATE utf8mb4_unicode_ci NOT NULL,
   `importe` decimal(10,2) NOT NULL,
-  `metodo_pago` enum('efectivo','tarjeta','transferencia','bizum','otro') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'efectivo',
+  `metodo_pago` enum('efectivo','tarjeta','transferencia','yapeplin','otro') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'efectivo',
   `concepto` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_unicode_ci,
   `referencia` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1043,222 +777,183 @@ CREATE TABLE IF NOT EXISTS `movimientos_caja` (
   PRIMARY KEY (`id`),
   KEY `movimientos_caja_caja_id_foreign` (`caja_id`),
   KEY `movimientos_caja_user_id_foreign` (`user_id`),
-  CONSTRAINT `movimientos_caja_caja_id_foreign` FOREIGN KEY (`caja_id`) REFERENCES `cajas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `movimientos_caja_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `movimientos_caja_caja_id_foreign` FOREIGN KEY (`caja_id`) REFERENCES `pelu_cajas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `movimientos_caja_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelu_users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.movimientos_caja: ~206 rows (aproximadamente)
-DELETE FROM `movimientos_caja`;
-INSERT INTO `movimientos_caja` (`id`, `caja_id`, `user_id`, `tipo`, `importe`, `metodo_pago`, `concepto`, `descripcion`, `referencia`, `fecha`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, 'venta', 64.00, 'transferencia', 'Venta V-20260407-00001', NULL, 'V-20260407-00001', '2026-04-07 15:46:00', '2026-04-07 20:46:00', '2026-04-07 20:46:00'),
-	(2, 1, 1, 'venta', 50.00, 'tarjeta', 'Venta V-20260407-00002', NULL, 'V-20260407-00002', '2026-04-07 19:30:00', '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(3, 1, 1, 'venta', 77.50, 'bizum', 'Venta V-20260407-00003', NULL, 'V-20260407-00003', '2026-04-07 14:04:00', '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(4, 1, 1, 'venta', 12.50, 'tarjeta', 'Venta V-20260407-00004', NULL, 'V-20260407-00004', '2026-04-07 18:51:00', '2026-04-07 23:51:00', '2026-04-07 23:51:00'),
-	(5, 1, 1, 'venta', 14.00, 'transferencia', 'Venta V-20260407-00005', NULL, 'V-20260407-00005', '2026-04-07 18:07:00', '2026-04-07 23:07:00', '2026-04-07 23:07:00'),
-	(6, 2, 1, 'venta', 107.00, 'transferencia', 'Venta V-20260409-00006', NULL, 'V-20260409-00006', '2026-04-09 10:04:00', '2026-04-09 15:04:00', '2026-04-09 15:04:00'),
-	(7, 2, 1, 'venta', 30.50, 'transferencia', 'Venta V-20260409-00007', NULL, 'V-20260409-00007', '2026-04-09 19:45:00', '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(8, 2, 1, 'venta', 24.00, 'tarjeta', 'Venta V-20260409-00008', NULL, 'V-20260409-00008', '2026-04-09 10:53:00', '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(9, 2, 1, 'venta', 150.00, 'transferencia', 'Venta V-20260409-00009', NULL, 'V-20260409-00009', '2026-04-09 14:00:00', '2026-04-09 19:00:00', '2026-04-09 19:00:00'),
-	(10, 3, 1, 'venta', 84.00, 'efectivo', 'Venta V-20260410-00010', NULL, 'V-20260410-00010', '2026-04-10 10:33:00', '2026-04-10 15:33:00', '2026-04-10 15:33:00'),
-	(11, 3, 1, 'venta', 107.50, 'tarjeta', 'Venta V-20260410-00011', NULL, 'V-20260410-00011', '2026-04-10 11:39:00', '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(12, 4, 1, 'venta', 20.00, 'tarjeta', 'Venta V-20260411-00012', NULL, 'V-20260411-00012', '2026-04-11 19:15:00', '2026-04-12 00:15:00', '2026-04-12 00:15:00'),
-	(13, 4, 1, 'venta', 16.50, 'tarjeta', 'Venta V-20260411-00013', NULL, 'V-20260411-00013', '2026-04-11 19:08:00', '2026-04-12 00:08:00', '2026-04-12 00:08:00'),
-	(14, 4, 1, 'venta', 133.00, 'efectivo', 'Venta V-20260411-00014', NULL, 'V-20260411-00014', '2026-04-11 12:11:00', '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(15, 4, 1, 'venta', 81.50, 'bizum', 'Venta V-20260411-00015', NULL, 'V-20260411-00015', '2026-04-11 16:03:00', '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(16, 4, 1, 'venta', 22.00, 'tarjeta', 'Venta V-20260411-00016', NULL, 'V-20260411-00016', '2026-04-11 17:53:00', '2026-04-11 22:53:00', '2026-04-11 22:53:00'),
-	(17, 4, 1, 'venta', 89.00, 'tarjeta', 'Venta V-20260411-00017', NULL, 'V-20260411-00017', '2026-04-11 18:40:00', '2026-04-11 23:40:00', '2026-04-11 23:40:00'),
-	(18, 5, 1, 'venta', 120.00, 'efectivo', 'Venta V-20260413-00018', NULL, 'V-20260413-00018', '2026-04-13 11:26:00', '2026-04-13 16:26:00', '2026-04-13 16:26:00'),
-	(19, 5, 1, 'venta', 105.50, 'efectivo', 'Venta V-20260413-00019', NULL, 'V-20260413-00019', '2026-04-13 17:00:00', '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(20, 5, 1, 'venta', 131.00, 'tarjeta', 'Venta V-20260413-00020', NULL, 'V-20260413-00020', '2026-04-13 12:17:00', '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(21, 5, 1, 'venta', 15.50, 'tarjeta', 'Venta V-20260413-00021', NULL, 'V-20260413-00021', '2026-04-13 12:20:00', '2026-04-13 17:20:00', '2026-04-13 17:20:00'),
-	(22, 5, 1, 'venta', 12.00, 'bizum', 'Venta V-20260413-00022', NULL, 'V-20260413-00022', '2026-04-13 12:46:00', '2026-04-13 17:46:00', '2026-04-13 17:46:00'),
-	(23, 5, 1, 'venta', 23.00, 'bizum', 'Venta V-20260413-00023', NULL, 'V-20260413-00023', '2026-04-13 13:34:00', '2026-04-13 18:34:00', '2026-04-13 18:34:00'),
-	(24, 5, 1, 'venta', 42.00, 'tarjeta', 'Venta V-20260413-00024', NULL, 'V-20260413-00024', '2026-04-13 16:26:00', '2026-04-13 21:26:00', '2026-04-13 21:26:00'),
-	(25, 6, 1, 'venta', 62.00, 'bizum', 'Venta V-20260414-00025', NULL, 'V-20260414-00025', '2026-04-14 11:39:00', '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(26, 6, 1, 'venta', 53.00, 'tarjeta', 'Venta V-20260414-00026', NULL, 'V-20260414-00026', '2026-04-14 14:53:00', '2026-04-14 19:53:00', '2026-04-14 19:53:00'),
-	(27, 6, 1, 'venta', 135.00, 'efectivo', 'Venta V-20260414-00027', NULL, 'V-20260414-00027', '2026-04-14 11:29:00', '2026-04-14 16:29:00', '2026-04-14 16:29:00'),
-	(28, 6, 1, 'venta', 125.50, 'tarjeta', 'Venta V-20260414-00028', NULL, 'V-20260414-00028', '2026-04-14 18:22:00', '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(29, 7, 1, 'venta', 184.00, 'bizum', 'Venta V-20260415-00029', NULL, 'V-20260415-00029', '2026-04-15 12:00:00', '2026-04-15 17:00:00', '2026-04-15 17:00:00'),
-	(30, 7, 1, 'venta', 136.50, 'transferencia', 'Venta V-20260415-00030', NULL, 'V-20260415-00030', '2026-04-15 15:53:00', '2026-04-15 20:53:00', '2026-04-15 20:53:00'),
-	(31, 8, 1, 'venta', 130.00, 'tarjeta', 'Venta V-20260416-00031', NULL, 'V-20260416-00031', '2026-04-16 19:32:00', '2026-04-17 00:32:00', '2026-04-17 00:32:00'),
-	(32, 8, 1, 'venta', 55.00, 'bizum', 'Venta V-20260416-00032', NULL, 'V-20260416-00032', '2026-04-16 10:12:00', '2026-04-16 15:12:00', '2026-04-16 15:12:00'),
-	(33, 8, 1, 'venta', 30.00, 'transferencia', 'Venta V-20260416-00033', NULL, 'V-20260416-00033', '2026-04-16 17:31:00', '2026-04-16 22:31:00', '2026-04-16 22:31:00'),
-	(34, 8, 1, 'venta', 33.50, 'tarjeta', 'Venta V-20260416-00034', NULL, 'V-20260416-00034', '2026-04-16 16:55:00', '2026-04-16 21:55:00', '2026-04-16 21:55:00'),
-	(35, 8, 1, 'venta', 16.50, 'efectivo', 'Venta V-20260416-00035', NULL, 'V-20260416-00035', '2026-04-16 15:59:00', '2026-04-16 20:59:00', '2026-04-16 20:59:00'),
-	(36, 8, 1, 'venta', 95.00, 'tarjeta', 'Venta V-20260416-00036', NULL, 'V-20260416-00036', '2026-04-16 15:28:00', '2026-04-16 20:28:00', '2026-04-16 20:28:00'),
-	(37, 9, 1, 'venta', 32.50, 'bizum', 'Venta V-20260417-00037', NULL, 'V-20260417-00037', '2026-04-17 10:19:00', '2026-04-17 15:19:00', '2026-04-17 15:19:00'),
-	(38, 9, 1, 'venta', 135.00, 'efectivo', 'Venta V-20260417-00038', NULL, 'V-20260417-00038', '2026-04-17 14:27:00', '2026-04-17 19:27:00', '2026-04-17 19:27:00'),
-	(39, 9, 1, 'venta', 197.00, 'efectivo', 'Venta V-20260417-00039', NULL, 'V-20260417-00039', '2026-04-17 15:11:00', '2026-04-17 20:11:00', '2026-04-17 20:11:00'),
-	(40, 9, 1, 'venta', 14.00, 'transferencia', 'Venta V-20260417-00040', NULL, 'V-20260417-00040', '2026-04-17 13:36:00', '2026-04-17 18:36:00', '2026-04-17 18:36:00'),
-	(41, 10, 1, 'venta', 16.50, 'tarjeta', 'Venta V-20260418-00041', NULL, 'V-20260418-00041', '2026-04-18 10:30:00', '2026-04-18 15:30:00', '2026-04-18 15:30:00'),
-	(42, 10, 1, 'venta', 90.00, 'tarjeta', 'Venta V-20260418-00042', NULL, 'V-20260418-00042', '2026-04-18 16:28:00', '2026-04-18 21:28:00', '2026-04-18 21:28:00'),
-	(43, 10, 1, 'venta', 203.00, 'transferencia', 'Venta V-20260418-00043', NULL, 'V-20260418-00043', '2026-04-18 11:39:00', '2026-04-18 16:39:00', '2026-04-18 16:39:00'),
-	(44, 10, 1, 'venta', 92.50, 'tarjeta', 'Venta V-20260418-00044', NULL, 'V-20260418-00044', '2026-04-18 11:40:00', '2026-04-18 16:40:00', '2026-04-18 16:40:00'),
-	(45, 11, 1, 'venta', 46.50, 'bizum', 'Venta V-20260420-00045', NULL, 'V-20260420-00045', '2026-04-20 09:35:00', '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(46, 11, 1, 'venta', 18.00, 'tarjeta', 'Venta V-20260420-00046', NULL, 'V-20260420-00046', '2026-04-20 16:53:00', '2026-04-20 21:53:00', '2026-04-20 21:53:00'),
-	(47, 11, 1, 'venta', 12.00, 'efectivo', 'Venta V-20260420-00047', NULL, 'V-20260420-00047', '2026-04-20 09:55:00', '2026-04-20 14:55:00', '2026-04-20 14:55:00'),
-	(48, 11, 1, 'venta', 40.50, 'tarjeta', 'Venta V-20260420-00048', NULL, 'V-20260420-00048', '2026-04-20 19:42:00', '2026-04-21 00:42:00', '2026-04-21 00:42:00'),
-	(49, 11, 1, 'venta', 26.00, 'bizum', 'Venta V-20260420-00049', NULL, 'V-20260420-00049', '2026-04-20 19:24:00', '2026-04-21 00:24:00', '2026-04-21 00:24:00'),
-	(50, 12, 1, 'venta', 137.00, 'tarjeta', 'Venta V-20260421-00050', NULL, 'V-20260421-00050', '2026-04-21 09:29:00', '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(51, 12, 1, 'venta', 125.00, 'tarjeta', 'Venta V-20260421-00051', NULL, 'V-20260421-00051', '2026-04-21 11:34:00', '2026-04-21 16:34:00', '2026-04-21 16:34:00'),
-	(52, 12, 1, 'venta', 80.00, 'efectivo', 'Venta V-20260421-00052', NULL, 'V-20260421-00052', '2026-04-21 09:00:00', '2026-04-21 14:00:00', '2026-04-21 14:00:00'),
-	(53, 12, 1, 'venta', 44.00, 'transferencia', 'Venta V-20260421-00053', NULL, 'V-20260421-00053', '2026-04-21 14:27:00', '2026-04-21 19:27:00', '2026-04-21 19:27:00'),
-	(54, 13, 1, 'venta', 26.00, 'efectivo', 'Venta V-20260422-00054', NULL, 'V-20260422-00054', '2026-04-22 19:41:00', '2026-04-23 00:41:00', '2026-04-23 00:41:00'),
-	(55, 13, 1, 'venta', 145.50, 'efectivo', 'Venta V-20260422-00055', NULL, 'V-20260422-00055', '2026-04-22 09:07:00', '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(56, 14, 1, 'venta', 41.50, 'efectivo', 'Venta V-20260423-00056', NULL, 'V-20260423-00056', '2026-04-23 09:27:00', '2026-04-23 14:27:00', '2026-04-23 14:27:00'),
-	(57, 14, 1, 'venta', 140.00, 'efectivo', 'Venta V-20260423-00057', NULL, 'V-20260423-00057', '2026-04-23 10:30:00', '2026-04-23 15:30:00', '2026-04-23 15:30:00'),
-	(58, 15, 1, 'venta', 28.00, 'efectivo', 'Venta V-20260424-00058', NULL, 'V-20260424-00058', '2026-04-24 18:23:00', '2026-04-24 23:23:00', '2026-04-24 23:23:00'),
-	(59, 15, 1, 'venta', 57.50, 'tarjeta', 'Venta V-20260424-00059', NULL, 'V-20260424-00059', '2026-04-24 16:13:00', '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(60, 15, 1, 'venta', 154.00, 'transferencia', 'Venta V-20260424-00060', NULL, 'V-20260424-00060', '2026-04-24 10:54:00', '2026-04-24 15:54:00', '2026-04-24 15:54:00'),
-	(61, 15, 1, 'venta', 203.00, 'tarjeta', 'Venta V-20260424-00061', NULL, 'V-20260424-00061', '2026-04-24 12:33:00', '2026-04-24 17:33:00', '2026-04-24 17:33:00'),
-	(62, 16, 1, 'venta', 152.50, 'efectivo', 'Venta V-20260425-00062', NULL, 'V-20260425-00062', '2026-04-25 17:43:00', '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(63, 16, 1, 'venta', 12.00, 'tarjeta', 'Venta V-20260425-00063', NULL, 'V-20260425-00063', '2026-04-25 10:17:00', '2026-04-25 15:17:00', '2026-04-25 15:17:00'),
-	(64, 16, 1, 'venta', 123.00, 'tarjeta', 'Venta V-20260425-00064', NULL, 'V-20260425-00064', '2026-04-25 16:05:00', '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(65, 16, 1, 'venta', 47.50, 'tarjeta', 'Venta V-20260425-00065', NULL, 'V-20260425-00065', '2026-04-25 17:36:00', '2026-04-25 22:36:00', '2026-04-25 22:36:00'),
-	(66, 16, 1, 'venta', 80.00, 'tarjeta', 'Venta V-20260425-00066', NULL, 'V-20260425-00066', '2026-04-25 09:38:00', '2026-04-25 14:38:00', '2026-04-25 14:38:00'),
-	(67, 16, 1, 'venta', 120.00, 'transferencia', 'Venta V-20260425-00067', NULL, 'V-20260425-00067', '2026-04-25 09:23:00', '2026-04-25 14:23:00', '2026-04-25 14:23:00'),
-	(68, 16, 1, 'venta', 45.50, 'efectivo', 'Venta V-20260425-00068', NULL, 'V-20260425-00068', '2026-04-25 13:36:00', '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(69, 17, 1, 'venta', 45.50, 'bizum', 'Venta V-20260427-00069', NULL, 'V-20260427-00069', '2026-04-27 13:38:00', '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(70, 17, 1, 'venta', 120.00, 'efectivo', 'Venta V-20260427-00070', NULL, 'V-20260427-00070', '2026-04-27 13:56:00', '2026-04-27 18:56:00', '2026-04-27 18:56:00'),
-	(71, 17, 1, 'venta', 16.50, 'tarjeta', 'Venta V-20260427-00071', NULL, 'V-20260427-00071', '2026-04-27 19:31:00', '2026-04-28 00:31:00', '2026-04-28 00:31:00'),
-	(72, 17, 1, 'venta', 14.00, 'efectivo', 'Venta V-20260427-00072', NULL, 'V-20260427-00072', '2026-04-27 14:00:00', '2026-04-27 19:00:00', '2026-04-27 19:00:00'),
-	(73, 18, 1, 'venta', 70.00, 'tarjeta', 'Venta V-20260428-00073', NULL, 'V-20260428-00073', '2026-04-28 18:46:00', '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(74, 18, 1, 'venta', 54.50, 'bizum', 'Venta V-20260428-00074', NULL, 'V-20260428-00074', '2026-04-28 09:12:00', '2026-04-28 14:12:00', '2026-04-28 14:12:00'),
-	(75, 18, 1, 'venta', 68.50, 'tarjeta', 'Venta V-20260428-00075', NULL, 'V-20260428-00075', '2026-04-28 09:17:00', '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(76, 18, 1, 'venta', 36.00, 'tarjeta', 'Venta V-20260428-00076', NULL, 'V-20260428-00076', '2026-04-28 09:54:00', '2026-04-28 14:54:00', '2026-04-28 14:54:00'),
-	(77, 19, 1, 'venta', 101.00, 'tarjeta', 'Venta V-20260429-00077', NULL, 'V-20260429-00077', '2026-04-29 14:13:00', '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(78, 19, 1, 'venta', 26.00, 'tarjeta', 'Venta V-20260429-00078', NULL, 'V-20260429-00078', '2026-04-29 19:28:00', '2026-04-30 00:28:00', '2026-04-30 00:28:00'),
-	(79, 20, 1, 'venta', 14.00, 'tarjeta', 'Venta V-20260430-00079', NULL, 'V-20260430-00079', '2026-04-30 18:55:00', '2026-04-30 23:55:00', '2026-04-30 23:55:00'),
-	(80, 20, 1, 'venta', 95.00, 'bizum', 'Venta V-20260430-00080', NULL, 'V-20260430-00080', '2026-04-30 12:33:00', '2026-04-30 17:33:00', '2026-04-30 17:33:00'),
-	(81, 21, 1, 'venta', 58.00, 'tarjeta', 'Venta V-20260501-00081', NULL, 'V-20260501-00081', '2026-05-01 17:04:00', '2026-05-01 22:04:00', '2026-05-01 22:04:00'),
-	(82, 21, 1, 'venta', 190.00, 'efectivo', 'Venta V-20260501-00082', NULL, 'V-20260501-00082', '2026-05-01 18:04:00', '2026-05-01 23:04:00', '2026-05-01 23:04:00'),
-	(83, 21, 1, 'venta', 107.00, 'tarjeta', 'Venta V-20260501-00083', NULL, 'V-20260501-00083', '2026-05-01 13:13:00', '2026-05-01 18:13:00', '2026-05-01 18:13:00'),
-	(84, 21, 1, 'venta', 38.00, 'tarjeta', 'Venta V-20260501-00084', NULL, 'V-20260501-00084', '2026-05-01 16:56:00', '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(85, 22, 1, 'venta', 30.00, 'tarjeta', 'Venta V-20260502-00085', NULL, 'V-20260502-00085', '2026-05-02 11:54:00', '2026-05-02 16:54:00', '2026-05-02 16:54:00'),
-	(86, 22, 1, 'venta', 44.00, 'efectivo', 'Venta V-20260502-00086', NULL, 'V-20260502-00086', '2026-05-02 19:35:00', '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(87, 22, 1, 'venta', 69.50, 'efectivo', 'Venta V-20260502-00087', NULL, 'V-20260502-00087', '2026-05-02 12:50:00', '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(88, 22, 1, 'venta', 145.00, 'tarjeta', 'Venta V-20260502-00088', NULL, 'V-20260502-00088', '2026-05-02 13:53:00', '2026-05-02 18:53:00', '2026-05-02 18:53:00'),
-	(89, 22, 1, 'venta', 14.00, 'tarjeta', 'Venta V-20260502-00089', NULL, 'V-20260502-00089', '2026-05-02 10:01:00', '2026-05-02 15:01:00', '2026-05-02 15:01:00'),
-	(90, 22, 1, 'venta', 20.00, 'tarjeta', 'Venta V-20260502-00090', NULL, 'V-20260502-00090', '2026-05-02 16:20:00', '2026-05-02 21:20:00', '2026-05-02 21:20:00'),
-	(91, 22, 1, 'venta', 14.00, 'bizum', 'Venta V-20260502-00091', NULL, 'V-20260502-00091', '2026-05-02 19:18:00', '2026-05-03 00:18:00', '2026-05-03 00:18:00'),
-	(92, 23, 1, 'venta', 12.00, 'tarjeta', 'Venta V-20260504-00092', NULL, 'V-20260504-00092', '2026-05-04 17:52:00', '2026-05-04 22:52:00', '2026-05-04 22:52:00'),
-	(93, 23, 1, 'venta', 123.00, 'efectivo', 'Venta V-20260504-00093', NULL, 'V-20260504-00093', '2026-05-04 13:16:00', '2026-05-04 18:16:00', '2026-05-04 18:16:00'),
-	(94, 23, 1, 'venta', 45.50, 'efectivo', 'Venta V-20260504-00094', NULL, 'V-20260504-00094', '2026-05-04 10:44:00', '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(95, 23, 1, 'venta', 146.00, 'bizum', 'Venta V-20260504-00095', NULL, 'V-20260504-00095', '2026-05-04 18:56:00', '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(96, 23, 1, 'venta', 123.00, 'transferencia', 'Venta V-20260504-00096', NULL, 'V-20260504-00096', '2026-05-04 10:30:00', '2026-05-04 15:30:00', '2026-05-04 15:30:00'),
-	(97, 24, 1, 'venta', 71.00, 'bizum', 'Venta V-20260505-00097', NULL, 'V-20260505-00097', '2026-05-05 18:30:00', '2026-05-05 23:30:00', '2026-05-05 23:30:00'),
-	(98, 24, 1, 'venta', 145.00, 'efectivo', 'Venta V-20260505-00098', NULL, 'V-20260505-00098', '2026-05-05 13:37:00', '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(99, 24, 1, 'venta', 11.00, 'efectivo', 'Venta V-20260505-00099', NULL, 'V-20260505-00099', '2026-05-05 13:02:00', '2026-05-05 18:02:00', '2026-05-05 18:02:00'),
-	(100, 24, 1, 'venta', 27.50, 'efectivo', 'Venta V-20260505-00100', NULL, 'V-20260505-00100', '2026-05-05 12:21:00', '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(101, 25, 1, 'venta', 87.50, 'efectivo', 'Venta V-20260506-00101', NULL, 'V-20260506-00101', '2026-05-06 13:21:00', '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(102, 25, 1, 'venta', 80.00, 'transferencia', 'Venta V-20260506-00102', NULL, 'V-20260506-00102', '2026-05-06 16:43:00', '2026-05-06 21:43:00', '2026-05-06 21:43:00'),
-	(103, 25, 1, 'venta', 14.00, 'transferencia', 'Venta V-20260506-00103', NULL, 'V-20260506-00103', '2026-05-06 13:28:00', '2026-05-06 18:28:00', '2026-05-06 18:28:00'),
-	(104, 25, 1, 'venta', 64.00, 'tarjeta', 'Venta V-20260506-00104', NULL, 'V-20260506-00104', '2026-05-06 09:17:00', '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(105, 25, 1, 'venta', 18.00, 'tarjeta', 'Venta V-20260506-00105', NULL, 'V-20260506-00105', '2026-05-06 11:55:00', '2026-05-06 16:55:00', '2026-05-06 16:55:00'),
-	(106, 25, 1, 'venta', 103.00, 'efectivo', 'Venta V-20260506-00106', NULL, 'V-20260506-00106', '2026-05-06 16:40:00', '2026-05-06 21:40:00', '2026-05-06 21:40:00'),
-	(107, 25, 1, 'venta', 83.00, 'tarjeta', 'Venta V-20260506-00107', NULL, 'V-20260506-00107', '2026-05-06 15:54:00', '2026-05-06 20:54:00', '2026-05-06 20:54:00'),
-	(108, 26, 1, 'apertura', 100.00, 'efectivo', 'Apertura de caja', NULL, NULL, '2026-05-07 09:00:00', '2026-05-07 19:21:11', '2026-05-07 19:21:11'),
-	(109, 26, 1, 'venta', 35.00, 'bizum', 'Venta V-20260507-00108', NULL, 'V-20260507-00108', '2026-05-07 11:58:00', '2026-05-07 19:21:11', '2026-05-07 19:21:11'),
-	(110, 26, 1, 'venta', 20.00, 'tarjeta', 'Venta V-20260507-00109', NULL, 'V-20260507-00109', '2026-05-07 12:09:00', '2026-05-07 19:21:11', '2026-05-07 19:21:11'),
-	(111, 26, 1, 'venta', 22.00, 'efectivo', 'Venta V-20260507-00110', NULL, 'V-20260507-00110', '2026-05-07 10:30:00', '2026-05-07 19:21:11', '2026-05-07 19:21:11'),
-	(112, 26, 1, 'venta', 28.00, 'tarjeta', 'Venta V-20260507-00111', NULL, 'V-20260507-00111', '2026-05-07 10:51:00', '2026-05-07 19:21:11', '2026-05-07 19:21:11'),
-	(113, 27, 1, 'venta', 143.50, 'bizum', 'Venta V-20260407-00112', NULL, 'V-20260407-00112', '2026-04-07 14:52:00', '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(114, 27, 1, 'venta', 28.00, 'tarjeta', 'Venta V-20260407-00113', NULL, 'V-20260407-00113', '2026-04-07 18:53:00', '2026-04-07 23:53:00', '2026-04-07 23:53:00'),
-	(115, 27, 1, 'venta', 11.00, 'bizum', 'Venta V-20260407-00114', NULL, 'V-20260407-00114', '2026-04-07 18:17:00', '2026-04-07 23:17:00', '2026-04-07 23:17:00'),
-	(116, 28, 1, 'venta', 29.00, 'bizum', 'Venta V-20260409-00115', NULL, 'V-20260409-00115', '2026-04-09 10:44:00', '2026-04-09 15:44:00', '2026-04-09 15:44:00'),
-	(117, 28, 1, 'venta', 67.00, 'efectivo', 'Venta V-20260409-00116', NULL, 'V-20260409-00116', '2026-04-09 12:09:00', '2026-04-09 17:09:00', '2026-04-09 17:09:00'),
-	(118, 28, 1, 'venta', 12.00, 'tarjeta', 'Venta V-20260409-00117', NULL, 'V-20260409-00117', '2026-04-09 12:07:00', '2026-04-09 17:07:00', '2026-04-09 17:07:00'),
-	(119, 28, 1, 'venta', 36.00, 'tarjeta', 'Venta V-20260409-00118', NULL, 'V-20260409-00118', '2026-04-09 10:53:00', '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(120, 28, 1, 'venta', 42.50, 'tarjeta', 'Venta V-20260409-00119', NULL, 'V-20260409-00119', '2026-04-09 11:17:00', '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(121, 28, 1, 'venta', 115.00, 'efectivo', 'Venta V-20260409-00120', NULL, 'V-20260409-00120', '2026-04-09 14:13:00', '2026-04-09 19:13:00', '2026-04-09 19:13:00'),
-	(122, 29, 1, 'venta', 63.00, 'transferencia', 'Venta V-20260410-00121', NULL, 'V-20260410-00121', '2026-04-10 14:47:00', '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(123, 29, 1, 'venta', 230.00, 'tarjeta', 'Venta V-20260410-00122', NULL, 'V-20260410-00122', '2026-04-10 15:17:00', '2026-04-10 20:17:00', '2026-04-10 20:17:00'),
-	(124, 29, 1, 'venta', 42.00, 'tarjeta', 'Venta V-20260410-00123', NULL, 'V-20260410-00123', '2026-04-10 09:52:00', '2026-04-10 14:52:00', '2026-04-10 14:52:00'),
-	(125, 29, 1, 'venta', 16.50, 'efectivo', 'Venta V-20260410-00124', NULL, 'V-20260410-00124', '2026-04-10 15:47:00', '2026-04-10 20:47:00', '2026-04-10 20:47:00'),
-	(126, 30, 1, 'venta', 55.00, 'transferencia', 'Venta V-20260413-00125', NULL, 'V-20260413-00125', '2026-04-13 18:32:00', '2026-04-13 23:32:00', '2026-04-13 23:32:00'),
-	(127, 30, 1, 'venta', 69.00, 'tarjeta', 'Venta V-20260413-00126', NULL, 'V-20260413-00126', '2026-04-13 12:00:00', '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(128, 30, 1, 'venta', 14.00, 'efectivo', 'Venta V-20260413-00127', NULL, 'V-20260413-00127', '2026-04-13 09:40:00', '2026-04-13 14:40:00', '2026-04-13 14:40:00'),
-	(129, 30, 1, 'venta', 32.00, 'bizum', 'Venta V-20260413-00128', NULL, 'V-20260413-00128', '2026-04-13 13:47:00', '2026-04-13 18:47:00', '2026-04-13 18:47:00'),
-	(130, 30, 1, 'venta', 48.00, 'bizum', 'Venta V-20260413-00129', NULL, 'V-20260413-00129', '2026-04-13 09:24:00', '2026-04-13 14:24:00', '2026-04-13 14:24:00'),
-	(131, 31, 1, 'venta', 12.50, 'transferencia', 'Venta V-20260415-00130', NULL, 'V-20260415-00130', '2026-04-15 09:47:00', '2026-04-15 14:47:00', '2026-04-15 14:47:00'),
-	(132, 31, 1, 'venta', 128.00, 'efectivo', 'Venta V-20260415-00131', NULL, 'V-20260415-00131', '2026-04-15 09:45:00', '2026-04-15 14:45:00', '2026-04-15 14:45:00'),
-	(133, 31, 1, 'venta', 163.00, 'tarjeta', 'Venta V-20260415-00132', NULL, 'V-20260415-00132', '2026-04-15 14:33:00', '2026-04-15 19:33:00', '2026-04-15 19:33:00'),
-	(134, 31, 1, 'venta', 19.50, 'efectivo', 'Venta V-20260415-00133', NULL, 'V-20260415-00133', '2026-04-15 15:22:00', '2026-04-15 20:22:00', '2026-04-15 20:22:00'),
-	(135, 32, 1, 'venta', 83.00, 'tarjeta', 'Venta V-20260416-00134', NULL, 'V-20260416-00134', '2026-04-16 19:25:00', '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(136, 32, 1, 'venta', 28.00, 'efectivo', 'Venta V-20260416-00135', NULL, 'V-20260416-00135', '2026-04-16 19:18:00', '2026-04-17 00:18:00', '2026-04-17 00:18:00'),
-	(137, 32, 1, 'venta', 14.00, 'tarjeta', 'Venta V-20260416-00136', NULL, 'V-20260416-00136', '2026-04-16 11:12:00', '2026-04-16 16:12:00', '2026-04-16 16:12:00'),
-	(138, 33, 1, 'venta', 43.00, 'bizum', 'Venta V-20260417-00137', NULL, 'V-20260417-00137', '2026-04-17 11:39:00', '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(139, 33, 1, 'venta', 218.50, 'tarjeta', 'Venta V-20260417-00138', NULL, 'V-20260417-00138', '2026-04-17 13:30:00', '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(140, 34, 1, 'venta', 170.00, 'tarjeta', 'Venta V-20260420-00139', NULL, 'V-20260420-00139', '2026-04-20 14:31:00', '2026-04-20 19:31:00', '2026-04-20 19:31:00'),
-	(141, 34, 1, 'venta', 120.00, 'tarjeta', 'Venta V-20260420-00140', NULL, 'V-20260420-00140', '2026-04-20 10:36:00', '2026-04-20 15:36:00', '2026-04-20 15:36:00'),
-	(142, 34, 1, 'venta', 91.00, 'efectivo', 'Venta V-20260420-00141', NULL, 'V-20260420-00141', '2026-04-20 17:52:00', '2026-04-20 22:52:00', '2026-04-20 22:52:00'),
-	(143, 34, 1, 'venta', 114.00, 'tarjeta', 'Venta V-20260420-00142', NULL, 'V-20260420-00142', '2026-04-20 09:49:00', '2026-04-20 14:49:00', '2026-04-20 14:49:00'),
-	(144, 34, 1, 'venta', 46.50, 'tarjeta', 'Venta V-20260420-00143', NULL, 'V-20260420-00143', '2026-04-20 19:00:00', '2026-04-21 00:00:00', '2026-04-21 00:00:00'),
-	(145, 34, 1, 'venta', 106.00, 'tarjeta', 'Venta V-20260420-00144', NULL, 'V-20260420-00144', '2026-04-20 13:14:00', '2026-04-20 18:14:00', '2026-04-20 18:14:00'),
-	(146, 35, 1, 'venta', 120.00, 'bizum', 'Venta V-20260421-00145', NULL, 'V-20260421-00145', '2026-04-21 10:01:00', '2026-04-21 15:01:00', '2026-04-21 15:01:00'),
-	(147, 35, 1, 'venta', 58.00, 'efectivo', 'Venta V-20260421-00146', NULL, 'V-20260421-00146', '2026-04-21 16:01:00', '2026-04-21 21:01:00', '2026-04-21 21:01:00'),
-	(148, 35, 1, 'venta', 44.00, 'tarjeta', 'Venta V-20260421-00147', NULL, 'V-20260421-00147', '2026-04-21 18:16:00', '2026-04-21 23:16:00', '2026-04-21 23:16:00'),
-	(149, 36, 1, 'venta', 22.00, 'transferencia', 'Venta V-20260422-00148', NULL, 'V-20260422-00148', '2026-04-22 14:20:00', '2026-04-22 19:20:00', '2026-04-22 19:20:00'),
-	(150, 36, 1, 'venta', 86.00, 'tarjeta', 'Venta V-20260422-00149', NULL, 'V-20260422-00149', '2026-04-22 11:07:00', '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(151, 36, 1, 'venta', 93.00, 'tarjeta', 'Venta V-20260422-00150', NULL, 'V-20260422-00150', '2026-04-22 14:06:00', '2026-04-22 19:06:00', '2026-04-22 19:06:00'),
-	(152, 37, 1, 'venta', 28.00, 'efectivo', 'Venta V-20260423-00151', NULL, 'V-20260423-00151', '2026-04-23 13:53:00', '2026-04-23 18:53:00', '2026-04-23 18:53:00'),
-	(153, 37, 1, 'venta', 120.00, 'tarjeta', 'Venta V-20260423-00152', NULL, 'V-20260423-00152', '2026-04-23 18:32:00', '2026-04-23 23:32:00', '2026-04-23 23:32:00'),
-	(154, 38, 1, 'venta', 19.50, 'bizum', 'Venta V-20260424-00153', NULL, 'V-20260424-00153', '2026-04-24 13:22:00', '2026-04-24 18:22:00', '2026-04-24 18:22:00'),
-	(155, 38, 1, 'venta', 115.00, 'transferencia', 'Venta V-20260424-00154', NULL, 'V-20260424-00154', '2026-04-24 09:42:00', '2026-04-24 14:42:00', '2026-04-24 14:42:00'),
-	(156, 38, 1, 'venta', 116.00, 'tarjeta', 'Venta V-20260424-00155', NULL, 'V-20260424-00155', '2026-04-24 19:59:00', '2026-04-25 00:59:00', '2026-04-25 00:59:00'),
-	(157, 38, 1, 'venta', 173.00, 'efectivo', 'Venta V-20260424-00156', NULL, 'V-20260424-00156', '2026-04-24 11:45:00', '2026-04-24 16:45:00', '2026-04-24 16:45:00'),
-	(158, 38, 1, 'venta', 55.00, 'efectivo', 'Venta V-20260424-00157', NULL, 'V-20260424-00157', '2026-04-24 17:33:00', '2026-04-24 22:33:00', '2026-04-24 22:33:00'),
-	(159, 38, 1, 'venta', 38.00, 'bizum', 'Venta V-20260424-00158', NULL, 'V-20260424-00158', '2026-04-24 15:50:00', '2026-04-24 20:50:00', '2026-04-24 20:50:00'),
-	(160, 38, 1, 'venta', 85.50, 'bizum', 'Venta V-20260424-00159', NULL, 'V-20260424-00159', '2026-04-24 17:46:00', '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(161, 39, 1, 'venta', 73.00, 'tarjeta', 'Venta V-20260425-00160', NULL, 'V-20260425-00160', '2026-04-25 16:05:00', '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(162, 39, 1, 'venta', 80.00, 'transferencia', 'Venta V-20260425-00161', NULL, 'V-20260425-00161', '2026-04-25 09:17:00', '2026-04-25 14:17:00', '2026-04-25 14:17:00'),
-	(163, 39, 1, 'venta', 63.00, 'tarjeta', 'Venta V-20260425-00162', NULL, 'V-20260425-00162', '2026-04-25 10:35:00', '2026-04-25 15:35:00', '2026-04-25 15:35:00'),
-	(164, 39, 1, 'venta', 75.00, 'tarjeta', 'Venta V-20260425-00163', NULL, 'V-20260425-00163', '2026-04-25 19:58:00', '2026-04-26 00:58:00', '2026-04-26 00:58:00'),
-	(165, 40, 1, 'venta', 114.50, 'efectivo', 'Venta V-20260427-00164', NULL, 'V-20260427-00164', '2026-04-27 13:14:00', '2026-04-27 18:14:00', '2026-04-27 18:14:00'),
-	(166, 40, 1, 'venta', 123.00, 'tarjeta', 'Venta V-20260427-00165', NULL, 'V-20260427-00165', '2026-04-27 11:43:00', '2026-04-27 16:43:00', '2026-04-27 16:43:00'),
-	(167, 40, 1, 'venta', 69.00, 'efectivo', 'Venta V-20260427-00166', NULL, 'V-20260427-00166', '2026-04-27 12:36:00', '2026-04-27 17:36:00', '2026-04-27 17:36:00'),
-	(168, 40, 1, 'venta', 213.50, 'tarjeta', 'Venta V-20260427-00167', NULL, 'V-20260427-00167', '2026-04-27 15:22:00', '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(169, 40, 1, 'venta', 35.00, 'tarjeta', 'Venta V-20260427-00168', NULL, 'V-20260427-00168', '2026-04-27 09:32:00', '2026-04-27 14:32:00', '2026-04-27 14:32:00'),
-	(170, 40, 1, 'venta', 75.50, 'bizum', 'Venta V-20260427-00169', NULL, 'V-20260427-00169', '2026-04-27 11:44:00', '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(171, 40, 1, 'venta', 58.50, 'bizum', 'Venta V-20260427-00170', NULL, 'V-20260427-00170', '2026-04-27 16:07:00', '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(172, 41, 1, 'venta', 184.00, 'efectivo', 'Venta V-20260428-00171', NULL, 'V-20260428-00171', '2026-04-28 17:58:00', '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(173, 41, 1, 'venta', 19.50, 'tarjeta', 'Venta V-20260428-00172', NULL, 'V-20260428-00172', '2026-04-28 09:20:00', '2026-04-28 14:20:00', '2026-04-28 14:20:00'),
-	(174, 41, 1, 'venta', 118.00, 'efectivo', 'Venta V-20260428-00173', NULL, 'V-20260428-00173', '2026-04-28 11:44:00', '2026-04-28 16:44:00', '2026-04-28 16:44:00'),
-	(175, 42, 1, 'venta', 113.00, 'tarjeta', 'Venta V-20260429-00174', NULL, 'V-20260429-00174', '2026-04-29 15:26:00', '2026-04-29 20:26:00', '2026-04-29 20:26:00'),
-	(176, 42, 1, 'venta', 18.00, 'tarjeta', 'Venta V-20260429-00175', NULL, 'V-20260429-00175', '2026-04-29 13:59:00', '2026-04-29 18:59:00', '2026-04-29 18:59:00'),
-	(177, 42, 1, 'venta', 120.00, 'efectivo', 'Venta V-20260429-00176', NULL, 'V-20260429-00176', '2026-04-29 15:36:00', '2026-04-29 20:36:00', '2026-04-29 20:36:00'),
-	(178, 42, 1, 'venta', 12.00, 'tarjeta', 'Venta V-20260429-00177', NULL, 'V-20260429-00177', '2026-04-29 17:36:00', '2026-04-29 22:36:00', '2026-04-29 22:36:00'),
-	(179, 42, 1, 'venta', 58.00, 'efectivo', 'Venta V-20260429-00178', NULL, 'V-20260429-00178', '2026-04-29 17:49:00', '2026-04-29 22:49:00', '2026-04-29 22:49:00'),
-	(180, 42, 1, 'venta', 31.50, 'tarjeta', 'Venta V-20260429-00179', NULL, 'V-20260429-00179', '2026-04-29 18:24:00', '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(181, 42, 1, 'venta', 93.00, 'bizum', 'Venta V-20260429-00180', NULL, 'V-20260429-00180', '2026-04-29 19:35:00', '2026-04-30 00:35:00', '2026-04-30 00:35:00'),
-	(182, 43, 1, 'venta', 28.00, 'tarjeta', 'Venta V-20260430-00181', NULL, 'V-20260430-00181', '2026-04-30 15:22:00', '2026-04-30 20:22:00', '2026-04-30 20:22:00'),
-	(183, 43, 1, 'venta', 19.50, 'efectivo', 'Venta V-20260430-00182', NULL, 'V-20260430-00182', '2026-04-30 16:05:00', '2026-04-30 21:05:00', '2026-04-30 21:05:00'),
-	(184, 44, 1, 'venta', 46.00, 'tarjeta', 'Venta V-20260501-00183', NULL, 'V-20260501-00183', '2026-05-01 16:02:00', '2026-05-01 21:02:00', '2026-05-01 21:02:00'),
-	(185, 44, 1, 'venta', 42.50, 'tarjeta', 'Venta V-20260501-00184', NULL, 'V-20260501-00184', '2026-05-01 15:47:00', '2026-05-01 20:47:00', '2026-05-01 20:47:00'),
-	(186, 44, 1, 'venta', 18.00, 'tarjeta', 'Venta V-20260501-00185', NULL, 'V-20260501-00185', '2026-05-01 10:22:00', '2026-05-01 15:22:00', '2026-05-01 15:22:00'),
-	(187, 44, 1, 'venta', 25.00, 'tarjeta', 'Venta V-20260501-00186', NULL, 'V-20260501-00186', '2026-05-01 14:21:00', '2026-05-01 19:21:00', '2026-05-01 19:21:00'),
-	(188, 44, 1, 'venta', 25.00, 'tarjeta', 'Venta V-20260501-00187', NULL, 'V-20260501-00187', '2026-05-01 13:17:00', '2026-05-01 18:17:00', '2026-05-01 18:17:00'),
-	(189, 44, 1, 'venta', 120.00, 'transferencia', 'Venta V-20260501-00188', NULL, 'V-20260501-00188', '2026-05-01 16:20:00', '2026-05-01 21:20:00', '2026-05-01 21:20:00'),
-	(190, 44, 1, 'venta', 61.00, 'efectivo', 'Venta V-20260501-00189', NULL, 'V-20260501-00189', '2026-05-01 18:13:00', '2026-05-01 23:13:00', '2026-05-01 23:13:00'),
-	(191, 45, 1, 'venta', 56.00, 'tarjeta', 'Venta V-20260502-00190', NULL, 'V-20260502-00190', '2026-05-02 14:30:00', '2026-05-02 19:30:00', '2026-05-02 19:30:00'),
-	(192, 45, 1, 'venta', 15.50, 'transferencia', 'Venta V-20260502-00191', NULL, 'V-20260502-00191', '2026-05-02 15:24:00', '2026-05-02 20:24:00', '2026-05-02 20:24:00'),
-	(193, 45, 1, 'venta', 114.00, 'tarjeta', 'Venta V-20260502-00192', NULL, 'V-20260502-00192', '2026-05-02 19:38:00', '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(194, 45, 1, 'venta', 30.00, 'transferencia', 'Venta V-20260502-00193', NULL, 'V-20260502-00193', '2026-05-02 10:47:00', '2026-05-02 15:47:00', '2026-05-02 15:47:00'),
-	(195, 46, 1, 'venta', 44.50, 'efectivo', 'Venta V-20260504-00194', NULL, 'V-20260504-00194', '2026-05-04 17:14:00', '2026-05-04 22:14:00', '2026-05-04 22:14:00'),
-	(196, 46, 1, 'venta', 36.00, 'efectivo', 'Venta V-20260504-00195', NULL, 'V-20260504-00195', '2026-05-04 12:28:00', '2026-05-04 17:28:00', '2026-05-04 17:28:00'),
-	(197, 47, 1, 'venta', 12.00, 'bizum', 'Venta V-20260506-00196', NULL, 'V-20260506-00196', '2026-05-06 13:48:00', '2026-05-06 18:48:00', '2026-05-06 18:48:00'),
-	(198, 47, 1, 'venta', 135.00, 'bizum', 'Venta V-20260506-00197', NULL, 'V-20260506-00197', '2026-05-06 14:24:00', '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(199, 47, 1, 'venta', 12.00, 'efectivo', 'Venta V-20260506-00198', NULL, 'V-20260506-00198', '2026-05-06 19:37:00', '2026-05-07 00:37:00', '2026-05-07 00:37:00'),
-	(200, 47, 1, 'venta', 47.50, 'tarjeta', 'Venta V-20260506-00199', NULL, 'V-20260506-00199', '2026-05-06 15:53:00', '2026-05-06 20:53:00', '2026-05-06 20:53:00'),
-	(201, 47, 1, 'venta', 90.50, 'tarjeta', 'Venta V-20260506-00200', NULL, 'V-20260506-00200', '2026-05-06 14:24:00', '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(202, 47, 1, 'venta', 120.00, 'bizum', 'Venta V-20260506-00201', NULL, 'V-20260506-00201', '2026-05-06 10:33:00', '2026-05-06 15:33:00', '2026-05-06 15:33:00'),
-	(203, 48, 1, 'apertura', 100.00, 'efectivo', 'Apertura de caja', NULL, NULL, '2026-05-07 09:00:00', '2026-05-07 19:21:22', '2026-05-07 19:21:22'),
-	(204, 48, 1, 'venta', 120.00, 'efectivo', 'Venta V-20260507-00202', NULL, 'V-20260507-00202', '2026-05-07 13:51:00', '2026-05-07 19:21:22', '2026-05-07 19:21:22'),
-	(205, 48, 1, 'venta', 95.00, 'tarjeta', 'Venta V-20260507-00203', NULL, 'V-20260507-00203', '2026-05-07 10:09:00', '2026-05-07 19:21:22', '2026-05-07 19:21:22'),
-	(206, 48, 1, 'venta', 35.00, 'tarjeta', 'Venta V-20260507-00204', NULL, 'V-20260507-00204', '2026-05-07 10:00:00', '2026-05-07 19:21:22', '2026-05-07 19:21:22');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (1,1,1,'venta',12.50,'efectivo','Venta V-20260704-00001',NULL,'V-20260704-00001','2026-07-04 18:52:00','2026-07-04 18:52:00','2026-07-04 18:52:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (2,1,1,'venta',139.50,'tarjeta','Venta V-20260704-00002',NULL,'V-20260704-00002','2026-07-04 10:29:00','2026-07-04 10:29:00','2026-07-04 10:29:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (3,1,1,'venta',36.00,'tarjeta','Venta V-20260704-00003',NULL,'V-20260704-00003','2026-07-04 13:35:00','2026-07-04 13:35:00','2026-07-04 13:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (4,1,1,'venta',20.00,'tarjeta','Venta V-20260704-00004',NULL,'V-20260704-00004','2026-07-04 19:03:00','2026-07-04 19:03:00','2026-07-04 19:03:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (5,2,1,'venta',145.00,'tarjeta','Venta V-20260706-00005',NULL,'V-20260706-00005','2026-07-06 19:41:00','2026-07-06 19:41:00','2026-07-06 19:41:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (6,2,1,'venta',119.00,'transferencia','Venta V-20260706-00006',NULL,'V-20260706-00006','2026-07-06 15:24:00','2026-07-06 15:24:00','2026-07-06 15:24:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (7,2,1,'venta',145.00,'tarjeta','Venta V-20260706-00007',NULL,'V-20260706-00007','2026-07-06 18:49:00','2026-07-06 18:49:00','2026-07-06 18:49:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (8,2,1,'venta',14.00,'tarjeta','Venta V-20260706-00008',NULL,'V-20260706-00008','2026-07-06 16:06:00','2026-07-06 16:06:00','2026-07-06 16:06:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (9,2,1,'venta',39.00,'tarjeta','Venta V-20260706-00009',NULL,'V-20260706-00009','2026-07-06 12:24:00','2026-07-06 12:24:00','2026-07-06 12:24:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (10,2,1,'venta',43.50,'tarjeta','Venta V-20260706-00010',NULL,'V-20260706-00010','2026-07-06 10:48:00','2026-07-06 10:48:00','2026-07-06 10:48:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (11,3,1,'venta',36.00,'tarjeta','Venta V-20260707-00011',NULL,'V-20260707-00011','2026-07-07 18:30:00','2026-07-07 18:30:00','2026-07-07 18:30:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (12,3,1,'venta',105.00,'tarjeta','Venta V-20260707-00012',NULL,'V-20260707-00012','2026-07-07 19:31:00','2026-07-07 19:31:00','2026-07-07 19:31:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (13,3,1,'venta',142.50,'yapeplin','Venta V-20260707-00013',NULL,'V-20260707-00013','2026-07-07 12:35:00','2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (14,4,1,'venta',30.00,'tarjeta','Venta V-20260708-00014',NULL,'V-20260708-00014','2026-07-08 19:12:00','2026-07-08 19:12:00','2026-07-08 19:12:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (15,4,1,'venta',235.00,'transferencia','Venta V-20260708-00015',NULL,'V-20260708-00015','2026-07-08 12:37:00','2026-07-08 12:37:00','2026-07-08 12:37:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (16,5,1,'venta',110.00,'efectivo','Venta V-20260709-00016',NULL,'V-20260709-00016','2026-07-09 09:38:00','2026-07-09 09:38:00','2026-07-09 09:38:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (17,5,1,'venta',115.00,'tarjeta','Venta V-20260709-00017',NULL,'V-20260709-00017','2026-07-09 12:36:00','2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (18,5,1,'venta',43.50,'tarjeta','Venta V-20260709-00018',NULL,'V-20260709-00018','2026-07-09 09:41:00','2026-07-09 09:41:00','2026-07-09 09:41:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (19,5,1,'venta',54.00,'yapeplin','Venta V-20260709-00019',NULL,'V-20260709-00019','2026-07-09 14:19:00','2026-07-09 14:19:00','2026-07-09 14:19:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (20,6,1,'venta',28.00,'transferencia','Venta V-20260710-00020',NULL,'V-20260710-00020','2026-07-10 18:45:00','2026-07-10 18:45:00','2026-07-10 18:45:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (21,6,1,'venta',38.50,'tarjeta','Venta V-20260710-00021',NULL,'V-20260710-00021','2026-07-10 12:45:00','2026-07-10 12:45:00','2026-07-10 12:45:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (22,7,1,'venta',44.50,'yapeplin','Venta V-20260711-00022',NULL,'V-20260711-00022','2026-07-11 16:23:00','2026-07-11 16:23:00','2026-07-11 16:23:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (23,7,1,'venta',74.00,'tarjeta','Venta V-20260711-00023',NULL,'V-20260711-00023','2026-07-11 17:50:00','2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (24,7,1,'venta',133.00,'yapeplin','Venta V-20260711-00024',NULL,'V-20260711-00024','2026-07-11 14:03:00','2026-07-11 14:03:00','2026-07-11 14:03:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (25,7,1,'venta',81.00,'yapeplin','Venta V-20260711-00025',NULL,'V-20260711-00025','2026-07-11 12:30:00','2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (26,7,1,'venta',67.50,'efectivo','Venta V-20260711-00026',NULL,'V-20260711-00026','2026-07-11 10:14:00','2026-07-11 10:14:00','2026-07-11 10:14:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (27,7,1,'venta',14.00,'efectivo','Venta V-20260711-00027',NULL,'V-20260711-00027','2026-07-11 10:17:00','2026-07-11 10:17:00','2026-07-11 10:17:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (28,8,1,'venta',144.50,'tarjeta','Venta V-20260713-00028',NULL,'V-20260713-00028','2026-07-13 18:41:00','2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (29,8,1,'venta',187.50,'tarjeta','Venta V-20260713-00029',NULL,'V-20260713-00029','2026-07-13 15:29:00','2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (30,8,1,'venta',94.00,'tarjeta','Venta V-20260713-00030',NULL,'V-20260713-00030','2026-07-13 17:23:00','2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (31,8,1,'venta',77.00,'tarjeta','Venta V-20260713-00031',NULL,'V-20260713-00031','2026-07-13 09:00:00','2026-07-13 09:00:00','2026-07-13 09:00:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (32,9,1,'venta',42.00,'efectivo','Venta V-20260716-00032',NULL,'V-20260716-00032','2026-07-16 16:59:00','2026-07-16 16:59:00','2026-07-16 16:59:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (33,9,1,'venta',30.00,'efectivo','Venta V-20260716-00033',NULL,'V-20260716-00033','2026-07-16 14:58:00','2026-07-16 14:58:00','2026-07-16 14:58:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (34,10,1,'venta',105.00,'yapeplin','Venta V-20260717-00034',NULL,'V-20260717-00034','2026-07-17 14:11:00','2026-07-17 14:11:00','2026-07-17 14:11:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (35,10,1,'venta',129.50,'efectivo','Venta V-20260717-00035',NULL,'V-20260717-00035','2026-07-17 14:42:00','2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (36,10,1,'venta',138.00,'transferencia','Venta V-20260717-00036',NULL,'V-20260717-00036','2026-07-17 10:09:00','2026-07-17 10:09:00','2026-07-17 10:09:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (37,10,1,'venta',157.00,'efectivo','Venta V-20260717-00037',NULL,'V-20260717-00037','2026-07-17 15:25:00','2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (38,10,1,'venta',44.00,'tarjeta','Venta V-20260717-00038',NULL,'V-20260717-00038','2026-07-17 17:06:00','2026-07-17 17:06:00','2026-07-17 17:06:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (39,11,1,'venta',47.00,'efectivo','Venta V-20260718-00039',NULL,'V-20260718-00039','2026-07-18 15:44:00','2026-07-18 15:44:00','2026-07-18 15:44:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (40,11,1,'venta',19.50,'yapeplin','Venta V-20260718-00040',NULL,'V-20260718-00040','2026-07-18 19:07:00','2026-07-18 19:07:00','2026-07-18 19:07:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (41,12,1,'venta',101.00,'transferencia','Venta V-20260720-00041',NULL,'V-20260720-00041','2026-07-20 17:29:00','2026-07-20 17:29:00','2026-07-20 17:29:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (42,12,1,'venta',18.00,'efectivo','Venta V-20260720-00042',NULL,'V-20260720-00042','2026-07-20 15:56:00','2026-07-20 15:56:00','2026-07-20 15:56:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (43,12,1,'venta',125.00,'yapeplin','Venta V-20260720-00043',NULL,'V-20260720-00043','2026-07-20 09:59:00','2026-07-20 09:59:00','2026-07-20 09:59:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (44,12,1,'venta',67.00,'efectivo','Venta V-20260720-00044',NULL,'V-20260720-00044','2026-07-20 17:38:00','2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (45,13,1,'venta',95.50,'tarjeta','Venta V-20260721-00045',NULL,'V-20260721-00045','2026-07-21 11:27:00','2026-07-21 11:27:00','2026-07-21 11:27:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (46,13,1,'venta',44.00,'efectivo','Venta V-20260721-00046',NULL,'V-20260721-00046','2026-07-21 17:39:00','2026-07-21 17:39:00','2026-07-21 17:39:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (47,13,1,'venta',101.00,'efectivo','Venta V-20260721-00047',NULL,'V-20260721-00047','2026-07-21 09:37:00','2026-07-21 09:37:00','2026-07-21 09:37:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (48,13,1,'venta',107.00,'yapeplin','Venta V-20260721-00048',NULL,'V-20260721-00048','2026-07-21 19:56:00','2026-07-21 19:56:00','2026-07-21 19:56:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (49,13,1,'venta',25.00,'tarjeta','Venta V-20260721-00049',NULL,'V-20260721-00049','2026-07-21 14:40:00','2026-07-21 14:40:00','2026-07-21 14:40:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (50,14,1,'venta',14.00,'tarjeta','Venta V-20260722-00050',NULL,'V-20260722-00050','2026-07-22 09:17:00','2026-07-22 09:17:00','2026-07-22 09:17:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (51,14,1,'venta',28.00,'tarjeta','Venta V-20260722-00051',NULL,'V-20260722-00051','2026-07-22 14:51:00','2026-07-22 14:51:00','2026-07-22 14:51:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (52,14,1,'venta',143.50,'tarjeta','Venta V-20260722-00052',NULL,'V-20260722-00052','2026-07-22 19:13:00','2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (53,14,1,'venta',140.00,'efectivo','Venta V-20260722-00053',NULL,'V-20260722-00053','2026-07-22 13:40:00','2026-07-22 13:40:00','2026-07-22 13:40:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (54,15,1,'venta',30.00,'tarjeta','Venta V-20260723-00054',NULL,'V-20260723-00054','2026-07-23 14:18:00','2026-07-23 14:18:00','2026-07-23 14:18:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (55,15,1,'venta',24.50,'yapeplin','Venta V-20260723-00055',NULL,'V-20260723-00055','2026-07-23 15:45:00','2026-07-23 15:45:00','2026-07-23 15:45:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (56,15,1,'venta',229.00,'tarjeta','Venta V-20260723-00056',NULL,'V-20260723-00056','2026-07-23 11:54:00','2026-07-23 11:54:00','2026-07-23 11:54:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (57,15,1,'venta',32.50,'efectivo','Venta V-20260723-00057',NULL,'V-20260723-00057','2026-07-23 16:48:00','2026-07-23 16:48:00','2026-07-23 16:48:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (58,15,1,'venta',42.00,'efectivo','Venta V-20260723-00058',NULL,'V-20260723-00058','2026-07-23 13:33:00','2026-07-23 13:33:00','2026-07-23 13:33:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (59,15,1,'venta',175.00,'transferencia','Venta V-20260723-00059',NULL,'V-20260723-00059','2026-07-23 13:30:00','2026-07-23 13:30:00','2026-07-23 13:30:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (60,16,1,'venta',47.50,'transferencia','Venta V-20260724-00060',NULL,'V-20260724-00060','2026-07-24 09:30:00','2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (61,16,1,'venta',110.50,'efectivo','Venta V-20260724-00061',NULL,'V-20260724-00061','2026-07-24 15:56:00','2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (62,16,1,'venta',113.00,'efectivo','Venta V-20260724-00062',NULL,'V-20260724-00062','2026-07-24 13:14:00','2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (63,17,1,'venta',138.00,'tarjeta','Venta V-20260725-00063',NULL,'V-20260725-00063','2026-07-25 12:29:00','2026-07-25 12:29:00','2026-07-25 12:29:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (64,17,1,'venta',69.00,'efectivo','Venta V-20260725-00064',NULL,'V-20260725-00064','2026-07-25 19:00:00','2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (65,18,1,'venta',28.00,'tarjeta','Venta V-20260727-00065',NULL,'V-20260727-00065','2026-07-27 18:47:00','2026-07-27 18:47:00','2026-07-27 18:47:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (66,18,1,'venta',32.50,'efectivo','Venta V-20260727-00066',NULL,'V-20260727-00066','2026-07-27 14:29:00','2026-07-27 14:29:00','2026-07-27 14:29:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (67,18,1,'venta',12.00,'efectivo','Venta V-20260727-00067',NULL,'V-20260727-00067','2026-07-27 16:31:00','2026-07-27 16:31:00','2026-07-27 16:31:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (68,18,1,'venta',14.00,'transferencia','Venta V-20260727-00068',NULL,'V-20260727-00068','2026-07-27 16:45:00','2026-07-27 16:45:00','2026-07-27 16:45:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (69,18,1,'venta',18.00,'tarjeta','Venta V-20260727-00069',NULL,'V-20260727-00069','2026-07-27 19:08:00','2026-07-27 19:08:00','2026-07-27 19:08:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (70,19,1,'venta',150.00,'tarjeta','Venta V-20260728-00070',NULL,'V-20260728-00070','2026-07-28 18:43:00','2026-07-28 18:43:00','2026-07-28 18:43:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (71,19,1,'venta',64.00,'yapeplin','Venta V-20260728-00071',NULL,'V-20260728-00071','2026-07-28 13:12:00','2026-07-28 13:12:00','2026-07-28 13:12:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (72,19,1,'venta',34.00,'tarjeta','Venta V-20260728-00072',NULL,'V-20260728-00072','2026-07-28 14:12:00','2026-07-28 14:12:00','2026-07-28 14:12:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (73,20,1,'venta',26.00,'tarjeta','Venta V-20260729-00073',NULL,'V-20260729-00073','2026-07-29 18:32:00','2026-07-29 18:32:00','2026-07-29 18:32:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (74,20,1,'venta',40.00,'transferencia','Venta V-20260729-00074',NULL,'V-20260729-00074','2026-07-29 12:00:00','2026-07-29 12:00:00','2026-07-29 12:00:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (75,20,1,'venta',91.50,'transferencia','Venta V-20260729-00075',NULL,'V-20260729-00075','2026-07-29 12:26:00','2026-07-29 12:26:00','2026-07-29 12:26:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (76,20,1,'venta',11.00,'efectivo','Venta V-20260729-00076',NULL,'V-20260729-00076','2026-07-29 17:11:00','2026-07-29 17:11:00','2026-07-29 17:11:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (77,20,1,'venta',12.00,'tarjeta','Venta V-20260729-00077',NULL,'V-20260729-00077','2026-07-29 16:44:00','2026-07-29 16:44:00','2026-07-29 16:44:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (78,20,1,'venta',37.50,'transferencia','Venta V-20260729-00078',NULL,'V-20260729-00078','2026-07-29 15:46:00','2026-07-29 15:46:00','2026-07-29 15:46:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (79,20,1,'venta',98.50,'efectivo','Venta V-20260729-00079',NULL,'V-20260729-00079','2026-07-29 16:49:00','2026-07-29 16:49:00','2026-07-29 16:49:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (80,21,1,'venta',85.00,'tarjeta','Venta V-20260730-00080',NULL,'V-20260730-00080','2026-07-30 17:05:00','2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (81,21,1,'venta',12.00,'efectivo','Venta V-20260730-00081',NULL,'V-20260730-00081','2026-07-30 14:59:00','2026-07-30 14:59:00','2026-07-30 14:59:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (82,21,1,'venta',113.00,'yapeplin','Venta V-20260730-00082',NULL,'V-20260730-00082','2026-07-30 18:38:00','2026-07-30 18:38:00','2026-07-30 18:38:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (83,22,1,'venta',14.00,'transferencia','Venta V-20260731-00083',NULL,'V-20260731-00083','2026-07-31 10:40:00','2026-07-31 10:40:00','2026-07-31 10:40:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (84,22,1,'venta',132.50,'efectivo','Venta V-20260731-00084',NULL,'V-20260731-00084','2026-07-31 18:19:00','2026-07-31 18:19:00','2026-07-31 18:19:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (85,22,1,'venta',35.00,'yapeplin','Venta V-20260731-00085',NULL,'V-20260731-00085','2026-07-31 18:43:00','2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (86,23,1,'venta',120.00,'yapeplin','Venta V-20260801-00086',NULL,'V-20260801-00086','2026-08-01 14:22:00','2026-08-01 14:22:00','2026-08-01 14:22:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (87,23,1,'venta',28.00,'yapeplin','Venta V-20260801-00087',NULL,'V-20260801-00087','2026-08-01 09:00:00','2026-08-01 09:00:00','2026-08-01 09:00:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (88,23,1,'venta',94.50,'transferencia','Venta V-20260801-00088',NULL,'V-20260801-00088','2026-08-01 17:40:00','2026-08-01 17:40:00','2026-08-01 17:40:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (89,24,1,'apertura',100.00,'efectivo','Apertura de caja',NULL,NULL,'2026-08-03 09:00:00','2026-08-03 00:40:39','2026-08-03 00:40:39');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (90,24,3,'venta',25.00,'yapeplin','Venta V-20260803011610-19AD',NULL,'V-20260803011610-19AD','2026-08-03 01:16:10','2026-08-03 01:16:10','2026-08-03 01:16:10');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (91,24,3,'venta',25.00,'yapeplin','Venta V-20260803011618-3B45',NULL,'V-20260803011618-3B45','2026-08-03 01:16:18','2026-08-03 01:16:18','2026-08-03 01:16:18');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (92,24,3,'venta',25.00,'yapeplin','Venta V-20260803011620-8E46',NULL,'V-20260803011620-8E46','2026-08-03 01:16:20','2026-08-03 01:16:20','2026-08-03 01:16:20');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (93,24,3,'venta',25.00,'efectivo','Venta V-20260803011640-8A6F',NULL,'V-20260803011640-8A6F','2026-08-03 01:16:40','2026-08-03 01:16:40','2026-08-03 01:16:40');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (94,24,3,'venta',25.00,'efectivo','Venta V-20260803011644-48F1',NULL,'V-20260803011644-48F1','2026-08-03 01:16:44','2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (95,24,3,'venta',25.00,'efectivo','Venta V-20260803011644-CA11',NULL,'V-20260803011644-CA11','2026-08-03 01:16:44','2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (96,24,3,'venta',25.00,'efectivo','Venta V-20260803011655-6509',NULL,'V-20260803011655-6509','2026-08-03 01:16:55','2026-08-03 01:16:55','2026-08-03 01:16:55');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (97,24,3,'venta',25.00,'efectivo','Venta V-20260803011705-EB66',NULL,'V-20260803011705-EB66','2026-08-03 01:17:05','2026-08-03 01:17:05','2026-08-03 01:17:05');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (98,24,3,'venta',25.00,'efectivo','Venta V-20260803011707-3EED',NULL,'V-20260803011707-3EED','2026-08-03 01:17:07','2026-08-03 01:17:07','2026-08-03 01:17:07');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (99,24,3,'venta',25.00,'efectivo','Venta V-20260803011708-9314',NULL,'V-20260803011708-9314','2026-08-03 01:17:08','2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (100,24,3,'venta',25.00,'efectivo','Venta V-20260803011708-EC41',NULL,'V-20260803011708-EC41','2026-08-03 01:17:08','2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (101,24,3,'venta',25.00,'efectivo','Venta V-20260803011709-6550',NULL,'V-20260803011709-6550','2026-08-03 01:17:09','2026-08-03 01:17:09','2026-08-03 01:17:09');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (102,24,3,'venta',25.00,'efectivo','Venta V-20260803011710-48E7',NULL,'V-20260803011710-48E7','2026-08-03 01:17:10','2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (103,24,3,'venta',25.00,'efectivo','Venta V-20260803011710-ACF1',NULL,'V-20260803011710-ACF1','2026-08-03 01:17:10','2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (104,24,3,'venta',25.00,'efectivo','Venta V-20260803011711-2904',NULL,'V-20260803011711-2904','2026-08-03 01:17:11','2026-08-03 01:17:11','2026-08-03 01:17:11');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (105,24,3,'venta',25.00,'efectivo','Venta V-20260803011712-DD0A',NULL,'V-20260803011712-DD0A','2026-08-03 01:17:12','2026-08-03 01:17:12','2026-08-03 01:17:12');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (106,24,3,'venta',25.00,'efectivo','Venta V-20260803011713-FCB1',NULL,'V-20260803011713-FCB1','2026-08-03 01:17:13','2026-08-03 01:17:13','2026-08-03 01:17:13');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (107,24,3,'venta',25.00,'efectivo','Venta V-20260803011714-3AAD',NULL,'V-20260803011714-3AAD','2026-08-03 01:17:14','2026-08-03 01:17:14','2026-08-03 01:17:14');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (108,24,3,'venta',25.00,'efectivo','Venta V-20260803011715-901D',NULL,'V-20260803011715-901D','2026-08-03 01:17:15','2026-08-03 01:17:15','2026-08-03 01:17:15');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (109,24,3,'venta',25.00,'efectivo','Venta V-20260803011716-CDBC',NULL,'V-20260803011716-CDBC','2026-08-03 01:17:16','2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (110,24,3,'venta',25.00,'efectivo','Venta V-20260803011716-21FD',NULL,'V-20260803011716-21FD','2026-08-03 01:17:16','2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (111,24,3,'venta',25.00,'efectivo','Venta V-20260803011717-F077',NULL,'V-20260803011717-F077','2026-08-03 01:17:17','2026-08-03 01:17:17','2026-08-03 01:17:17');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (112,24,3,'venta',25.00,'efectivo','Venta V-20260803011718-807A',NULL,'V-20260803011718-807A','2026-08-03 01:17:18','2026-08-03 01:17:18','2026-08-03 01:17:18');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (113,24,3,'venta',25.00,'efectivo','Venta V-20260803011751-97E6',NULL,'V-20260803011751-97E6','2026-08-03 01:17:51','2026-08-03 01:17:51','2026-08-03 01:17:51');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (114,24,3,'venta',25.00,'efectivo','Venta V-20260803011752-3196',NULL,'V-20260803011752-3196','2026-08-03 01:17:52','2026-08-03 01:17:52','2026-08-03 01:17:52');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (115,24,3,'venta',25.00,'efectivo','Venta V-20260803011753-E8F4',NULL,'V-20260803011753-E8F4','2026-08-03 01:17:53','2026-08-03 01:17:53','2026-08-03 01:17:53');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (116,24,3,'venta',25.00,'efectivo','Venta V-20260803011754-276F',NULL,'V-20260803011754-276F','2026-08-03 01:17:54','2026-08-03 01:17:54','2026-08-03 01:17:54');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (117,24,3,'venta',25.00,'efectivo','Venta V-20260803011755-E876',NULL,'V-20260803011755-E876','2026-08-03 01:17:55','2026-08-03 01:17:55','2026-08-03 01:17:55');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (118,24,3,'venta',25.00,'efectivo','Venta V-20260803011756-56E5',NULL,'V-20260803011756-56E5','2026-08-03 01:17:56','2026-08-03 01:17:56','2026-08-03 01:17:56');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (119,24,3,'venta',25.00,'efectivo','Venta V-20260803011757-73EB',NULL,'V-20260803011757-73EB','2026-08-03 01:17:57','2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (120,24,3,'venta',25.00,'efectivo','Venta V-20260803011757-58E0',NULL,'V-20260803011757-58E0','2026-08-03 01:17:57','2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (121,24,3,'venta',25.00,'efectivo','Venta V-20260803011758-0317',NULL,'V-20260803011758-0317','2026-08-03 01:17:58','2026-08-03 01:17:58','2026-08-03 01:17:58');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (122,24,3,'venta',25.00,'efectivo','Venta V-20260803011759-6844',NULL,'V-20260803011759-6844','2026-08-03 01:17:59','2026-08-03 01:17:59','2026-08-03 01:17:59');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (123,24,3,'venta',25.00,'efectivo','Venta V-20260803011800-302B',NULL,'V-20260803011800-302B','2026-08-03 01:18:00','2026-08-03 01:18:00','2026-08-03 01:18:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (124,24,3,'venta',25.00,'efectivo','Venta V-20260803011801-1814',NULL,'V-20260803011801-1814','2026-08-03 01:18:01','2026-08-03 01:18:01','2026-08-03 01:18:01');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (125,24,3,'venta',25.00,'efectivo','Venta V-20260803011802-4B9F',NULL,'V-20260803011802-4B9F','2026-08-03 01:18:02','2026-08-03 01:18:02','2026-08-03 01:18:02');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (126,24,3,'venta',25.00,'efectivo','Venta V-20260803011807-E612',NULL,'V-20260803011807-E612','2026-08-03 01:18:07','2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (127,24,3,'venta',25.00,'efectivo','Venta V-20260803011807-5A9A',NULL,'V-20260803011807-5A9A','2026-08-03 01:18:07','2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (128,24,3,'venta',25.00,'efectivo','Venta V-20260803011808-A7E6',NULL,'V-20260803011808-A7E6','2026-08-03 01:18:08','2026-08-03 01:18:08','2026-08-03 01:18:08');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (129,24,3,'venta',25.00,'efectivo','Venta V-20260803011809-6944',NULL,'V-20260803011809-6944','2026-08-03 01:18:09','2026-08-03 01:18:09','2026-08-03 01:18:09');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (130,24,3,'venta',25.00,'efectivo','Venta V-20260803011812-C179',NULL,'V-20260803011812-C179','2026-08-03 01:18:12','2026-08-03 01:18:12','2026-08-03 01:18:12');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (131,24,3,'venta',25.00,'efectivo','Venta V-20260803011813-6ED9',NULL,'V-20260803011813-6ED9','2026-08-03 01:18:13','2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (132,24,3,'venta',25.00,'efectivo','Venta V-20260803011813-C0AF',NULL,'V-20260803011813-C0AF','2026-08-03 01:18:13','2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (133,24,3,'venta',25.00,'efectivo','Venta V-20260803011814-DAA7',NULL,'V-20260803011814-DAA7','2026-08-03 01:18:14','2026-08-03 01:18:14','2026-08-03 01:18:14');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (134,24,3,'venta',25.00,'efectivo','Venta V-20260803011815-FCDF',NULL,'V-20260803011815-FCDF','2026-08-03 01:18:15','2026-08-03 01:18:15','2026-08-03 01:18:15');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (135,24,3,'venta',25.00,'efectivo','Venta V-20260803011816-E73F',NULL,'V-20260803011816-E73F','2026-08-03 01:18:16','2026-08-03 01:18:16','2026-08-03 01:18:16');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (136,24,3,'venta',25.00,'efectivo','Venta V-20260803011817-E0AA',NULL,'V-20260803011817-E0AA','2026-08-03 01:18:17','2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (137,24,3,'venta',25.00,'efectivo','Venta V-20260803011817-CA8C',NULL,'V-20260803011817-CA8C','2026-08-03 01:18:17','2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (138,24,3,'venta',25.00,'efectivo','Venta V-20260803011818-4BA6',NULL,'V-20260803011818-4BA6','2026-08-03 01:18:18','2026-08-03 01:18:18','2026-08-03 01:18:18');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (139,24,3,'venta',25.00,'efectivo','Venta V-20260803011819-B817',NULL,'V-20260803011819-B817','2026-08-03 01:18:19','2026-08-03 01:18:19','2026-08-03 01:18:19');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (140,24,3,'venta',25.00,'efectivo','Venta V-20260803011820-30AE',NULL,'V-20260803011820-30AE','2026-08-03 01:18:20','2026-08-03 01:18:20','2026-08-03 01:18:20');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (141,24,3,'venta',25.00,'efectivo','Venta V-20260803011821-6108',NULL,'V-20260803011821-6108','2026-08-03 01:18:21','2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (142,24,3,'venta',25.00,'efectivo','Venta V-20260803011821-6C78',NULL,'V-20260803011821-6C78','2026-08-03 01:18:21','2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (143,24,3,'venta',25.00,'efectivo','Venta V-20260803011822-997C',NULL,'V-20260803011822-997C','2026-08-03 01:18:22','2026-08-03 01:18:22','2026-08-03 01:18:22');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (144,24,3,'venta',25.00,'efectivo','Venta V-20260803011823-6B78',NULL,'V-20260803011823-6B78','2026-08-03 01:18:23','2026-08-03 01:18:23','2026-08-03 01:18:23');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (145,24,3,'venta',25.00,'efectivo','Venta V-20260803011824-4216',NULL,'V-20260803011824-4216','2026-08-03 01:18:24','2026-08-03 01:18:24','2026-08-03 01:18:24');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (146,24,3,'venta',25.00,'efectivo','Venta V-20260803011825-6585',NULL,'V-20260803011825-6585','2026-08-03 01:18:25','2026-08-03 01:18:25','2026-08-03 01:18:25');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (147,24,3,'venta',25.00,'efectivo','Venta V-20260803011826-0E52',NULL,'V-20260803011826-0E52','2026-08-03 01:18:26','2026-08-03 01:18:26','2026-08-03 01:18:26');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (148,24,3,'venta',25.00,'efectivo','Venta V-20260803011827-9C41',NULL,'V-20260803011827-9C41','2026-08-03 01:18:27','2026-08-03 01:18:27','2026-08-03 01:18:27');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (149,24,3,'venta',25.00,'efectivo','Venta V-20260803011828-F826',NULL,'V-20260803011828-F826','2026-08-03 01:18:28','2026-08-03 01:18:28','2026-08-03 01:18:28');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (150,24,3,'venta',25.00,'yapeplin','Venta V-20260803012049-68E6',NULL,'V-20260803012049-68E6','2026-08-03 01:20:49','2026-08-03 01:20:49','2026-08-03 01:20:49');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (151,24,1,'venta',36.00,'efectivo','Venta V-20260803012057-8C05',NULL,'V-20260803012057-8C05','2026-08-03 01:20:57','2026-08-03 01:20:57','2026-08-03 01:20:57');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (152,24,3,'venta',25.00,'yapeplin','Venta V-20260803012058-668D',NULL,'V-20260803012058-668D','2026-08-03 01:20:58','2026-08-03 01:20:58','2026-08-03 01:20:58');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (153,24,3,'venta',25.00,'efectivo','Venta V-20260803012210-5270',NULL,'V-20260803012210-5270','2026-08-03 01:22:10','2026-08-03 01:22:10','2026-08-03 01:22:10');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (154,24,3,'venta',25.00,'efectivo','Venta V-20260803012341-DA73',NULL,'V-20260803012341-DA73','2026-08-03 01:23:41','2026-08-03 01:23:41','2026-08-03 01:23:41');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (155,24,3,'venta',43.00,'efectivo','Venta V-20260803012601-B971',NULL,'V-20260803012601-B971','2026-08-03 01:26:01','2026-08-03 01:26:01','2026-08-03 01:26:01');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (156,24,3,'venta',25.00,'efectivo','Venta V-20260803012800-FE8B',NULL,'V-20260803012800-FE8B','2026-08-03 01:28:00','2026-08-03 01:28:00','2026-08-03 01:28:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (157,24,3,'venta',25.00,'efectivo','Venta V-20260803012811-8D51',NULL,'V-20260803012811-8D51','2026-08-03 01:28:11','2026-08-03 01:28:11','2026-08-03 01:28:11');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (158,24,3,'venta',25.00,'efectivo','Venta V-20260803012851-39EE',NULL,'V-20260803012851-39EE','2026-08-03 01:28:51','2026-08-03 01:28:51','2026-08-03 01:28:51');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (159,24,3,'venta',25.00,'efectivo','Venta V-20260803013104-860C',NULL,'V-20260803013104-860C','2026-08-03 01:31:04','2026-08-03 01:31:04','2026-08-03 01:31:04');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (160,24,3,'venta',18.00,'efectivo','Venta V-20260803013155-3A82',NULL,'V-20260803013155-3A82','2026-08-03 01:31:55','2026-08-03 01:31:55','2026-08-03 01:31:55');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (161,24,1,'devolucion',25.00,'yapeplin','Devolución venta V-20260803012049-68E6',NULL,'V-20260803012049-68E6','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (162,24,1,'devolucion',25.00,'yapeplin','Devolución venta V-20260803012058-668D',NULL,'V-20260803012058-668D','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (163,24,1,'devolucion',25.00,'efectivo','Devolución venta V-20260803012210-5270',NULL,'V-20260803012210-5270','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (164,24,1,'devolucion',25.00,'efectivo','Devolución venta V-20260803012341-DA73',NULL,'V-20260803012341-DA73','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (165,24,1,'devolucion',43.00,'efectivo','Devolución venta V-20260803012601-B971',NULL,'V-20260803012601-B971','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (166,24,1,'devolucion',25.00,'efectivo','Devolución venta V-20260803012800-FE8B',NULL,'V-20260803012800-FE8B','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (167,24,1,'devolucion',25.00,'efectivo','Devolución venta V-20260803012811-8D51',NULL,'V-20260803012811-8D51','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (168,24,1,'devolucion',25.00,'efectivo','Devolución venta V-20260803012851-39EE',NULL,'V-20260803012851-39EE','2026-08-03 01:35:00','2026-08-03 01:35:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_movimientos_caja` (`id`,`caja_id`,`user_id`,`tipo`,`importe`,`metodo_pago`,`concepto`,`descripcion`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (169,24,3,'venta',25.00,'efectivo','Venta V-20260803013830-26C1',NULL,'V-20260803013830-26C1','2026-08-03 01:38:30','2026-08-03 01:38:30','2026-08-03 01:38:30');
 
--- Volcando estructura para tabla tpv_peluqueria.movimientos_stock
-CREATE TABLE IF NOT EXISTS `movimientos_stock` (
+-- Tabla: pelu_movimientos_stock
+DROP TABLE IF EXISTS `pelu_movimientos_stock`;
+CREATE TABLE `pelu_movimientos_stock` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `producto_id` bigint unsigned NOT NULL,
@@ -1276,149 +971,74 @@ CREATE TABLE IF NOT EXISTS `movimientos_stock` (
   KEY `movimientos_stock_empresa_id_foreign` (`empresa_id`),
   KEY `movimientos_stock_producto_id_foreign` (`producto_id`),
   KEY `movimientos_stock_user_id_foreign` (`user_id`),
-  CONSTRAINT `movimientos_stock_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `movimientos_stock_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `movimientos_stock_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `movimientos_stock_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `movimientos_stock_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `pelu_productos` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `movimientos_stock_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelu_users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.movimientos_stock: ~129 rows (aproximadamente)
-DELETE FROM `movimientos_stock`;
-INSERT INTO `movimientos_stock` (`id`, `empresa_id`, `producto_id`, `user_id`, `tipo`, `cantidad`, `stock_anterior`, `stock_nuevo`, `precio_unitario`, `motivo`, `referencia`, `created_at`, `updated_at`) VALUES
-	(1, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260407-00002', '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(2, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260407-00002', '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(3, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260407-00003', '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(4, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260407-00003', '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(5, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260407-00004', '2026-04-07 23:51:00', '2026-04-07 23:51:00'),
-	(6, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260407-00005', '2026-04-07 23:07:00', '2026-04-07 23:07:00'),
-	(7, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260409-00007', '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(8, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260409-00007', '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(9, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260409-00008', '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(10, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260410-00011', '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(11, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260410-00011', '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(12, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260411-00013', '2026-04-12 00:08:00', '2026-04-12 00:08:00'),
-	(13, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260411-00014', '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(14, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260411-00014', '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(15, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260411-00015', '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(16, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260413-00019', '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(17, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260413-00020', '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(18, 1, 9, 1, 'venta', 1.00, 19.00, 18.00, 15.50, NULL, 'V-20260413-00021', '2026-04-13 17:20:00', '2026-04-13 17:20:00'),
-	(19, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260413-00023', '2026-04-13 18:34:00', '2026-04-13 18:34:00'),
-	(20, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260414-00025', '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(21, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260414-00025', '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(22, 1, 9, 1, 'venta', 1.00, 19.00, 18.00, 15.50, NULL, 'V-20260414-00028', '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(23, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260415-00030', '2026-04-15 20:53:00', '2026-04-15 20:53:00'),
-	(24, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260416-00034', '2026-04-16 21:55:00', '2026-04-16 21:55:00'),
-	(25, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260416-00035', '2026-04-16 20:59:00', '2026-04-16 20:59:00'),
-	(26, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260417-00037', '2026-04-17 15:19:00', '2026-04-17 15:19:00'),
-	(27, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260418-00041', '2026-04-18 15:30:00', '2026-04-18 15:30:00'),
-	(28, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260418-00044', '2026-04-18 16:40:00', '2026-04-18 16:40:00'),
-	(29, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260420-00045', '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(30, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260420-00047', '2026-04-20 14:55:00', '2026-04-20 14:55:00'),
-	(31, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260420-00048', '2026-04-21 00:42:00', '2026-04-21 00:42:00'),
-	(32, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260420-00049', '2026-04-21 00:24:00', '2026-04-21 00:24:00'),
-	(33, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260421-00050', '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(34, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260421-00053', '2026-04-21 19:27:00', '2026-04-21 19:27:00'),
-	(35, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260422-00054', '2026-04-23 00:41:00', '2026-04-23 00:41:00'),
-	(36, 1, 9, 1, 'venta', 1.00, 19.00, 18.00, 15.50, NULL, 'V-20260422-00055', '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(37, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260423-00056', '2026-04-23 14:27:00', '2026-04-23 14:27:00'),
-	(38, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260424-00059', '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(39, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260424-00059', '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(40, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260425-00062', '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(41, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260425-00065', '2026-04-25 22:36:00', '2026-04-25 22:36:00'),
-	(42, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260425-00068', '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(43, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260425-00068', '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(44, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260427-00069', '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(45, 1, 9, 1, 'venta', 1.00, 19.00, 18.00, 15.50, NULL, 'V-20260427-00069', '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(46, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260427-00071', '2026-04-28 00:31:00', '2026-04-28 00:31:00'),
-	(47, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260428-00073', '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(48, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260428-00073', '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(49, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260428-00074', '2026-04-28 14:12:00', '2026-04-28 14:12:00'),
-	(50, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260428-00075', '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(51, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260428-00076', '2026-04-28 14:54:00', '2026-04-28 14:54:00'),
-	(52, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260429-00077', '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(53, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260429-00078', '2026-04-30 00:28:00', '2026-04-30 00:28:00'),
-	(54, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260501-00081', '2026-05-01 22:04:00', '2026-05-01 22:04:00'),
-	(55, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260501-00083', '2026-05-01 18:13:00', '2026-05-01 18:13:00'),
-	(56, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260501-00084', '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(57, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260501-00084', '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(58, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260502-00085', '2026-05-02 16:54:00', '2026-05-02 16:54:00'),
-	(59, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260502-00086', '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(60, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260502-00086', '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(61, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260502-00087', '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(62, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260502-00087', '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(63, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260502-00089', '2026-05-02 15:01:00', '2026-05-02 15:01:00'),
-	(64, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260504-00094', '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(65, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260504-00094', '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(66, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260504-00095', '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(67, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260505-00097', '2026-05-05 23:30:00', '2026-05-05 23:30:00'),
-	(68, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260505-00098', '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(69, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260505-00098', '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(70, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260505-00099', '2026-05-05 18:02:00', '2026-05-05 18:02:00'),
-	(71, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260505-00100', '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(72, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260505-00100', '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(73, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260506-00101', '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(74, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260506-00104', '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(75, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260506-00104', '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(76, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260506-00104', '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(77, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260407-00112', '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(78, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260407-00112', '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(79, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260407-00114', '2026-04-07 23:17:00', '2026-04-07 23:17:00'),
-	(80, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260409-00115', '2026-04-09 15:44:00', '2026-04-09 15:44:00'),
-	(81, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260409-00117', '2026-04-09 17:07:00', '2026-04-09 17:07:00'),
-	(82, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260409-00118', '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(83, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260409-00119', '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(84, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260409-00119', '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(85, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260410-00121', '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(86, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260410-00121', '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(87, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260410-00124', '2026-04-10 20:47:00', '2026-04-10 20:47:00'),
-	(88, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260413-00126', '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(89, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260413-00126', '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(90, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260413-00127', '2026-04-13 14:40:00', '2026-04-13 14:40:00'),
-	(91, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260415-00130', '2026-04-15 14:47:00', '2026-04-15 14:47:00'),
-	(92, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260415-00133', '2026-04-15 20:22:00', '2026-04-15 20:22:00'),
-	(93, 1, 8, 1, 'venta', 1.00, 15.00, 14.00, 30.00, NULL, 'V-20260416-00134', '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(94, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260416-00136', '2026-04-16 16:12:00', '2026-04-16 16:12:00'),
-	(95, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260417-00137', '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(96, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260417-00137', '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(97, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260417-00137', '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(98, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260417-00138', '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(99, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260420-00141', '2026-04-20 22:52:00', '2026-04-20 22:52:00'),
-	(100, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260420-00143', '2026-04-21 00:00:00', '2026-04-21 00:00:00'),
-	(101, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260420-00144', '2026-04-20 18:14:00', '2026-04-20 18:14:00'),
-	(102, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260421-00146', '2026-04-21 21:01:00', '2026-04-21 21:01:00'),
-	(103, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260422-00149', '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(104, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260424-00153', '2026-04-24 18:22:00', '2026-04-24 18:22:00'),
-	(105, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260424-00155', '2026-04-25 00:59:00', '2026-04-25 00:59:00'),
-	(106, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260424-00158', '2026-04-24 20:50:00', '2026-04-24 20:50:00'),
-	(107, 1, 5, 1, 'venta', 1.00, 11.00, 10.00, 16.50, NULL, 'V-20260424-00159', '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(108, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260425-00160', '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(109, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260427-00164', '2026-04-27 18:14:00', '2026-04-27 18:14:00'),
-	(110, 1, 4, 1, 'venta', 1.00, 21.00, 20.00, 14.00, NULL, 'V-20260427-00166', '2026-04-27 17:36:00', '2026-04-27 17:36:00'),
-	(111, 1, 1, 1, 'venta', 1.00, 16.00, 15.00, 18.50, NULL, 'V-20260427-00167', '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(112, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260427-00169', '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(113, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260427-00170', '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(114, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260427-00170', '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(115, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260428-00171', '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(116, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260428-00172', '2026-04-28 14:20:00', '2026-04-28 14:20:00'),
-	(117, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260429-00177', '2026-04-29 22:36:00', '2026-04-29 22:36:00'),
-	(118, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260429-00178', '2026-04-29 22:49:00', '2026-04-29 22:49:00'),
-	(119, 1, 6, 1, 'venta', 1.00, 26.00, 25.00, 12.00, NULL, 'V-20260429-00179', '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(120, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260429-00179', '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(121, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260430-00182', '2026-04-30 21:05:00', '2026-04-30 21:05:00'),
-	(122, 1, 10, 1, 'venta', 1.00, 23.00, 22.00, 12.50, NULL, 'V-20260501-00184', '2026-05-01 20:47:00', '2026-05-01 20:47:00'),
-	(123, 1, 3, 1, 'venta', 1.00, 9.00, 8.00, 26.00, NULL, 'V-20260501-00189', '2026-05-01 23:13:00', '2026-05-01 23:13:00'),
-	(124, 1, 9, 1, 'venta', 1.00, 19.00, 18.00, 15.50, NULL, 'V-20260502-00191', '2026-05-02 20:24:00', '2026-05-02 20:24:00'),
-	(125, 1, 11, 1, 'venta', 1.00, 17.00, 16.00, 11.00, NULL, 'V-20260502-00192', '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(126, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260504-00194', '2026-05-04 22:14:00', '2026-05-04 22:14:00'),
-	(127, 1, 7, 1, 'venta', 1.00, 11.00, 10.00, 36.00, NULL, 'V-20260504-00195', '2026-05-04 17:28:00', '2026-05-04 17:28:00'),
-	(128, 1, 2, 1, 'venta', 1.00, 13.00, 12.00, 19.50, NULL, 'V-20260506-00199', '2026-05-06 20:53:00', '2026-05-06 20:53:00'),
-	(129, 1, 9, 1, 'venta', 1.00, 19.00, 18.00, 15.50, NULL, 'V-20260506-00200', '2026-05-06 19:24:00', '2026-05-06 19:24:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (1,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260704-00001','2026-07-04 18:52:00','2026-07-04 18:52:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (2,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260704-00002','2026-07-04 10:29:00','2026-07-04 10:29:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (3,1,7,1,'venta',1.00,11.00,10.00,36.00,NULL,'V-20260704-00003','2026-07-04 13:35:00','2026-07-04 13:35:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (4,1,11,1,'venta',1.00,17.00,16.00,11.00,NULL,'V-20260706-00009','2026-07-06 12:24:00','2026-07-06 12:24:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (5,1,9,1,'venta',1.00,19.00,18.00,15.50,NULL,'V-20260706-00010','2026-07-06 10:48:00','2026-07-06 10:48:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (6,1,7,1,'venta',1.00,11.00,10.00,36.00,NULL,'V-20260707-00011','2026-07-07 18:30:00','2026-07-07 18:30:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (7,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260707-00013','2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (8,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260708-00014','2026-07-08 19:12:00','2026-07-08 19:12:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (9,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260709-00016','2026-07-09 09:38:00','2026-07-09 09:38:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (10,1,6,1,'venta',1.00,26.00,25.00,12.00,NULL,'V-20260709-00017','2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (11,1,9,1,'venta',1.00,19.00,18.00,15.50,NULL,'V-20260709-00018','2026-07-09 09:41:00','2026-07-09 09:41:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (12,1,1,1,'venta',1.00,16.00,15.00,18.50,NULL,'V-20260710-00021','2026-07-10 12:45:00','2026-07-10 12:45:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (13,1,5,1,'venta',1.00,11.00,10.00,16.50,NULL,'V-20260711-00022','2026-07-11 16:23:00','2026-07-11 16:23:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (14,1,11,1,'venta',1.00,17.00,16.00,11.00,NULL,'V-20260711-00023','2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (15,1,3,1,'venta',1.00,9.00,8.00,26.00,NULL,'V-20260711-00025','2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (16,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260711-00026','2026-07-11 10:14:00','2026-07-11 10:14:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (17,1,4,1,'venta',1.00,21.00,20.00,14.00,NULL,'V-20260711-00027','2026-07-11 10:17:00','2026-07-11 10:17:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (18,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260713-00028','2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (19,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260713-00029','2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (20,1,11,1,'venta',1.00,17.00,16.00,11.00,NULL,'V-20260713-00030','2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (21,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260717-00034','2026-07-17 14:11:00','2026-07-17 14:11:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (22,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260717-00035','2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (23,1,6,1,'venta',1.00,26.00,25.00,12.00,NULL,'V-20260717-00037','2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (24,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260718-00040','2026-07-18 19:07:00','2026-07-18 19:07:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (25,1,3,1,'venta',1.00,9.00,8.00,26.00,NULL,'V-20260720-00041','2026-07-20 17:29:00','2026-07-20 17:29:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (26,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260720-00043','2026-07-20 09:59:00','2026-07-20 09:59:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (27,1,4,1,'venta',1.00,21.00,20.00,14.00,NULL,'V-20260720-00044','2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (28,1,9,1,'venta',1.00,19.00,18.00,15.50,NULL,'V-20260721-00045','2026-07-21 11:27:00','2026-07-21 11:27:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (29,1,4,1,'venta',1.00,21.00,20.00,14.00,NULL,'V-20260721-00046','2026-07-21 17:39:00','2026-07-21 17:39:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (30,1,3,1,'venta',1.00,9.00,8.00,26.00,NULL,'V-20260721-00047','2026-07-21 09:37:00','2026-07-21 09:37:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (31,1,4,1,'venta',1.00,21.00,20.00,14.00,NULL,'V-20260722-00050','2026-07-22 09:17:00','2026-07-22 09:17:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (32,1,7,1,'venta',1.00,11.00,10.00,36.00,NULL,'V-20260722-00052','2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (33,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260722-00052','2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (34,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260723-00055','2026-07-23 15:45:00','2026-07-23 15:45:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (35,1,1,1,'venta',1.00,16.00,15.00,18.50,NULL,'V-20260723-00057','2026-07-23 16:48:00','2026-07-23 16:48:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (36,1,4,1,'venta',1.00,21.00,20.00,14.00,NULL,'V-20260723-00058','2026-07-23 13:33:00','2026-07-23 13:33:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (37,1,9,1,'venta',1.00,19.00,18.00,15.50,NULL,'V-20260724-00060','2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (38,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260724-00061','2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (39,1,11,1,'venta',1.00,17.00,16.00,11.00,NULL,'V-20260724-00061','2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (40,1,11,1,'venta',1.00,17.00,16.00,11.00,NULL,'V-20260724-00062','2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (41,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260725-00064','2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (42,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260725-00064','2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (43,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260725-00064','2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (44,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260727-00066','2026-07-27 14:29:00','2026-07-27 14:29:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (45,1,6,1,'venta',1.00,26.00,25.00,12.00,NULL,'V-20260727-00067','2026-07-27 16:31:00','2026-07-27 16:31:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (46,1,3,1,'venta',1.00,9.00,8.00,26.00,NULL,'V-20260729-00073','2026-07-29 18:32:00','2026-07-29 18:32:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (47,1,5,1,'venta',1.00,11.00,10.00,16.50,NULL,'V-20260729-00075','2026-07-29 12:26:00','2026-07-29 12:26:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (48,1,11,1,'venta',1.00,17.00,16.00,11.00,NULL,'V-20260729-00076','2026-07-29 17:11:00','2026-07-29 17:11:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (49,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260729-00078','2026-07-29 15:46:00','2026-07-29 15:46:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (50,1,1,1,'venta',1.00,16.00,15.00,18.50,NULL,'V-20260729-00079','2026-07-29 16:49:00','2026-07-29 16:49:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (51,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260730-00080','2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (52,1,8,1,'venta',1.00,15.00,14.00,30.00,NULL,'V-20260730-00080','2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (53,1,10,1,'venta',1.00,23.00,22.00,12.50,NULL,'V-20260731-00084','2026-07-31 18:19:00','2026-07-31 18:19:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (54,1,5,1,'venta',1.00,11.00,10.00,16.50,NULL,'V-20260731-00085','2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (55,1,1,1,'venta',1.00,16.00,15.00,18.50,NULL,'V-20260731-00085','2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_movimientos_stock` (`id`,`empresa_id`,`producto_id`,`user_id`,`tipo`,`cantidad`,`stock_anterior`,`stock_nuevo`,`precio_unitario`,`motivo`,`referencia`,`created_at`,`updated_at`) VALUES (56,1,2,1,'venta',1.00,13.00,12.00,19.50,NULL,'V-20260801-00088','2026-08-01 17:40:00','2026-08-01 17:40:00');
 
--- Volcando estructura para tabla tpv_peluqueria.pagos_ventas
-CREATE TABLE IF NOT EXISTS `pagos_ventas` (
+-- Tabla: pelu_pagos_ventas
+DROP TABLE IF EXISTS `pelu_pagos_ventas`;
+CREATE TABLE `pelu_pagos_ventas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `venta_id` bigint unsigned NOT NULL,
-  `metodo` enum('efectivo','tarjeta','transferencia','bizum','bono','saldo','otro') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `metodo` enum('efectivo','tarjeta','transferencia','yapeplin','bono','saldo','otro') COLLATE utf8mb4_unicode_ci NOT NULL,
   `importe` decimal(10,2) NOT NULL,
   `referencia` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha` datetime NOT NULL,
@@ -1426,223 +1046,183 @@ CREATE TABLE IF NOT EXISTS `pagos_ventas` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pagos_ventas_venta_id_foreign` (`venta_id`),
-  CONSTRAINT `pagos_ventas_venta_id_foreign` FOREIGN KEY (`venta_id`) REFERENCES `ventas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `pagos_ventas_venta_id_foreign` FOREIGN KEY (`venta_id`) REFERENCES `pelu_ventas` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.pagos_ventas: ~197 rows (aproximadamente)
-DELETE FROM `pagos_ventas`;
-INSERT INTO `pagos_ventas` (`id`, `venta_id`, `metodo`, `importe`, `referencia`, `fecha`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'transferencia', 64.00, NULL, '2026-04-07 15:46:00', '2026-04-07 20:46:00', '2026-04-07 20:46:00'),
-	(2, 2, 'tarjeta', 50.00, NULL, '2026-04-07 19:30:00', '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(3, 3, 'bizum', 77.50, NULL, '2026-04-07 14:04:00', '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(4, 4, 'tarjeta', 12.50, NULL, '2026-04-07 18:51:00', '2026-04-07 23:51:00', '2026-04-07 23:51:00'),
-	(5, 5, 'transferencia', 14.00, NULL, '2026-04-07 18:07:00', '2026-04-07 23:07:00', '2026-04-07 23:07:00'),
-	(6, 6, 'transferencia', 107.00, NULL, '2026-04-09 10:04:00', '2026-04-09 15:04:00', '2026-04-09 15:04:00'),
-	(7, 7, 'transferencia', 30.50, NULL, '2026-04-09 19:45:00', '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(8, 8, 'tarjeta', 24.00, NULL, '2026-04-09 10:53:00', '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(9, 9, 'transferencia', 150.00, NULL, '2026-04-09 14:00:00', '2026-04-09 19:00:00', '2026-04-09 19:00:00'),
-	(10, 10, 'efectivo', 84.00, NULL, '2026-04-10 10:33:00', '2026-04-10 15:33:00', '2026-04-10 15:33:00'),
-	(11, 11, 'tarjeta', 107.50, NULL, '2026-04-10 11:39:00', '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(12, 12, 'tarjeta', 20.00, NULL, '2026-04-11 19:15:00', '2026-04-12 00:15:00', '2026-04-12 00:15:00'),
-	(13, 13, 'tarjeta', 16.50, NULL, '2026-04-11 19:08:00', '2026-04-12 00:08:00', '2026-04-12 00:08:00'),
-	(14, 14, 'efectivo', 133.00, NULL, '2026-04-11 12:11:00', '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(15, 15, 'bizum', 81.50, NULL, '2026-04-11 16:03:00', '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(16, 16, 'tarjeta', 22.00, NULL, '2026-04-11 17:53:00', '2026-04-11 22:53:00', '2026-04-11 22:53:00'),
-	(17, 17, 'tarjeta', 89.00, NULL, '2026-04-11 18:40:00', '2026-04-11 23:40:00', '2026-04-11 23:40:00'),
-	(18, 18, 'efectivo', 120.00, NULL, '2026-04-13 11:26:00', '2026-04-13 16:26:00', '2026-04-13 16:26:00'),
-	(19, 19, 'efectivo', 105.50, NULL, '2026-04-13 17:00:00', '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(20, 20, 'tarjeta', 131.00, NULL, '2026-04-13 12:17:00', '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(21, 21, 'tarjeta', 15.50, NULL, '2026-04-13 12:20:00', '2026-04-13 17:20:00', '2026-04-13 17:20:00'),
-	(22, 22, 'bizum', 12.00, NULL, '2026-04-13 12:46:00', '2026-04-13 17:46:00', '2026-04-13 17:46:00'),
-	(23, 23, 'bizum', 23.00, NULL, '2026-04-13 13:34:00', '2026-04-13 18:34:00', '2026-04-13 18:34:00'),
-	(24, 24, 'tarjeta', 42.00, NULL, '2026-04-13 16:26:00', '2026-04-13 21:26:00', '2026-04-13 21:26:00'),
-	(25, 25, 'bizum', 62.00, NULL, '2026-04-14 11:39:00', '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(26, 26, 'tarjeta', 53.00, NULL, '2026-04-14 14:53:00', '2026-04-14 19:53:00', '2026-04-14 19:53:00'),
-	(27, 27, 'efectivo', 135.00, NULL, '2026-04-14 11:29:00', '2026-04-14 16:29:00', '2026-04-14 16:29:00'),
-	(28, 28, 'tarjeta', 125.50, NULL, '2026-04-14 18:22:00', '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(29, 29, 'bizum', 184.00, NULL, '2026-04-15 12:00:00', '2026-04-15 17:00:00', '2026-04-15 17:00:00'),
-	(30, 30, 'transferencia', 136.50, NULL, '2026-04-15 15:53:00', '2026-04-15 20:53:00', '2026-04-15 20:53:00'),
-	(31, 31, 'tarjeta', 130.00, NULL, '2026-04-16 19:32:00', '2026-04-17 00:32:00', '2026-04-17 00:32:00'),
-	(32, 32, 'bizum', 55.00, NULL, '2026-04-16 10:12:00', '2026-04-16 15:12:00', '2026-04-16 15:12:00'),
-	(33, 33, 'transferencia', 30.00, NULL, '2026-04-16 17:31:00', '2026-04-16 22:31:00', '2026-04-16 22:31:00'),
-	(34, 34, 'tarjeta', 33.50, NULL, '2026-04-16 16:55:00', '2026-04-16 21:55:00', '2026-04-16 21:55:00'),
-	(35, 35, 'efectivo', 16.50, NULL, '2026-04-16 15:59:00', '2026-04-16 20:59:00', '2026-04-16 20:59:00'),
-	(36, 36, 'tarjeta', 95.00, NULL, '2026-04-16 15:28:00', '2026-04-16 20:28:00', '2026-04-16 20:28:00'),
-	(37, 37, 'bizum', 32.50, NULL, '2026-04-17 10:19:00', '2026-04-17 15:19:00', '2026-04-17 15:19:00'),
-	(38, 38, 'efectivo', 135.00, NULL, '2026-04-17 14:27:00', '2026-04-17 19:27:00', '2026-04-17 19:27:00'),
-	(39, 39, 'efectivo', 197.00, NULL, '2026-04-17 15:11:00', '2026-04-17 20:11:00', '2026-04-17 20:11:00'),
-	(40, 40, 'transferencia', 14.00, NULL, '2026-04-17 13:36:00', '2026-04-17 18:36:00', '2026-04-17 18:36:00'),
-	(41, 41, 'tarjeta', 16.50, NULL, '2026-04-18 10:30:00', '2026-04-18 15:30:00', '2026-04-18 15:30:00'),
-	(42, 42, 'tarjeta', 90.00, NULL, '2026-04-18 16:28:00', '2026-04-18 21:28:00', '2026-04-18 21:28:00'),
-	(43, 43, 'transferencia', 203.00, NULL, '2026-04-18 11:39:00', '2026-04-18 16:39:00', '2026-04-18 16:39:00'),
-	(44, 44, 'tarjeta', 92.50, NULL, '2026-04-18 11:40:00', '2026-04-18 16:40:00', '2026-04-18 16:40:00'),
-	(45, 45, 'bizum', 46.50, NULL, '2026-04-20 09:35:00', '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(46, 46, 'tarjeta', 18.00, NULL, '2026-04-20 16:53:00', '2026-04-20 21:53:00', '2026-04-20 21:53:00'),
-	(47, 47, 'efectivo', 12.00, NULL, '2026-04-20 09:55:00', '2026-04-20 14:55:00', '2026-04-20 14:55:00'),
-	(48, 48, 'tarjeta', 40.50, NULL, '2026-04-20 19:42:00', '2026-04-21 00:42:00', '2026-04-21 00:42:00'),
-	(49, 49, 'bizum', 26.00, NULL, '2026-04-20 19:24:00', '2026-04-21 00:24:00', '2026-04-21 00:24:00'),
-	(50, 50, 'tarjeta', 137.00, NULL, '2026-04-21 09:29:00', '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(51, 51, 'tarjeta', 125.00, NULL, '2026-04-21 11:34:00', '2026-04-21 16:34:00', '2026-04-21 16:34:00'),
-	(52, 52, 'efectivo', 80.00, NULL, '2026-04-21 09:00:00', '2026-04-21 14:00:00', '2026-04-21 14:00:00'),
-	(53, 53, 'transferencia', 44.00, NULL, '2026-04-21 14:27:00', '2026-04-21 19:27:00', '2026-04-21 19:27:00'),
-	(54, 54, 'efectivo', 26.00, NULL, '2026-04-22 19:41:00', '2026-04-23 00:41:00', '2026-04-23 00:41:00'),
-	(55, 55, 'efectivo', 145.50, NULL, '2026-04-22 09:07:00', '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(56, 56, 'efectivo', 41.50, NULL, '2026-04-23 09:27:00', '2026-04-23 14:27:00', '2026-04-23 14:27:00'),
-	(57, 57, 'efectivo', 140.00, NULL, '2026-04-23 10:30:00', '2026-04-23 15:30:00', '2026-04-23 15:30:00'),
-	(58, 58, 'efectivo', 28.00, NULL, '2026-04-24 18:23:00', '2026-04-24 23:23:00', '2026-04-24 23:23:00'),
-	(59, 59, 'tarjeta', 57.50, NULL, '2026-04-24 16:13:00', '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(60, 60, 'transferencia', 154.00, NULL, '2026-04-24 10:54:00', '2026-04-24 15:54:00', '2026-04-24 15:54:00'),
-	(61, 61, 'tarjeta', 203.00, NULL, '2026-04-24 12:33:00', '2026-04-24 17:33:00', '2026-04-24 17:33:00'),
-	(62, 62, 'efectivo', 152.50, NULL, '2026-04-25 17:43:00', '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(63, 63, 'tarjeta', 12.00, NULL, '2026-04-25 10:17:00', '2026-04-25 15:17:00', '2026-04-25 15:17:00'),
-	(64, 64, 'tarjeta', 123.00, NULL, '2026-04-25 16:05:00', '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(65, 65, 'tarjeta', 47.50, NULL, '2026-04-25 17:36:00', '2026-04-25 22:36:00', '2026-04-25 22:36:00'),
-	(66, 66, 'tarjeta', 80.00, NULL, '2026-04-25 09:38:00', '2026-04-25 14:38:00', '2026-04-25 14:38:00'),
-	(67, 67, 'transferencia', 120.00, NULL, '2026-04-25 09:23:00', '2026-04-25 14:23:00', '2026-04-25 14:23:00'),
-	(68, 68, 'efectivo', 45.50, NULL, '2026-04-25 13:36:00', '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(69, 69, 'bizum', 45.50, NULL, '2026-04-27 13:38:00', '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(70, 70, 'efectivo', 120.00, NULL, '2026-04-27 13:56:00', '2026-04-27 18:56:00', '2026-04-27 18:56:00'),
-	(71, 71, 'tarjeta', 16.50, NULL, '2026-04-27 19:31:00', '2026-04-28 00:31:00', '2026-04-28 00:31:00'),
-	(72, 72, 'efectivo', 14.00, NULL, '2026-04-27 14:00:00', '2026-04-27 19:00:00', '2026-04-27 19:00:00'),
-	(73, 73, 'tarjeta', 70.00, NULL, '2026-04-28 18:46:00', '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(74, 74, 'bizum', 54.50, NULL, '2026-04-28 09:12:00', '2026-04-28 14:12:00', '2026-04-28 14:12:00'),
-	(75, 75, 'tarjeta', 68.50, NULL, '2026-04-28 09:17:00', '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(76, 76, 'tarjeta', 36.00, NULL, '2026-04-28 09:54:00', '2026-04-28 14:54:00', '2026-04-28 14:54:00'),
-	(77, 77, 'tarjeta', 101.00, NULL, '2026-04-29 14:13:00', '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(78, 78, 'tarjeta', 26.00, NULL, '2026-04-29 19:28:00', '2026-04-30 00:28:00', '2026-04-30 00:28:00'),
-	(79, 79, 'tarjeta', 14.00, NULL, '2026-04-30 18:55:00', '2026-04-30 23:55:00', '2026-04-30 23:55:00'),
-	(80, 80, 'bizum', 95.00, NULL, '2026-04-30 12:33:00', '2026-04-30 17:33:00', '2026-04-30 17:33:00'),
-	(81, 81, 'tarjeta', 58.00, NULL, '2026-05-01 17:04:00', '2026-05-01 22:04:00', '2026-05-01 22:04:00'),
-	(82, 82, 'efectivo', 190.00, NULL, '2026-05-01 18:04:00', '2026-05-01 23:04:00', '2026-05-01 23:04:00'),
-	(83, 83, 'tarjeta', 107.00, NULL, '2026-05-01 13:13:00', '2026-05-01 18:13:00', '2026-05-01 18:13:00'),
-	(84, 84, 'tarjeta', 38.00, NULL, '2026-05-01 16:56:00', '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(85, 85, 'tarjeta', 30.00, NULL, '2026-05-02 11:54:00', '2026-05-02 16:54:00', '2026-05-02 16:54:00'),
-	(86, 86, 'efectivo', 44.00, NULL, '2026-05-02 19:35:00', '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(87, 87, 'efectivo', 69.50, NULL, '2026-05-02 12:50:00', '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(88, 88, 'tarjeta', 145.00, NULL, '2026-05-02 13:53:00', '2026-05-02 18:53:00', '2026-05-02 18:53:00'),
-	(89, 89, 'tarjeta', 14.00, NULL, '2026-05-02 10:01:00', '2026-05-02 15:01:00', '2026-05-02 15:01:00'),
-	(90, 90, 'tarjeta', 20.00, NULL, '2026-05-02 16:20:00', '2026-05-02 21:20:00', '2026-05-02 21:20:00'),
-	(91, 91, 'bizum', 14.00, NULL, '2026-05-02 19:18:00', '2026-05-03 00:18:00', '2026-05-03 00:18:00'),
-	(92, 92, 'tarjeta', 12.00, NULL, '2026-05-04 17:52:00', '2026-05-04 22:52:00', '2026-05-04 22:52:00'),
-	(93, 93, 'efectivo', 123.00, NULL, '2026-05-04 13:16:00', '2026-05-04 18:16:00', '2026-05-04 18:16:00'),
-	(94, 94, 'efectivo', 45.50, NULL, '2026-05-04 10:44:00', '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(95, 95, 'bizum', 146.00, NULL, '2026-05-04 18:56:00', '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(96, 96, 'transferencia', 123.00, NULL, '2026-05-04 10:30:00', '2026-05-04 15:30:00', '2026-05-04 15:30:00'),
-	(97, 97, 'bizum', 71.00, NULL, '2026-05-05 18:30:00', '2026-05-05 23:30:00', '2026-05-05 23:30:00'),
-	(98, 98, 'efectivo', 145.00, NULL, '2026-05-05 13:37:00', '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(99, 99, 'efectivo', 11.00, NULL, '2026-05-05 13:02:00', '2026-05-05 18:02:00', '2026-05-05 18:02:00'),
-	(100, 100, 'efectivo', 27.50, NULL, '2026-05-05 12:21:00', '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(101, 101, 'efectivo', 87.50, NULL, '2026-05-06 13:21:00', '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(102, 102, 'transferencia', 80.00, NULL, '2026-05-06 16:43:00', '2026-05-06 21:43:00', '2026-05-06 21:43:00'),
-	(103, 103, 'transferencia', 14.00, NULL, '2026-05-06 13:28:00', '2026-05-06 18:28:00', '2026-05-06 18:28:00'),
-	(104, 104, 'tarjeta', 64.00, NULL, '2026-05-06 09:17:00', '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(105, 105, 'tarjeta', 18.00, NULL, '2026-05-06 11:55:00', '2026-05-06 16:55:00', '2026-05-06 16:55:00'),
-	(106, 106, 'efectivo', 103.00, NULL, '2026-05-06 16:40:00', '2026-05-06 21:40:00', '2026-05-06 21:40:00'),
-	(107, 107, 'tarjeta', 83.00, NULL, '2026-05-06 15:54:00', '2026-05-06 20:54:00', '2026-05-06 20:54:00'),
-	(108, 112, 'bizum', 143.50, NULL, '2026-04-07 14:52:00', '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(109, 113, 'tarjeta', 28.00, NULL, '2026-04-07 18:53:00', '2026-04-07 23:53:00', '2026-04-07 23:53:00'),
-	(110, 114, 'bizum', 11.00, NULL, '2026-04-07 18:17:00', '2026-04-07 23:17:00', '2026-04-07 23:17:00'),
-	(111, 115, 'bizum', 29.00, NULL, '2026-04-09 10:44:00', '2026-04-09 15:44:00', '2026-04-09 15:44:00'),
-	(112, 116, 'efectivo', 67.00, NULL, '2026-04-09 12:09:00', '2026-04-09 17:09:00', '2026-04-09 17:09:00'),
-	(113, 117, 'tarjeta', 12.00, NULL, '2026-04-09 12:07:00', '2026-04-09 17:07:00', '2026-04-09 17:07:00'),
-	(114, 118, 'tarjeta', 36.00, NULL, '2026-04-09 10:53:00', '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(115, 119, 'tarjeta', 42.50, NULL, '2026-04-09 11:17:00', '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(116, 120, 'efectivo', 115.00, NULL, '2026-04-09 14:13:00', '2026-04-09 19:13:00', '2026-04-09 19:13:00'),
-	(117, 121, 'transferencia', 63.00, NULL, '2026-04-10 14:47:00', '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(118, 122, 'tarjeta', 230.00, NULL, '2026-04-10 15:17:00', '2026-04-10 20:17:00', '2026-04-10 20:17:00'),
-	(119, 123, 'tarjeta', 42.00, NULL, '2026-04-10 09:52:00', '2026-04-10 14:52:00', '2026-04-10 14:52:00'),
-	(120, 124, 'efectivo', 16.50, NULL, '2026-04-10 15:47:00', '2026-04-10 20:47:00', '2026-04-10 20:47:00'),
-	(121, 125, 'transferencia', 55.00, NULL, '2026-04-13 18:32:00', '2026-04-13 23:32:00', '2026-04-13 23:32:00'),
-	(122, 126, 'tarjeta', 69.00, NULL, '2026-04-13 12:00:00', '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(123, 127, 'efectivo', 14.00, NULL, '2026-04-13 09:40:00', '2026-04-13 14:40:00', '2026-04-13 14:40:00'),
-	(124, 128, 'bizum', 32.00, NULL, '2026-04-13 13:47:00', '2026-04-13 18:47:00', '2026-04-13 18:47:00'),
-	(125, 129, 'bizum', 48.00, NULL, '2026-04-13 09:24:00', '2026-04-13 14:24:00', '2026-04-13 14:24:00'),
-	(126, 130, 'transferencia', 12.50, NULL, '2026-04-15 09:47:00', '2026-04-15 14:47:00', '2026-04-15 14:47:00'),
-	(127, 131, 'efectivo', 128.00, NULL, '2026-04-15 09:45:00', '2026-04-15 14:45:00', '2026-04-15 14:45:00'),
-	(128, 132, 'tarjeta', 163.00, NULL, '2026-04-15 14:33:00', '2026-04-15 19:33:00', '2026-04-15 19:33:00'),
-	(129, 133, 'efectivo', 19.50, NULL, '2026-04-15 15:22:00', '2026-04-15 20:22:00', '2026-04-15 20:22:00'),
-	(130, 134, 'tarjeta', 83.00, NULL, '2026-04-16 19:25:00', '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(131, 135, 'efectivo', 28.00, NULL, '2026-04-16 19:18:00', '2026-04-17 00:18:00', '2026-04-17 00:18:00'),
-	(132, 136, 'tarjeta', 14.00, NULL, '2026-04-16 11:12:00', '2026-04-16 16:12:00', '2026-04-16 16:12:00'),
-	(133, 137, 'bizum', 43.00, NULL, '2026-04-17 11:39:00', '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(134, 138, 'tarjeta', 218.50, NULL, '2026-04-17 13:30:00', '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(135, 139, 'tarjeta', 170.00, NULL, '2026-04-20 14:31:00', '2026-04-20 19:31:00', '2026-04-20 19:31:00'),
-	(136, 140, 'tarjeta', 120.00, NULL, '2026-04-20 10:36:00', '2026-04-20 15:36:00', '2026-04-20 15:36:00'),
-	(137, 141, 'efectivo', 91.00, NULL, '2026-04-20 17:52:00', '2026-04-20 22:52:00', '2026-04-20 22:52:00'),
-	(138, 142, 'tarjeta', 114.00, NULL, '2026-04-20 09:49:00', '2026-04-20 14:49:00', '2026-04-20 14:49:00'),
-	(139, 143, 'tarjeta', 46.50, NULL, '2026-04-20 19:00:00', '2026-04-21 00:00:00', '2026-04-21 00:00:00'),
-	(140, 144, 'tarjeta', 106.00, NULL, '2026-04-20 13:14:00', '2026-04-20 18:14:00', '2026-04-20 18:14:00'),
-	(141, 145, 'bizum', 120.00, NULL, '2026-04-21 10:01:00', '2026-04-21 15:01:00', '2026-04-21 15:01:00'),
-	(142, 146, 'efectivo', 58.00, NULL, '2026-04-21 16:01:00', '2026-04-21 21:01:00', '2026-04-21 21:01:00'),
-	(143, 147, 'tarjeta', 44.00, NULL, '2026-04-21 18:16:00', '2026-04-21 23:16:00', '2026-04-21 23:16:00'),
-	(144, 148, 'transferencia', 22.00, NULL, '2026-04-22 14:20:00', '2026-04-22 19:20:00', '2026-04-22 19:20:00'),
-	(145, 149, 'tarjeta', 86.00, NULL, '2026-04-22 11:07:00', '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(146, 150, 'tarjeta', 93.00, NULL, '2026-04-22 14:06:00', '2026-04-22 19:06:00', '2026-04-22 19:06:00'),
-	(147, 151, 'efectivo', 28.00, NULL, '2026-04-23 13:53:00', '2026-04-23 18:53:00', '2026-04-23 18:53:00'),
-	(148, 152, 'tarjeta', 120.00, NULL, '2026-04-23 18:32:00', '2026-04-23 23:32:00', '2026-04-23 23:32:00'),
-	(149, 153, 'bizum', 19.50, NULL, '2026-04-24 13:22:00', '2026-04-24 18:22:00', '2026-04-24 18:22:00'),
-	(150, 154, 'transferencia', 115.00, NULL, '2026-04-24 09:42:00', '2026-04-24 14:42:00', '2026-04-24 14:42:00'),
-	(151, 155, 'tarjeta', 116.00, NULL, '2026-04-24 19:59:00', '2026-04-25 00:59:00', '2026-04-25 00:59:00'),
-	(152, 156, 'efectivo', 173.00, NULL, '2026-04-24 11:45:00', '2026-04-24 16:45:00', '2026-04-24 16:45:00'),
-	(153, 157, 'efectivo', 55.00, NULL, '2026-04-24 17:33:00', '2026-04-24 22:33:00', '2026-04-24 22:33:00'),
-	(154, 158, 'bizum', 38.00, NULL, '2026-04-24 15:50:00', '2026-04-24 20:50:00', '2026-04-24 20:50:00'),
-	(155, 159, 'bizum', 85.50, NULL, '2026-04-24 17:46:00', '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(156, 160, 'tarjeta', 73.00, NULL, '2026-04-25 16:05:00', '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(157, 161, 'transferencia', 80.00, NULL, '2026-04-25 09:17:00', '2026-04-25 14:17:00', '2026-04-25 14:17:00'),
-	(158, 162, 'tarjeta', 63.00, NULL, '2026-04-25 10:35:00', '2026-04-25 15:35:00', '2026-04-25 15:35:00'),
-	(159, 163, 'tarjeta', 75.00, NULL, '2026-04-25 19:58:00', '2026-04-26 00:58:00', '2026-04-26 00:58:00'),
-	(160, 164, 'efectivo', 114.50, NULL, '2026-04-27 13:14:00', '2026-04-27 18:14:00', '2026-04-27 18:14:00'),
-	(161, 165, 'tarjeta', 123.00, NULL, '2026-04-27 11:43:00', '2026-04-27 16:43:00', '2026-04-27 16:43:00'),
-	(162, 166, 'efectivo', 69.00, NULL, '2026-04-27 12:36:00', '2026-04-27 17:36:00', '2026-04-27 17:36:00'),
-	(163, 167, 'tarjeta', 213.50, NULL, '2026-04-27 15:22:00', '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(164, 168, 'tarjeta', 35.00, NULL, '2026-04-27 09:32:00', '2026-04-27 14:32:00', '2026-04-27 14:32:00'),
-	(165, 169, 'bizum', 75.50, NULL, '2026-04-27 11:44:00', '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(166, 170, 'bizum', 58.50, NULL, '2026-04-27 16:07:00', '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(167, 171, 'efectivo', 184.00, NULL, '2026-04-28 17:58:00', '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(168, 172, 'tarjeta', 19.50, NULL, '2026-04-28 09:20:00', '2026-04-28 14:20:00', '2026-04-28 14:20:00'),
-	(169, 173, 'efectivo', 118.00, NULL, '2026-04-28 11:44:00', '2026-04-28 16:44:00', '2026-04-28 16:44:00'),
-	(170, 174, 'tarjeta', 113.00, NULL, '2026-04-29 15:26:00', '2026-04-29 20:26:00', '2026-04-29 20:26:00'),
-	(171, 175, 'tarjeta', 18.00, NULL, '2026-04-29 13:59:00', '2026-04-29 18:59:00', '2026-04-29 18:59:00'),
-	(172, 176, 'efectivo', 120.00, NULL, '2026-04-29 15:36:00', '2026-04-29 20:36:00', '2026-04-29 20:36:00'),
-	(173, 177, 'tarjeta', 12.00, NULL, '2026-04-29 17:36:00', '2026-04-29 22:36:00', '2026-04-29 22:36:00'),
-	(174, 178, 'efectivo', 58.00, NULL, '2026-04-29 17:49:00', '2026-04-29 22:49:00', '2026-04-29 22:49:00'),
-	(175, 179, 'tarjeta', 31.50, NULL, '2026-04-29 18:24:00', '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(176, 180, 'bizum', 93.00, NULL, '2026-04-29 19:35:00', '2026-04-30 00:35:00', '2026-04-30 00:35:00'),
-	(177, 181, 'tarjeta', 28.00, NULL, '2026-04-30 15:22:00', '2026-04-30 20:22:00', '2026-04-30 20:22:00'),
-	(178, 182, 'efectivo', 19.50, NULL, '2026-04-30 16:05:00', '2026-04-30 21:05:00', '2026-04-30 21:05:00'),
-	(179, 183, 'tarjeta', 46.00, NULL, '2026-05-01 16:02:00', '2026-05-01 21:02:00', '2026-05-01 21:02:00'),
-	(180, 184, 'tarjeta', 42.50, NULL, '2026-05-01 15:47:00', '2026-05-01 20:47:00', '2026-05-01 20:47:00'),
-	(181, 185, 'tarjeta', 18.00, NULL, '2026-05-01 10:22:00', '2026-05-01 15:22:00', '2026-05-01 15:22:00'),
-	(182, 186, 'tarjeta', 25.00, NULL, '2026-05-01 14:21:00', '2026-05-01 19:21:00', '2026-05-01 19:21:00'),
-	(183, 187, 'tarjeta', 25.00, NULL, '2026-05-01 13:17:00', '2026-05-01 18:17:00', '2026-05-01 18:17:00'),
-	(184, 188, 'transferencia', 120.00, NULL, '2026-05-01 16:20:00', '2026-05-01 21:20:00', '2026-05-01 21:20:00'),
-	(185, 189, 'efectivo', 61.00, NULL, '2026-05-01 18:13:00', '2026-05-01 23:13:00', '2026-05-01 23:13:00'),
-	(186, 190, 'tarjeta', 56.00, NULL, '2026-05-02 14:30:00', '2026-05-02 19:30:00', '2026-05-02 19:30:00'),
-	(187, 191, 'transferencia', 15.50, NULL, '2026-05-02 15:24:00', '2026-05-02 20:24:00', '2026-05-02 20:24:00'),
-	(188, 192, 'tarjeta', 114.00, NULL, '2026-05-02 19:38:00', '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(189, 193, 'transferencia', 30.00, NULL, '2026-05-02 10:47:00', '2026-05-02 15:47:00', '2026-05-02 15:47:00'),
-	(190, 194, 'efectivo', 44.50, NULL, '2026-05-04 17:14:00', '2026-05-04 22:14:00', '2026-05-04 22:14:00'),
-	(191, 195, 'efectivo', 36.00, NULL, '2026-05-04 12:28:00', '2026-05-04 17:28:00', '2026-05-04 17:28:00'),
-	(192, 196, 'bizum', 12.00, NULL, '2026-05-06 13:48:00', '2026-05-06 18:48:00', '2026-05-06 18:48:00'),
-	(193, 197, 'bizum', 135.00, NULL, '2026-05-06 14:24:00', '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(194, 198, 'efectivo', 12.00, NULL, '2026-05-06 19:37:00', '2026-05-07 00:37:00', '2026-05-07 00:37:00'),
-	(195, 199, 'tarjeta', 47.50, NULL, '2026-05-06 15:53:00', '2026-05-06 20:53:00', '2026-05-06 20:53:00'),
-	(196, 200, 'tarjeta', 90.50, NULL, '2026-05-06 14:24:00', '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(197, 201, 'bizum', 120.00, NULL, '2026-05-06 10:33:00', '2026-05-06 15:33:00', '2026-05-06 15:33:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (1,1,'efectivo',12.50,NULL,'2026-07-04 18:52:00','2026-07-04 18:52:00','2026-07-04 18:52:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (2,2,'tarjeta',139.50,NULL,'2026-07-04 10:29:00','2026-07-04 10:29:00','2026-07-04 10:29:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (3,3,'tarjeta',36.00,NULL,'2026-07-04 13:35:00','2026-07-04 13:35:00','2026-07-04 13:35:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (4,4,'tarjeta',20.00,NULL,'2026-07-04 19:03:00','2026-07-04 19:03:00','2026-07-04 19:03:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (5,5,'tarjeta',145.00,NULL,'2026-07-06 19:41:00','2026-07-06 19:41:00','2026-07-06 19:41:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (6,6,'transferencia',119.00,NULL,'2026-07-06 15:24:00','2026-07-06 15:24:00','2026-07-06 15:24:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (7,7,'tarjeta',145.00,NULL,'2026-07-06 18:49:00','2026-07-06 18:49:00','2026-07-06 18:49:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (8,8,'tarjeta',14.00,NULL,'2026-07-06 16:06:00','2026-07-06 16:06:00','2026-07-06 16:06:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (9,9,'tarjeta',39.00,NULL,'2026-07-06 12:24:00','2026-07-06 12:24:00','2026-07-06 12:24:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (10,10,'tarjeta',43.50,NULL,'2026-07-06 10:48:00','2026-07-06 10:48:00','2026-07-06 10:48:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (11,11,'tarjeta',36.00,NULL,'2026-07-07 18:30:00','2026-07-07 18:30:00','2026-07-07 18:30:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (12,12,'tarjeta',105.00,NULL,'2026-07-07 19:31:00','2026-07-07 19:31:00','2026-07-07 19:31:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (13,13,'yapeplin',142.50,NULL,'2026-07-07 12:35:00','2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (14,14,'tarjeta',30.00,NULL,'2026-07-08 19:12:00','2026-07-08 19:12:00','2026-07-08 19:12:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (15,15,'transferencia',235.00,NULL,'2026-07-08 12:37:00','2026-07-08 12:37:00','2026-07-08 12:37:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (16,16,'efectivo',110.00,NULL,'2026-07-09 09:38:00','2026-07-09 09:38:00','2026-07-09 09:38:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (17,17,'tarjeta',115.00,NULL,'2026-07-09 12:36:00','2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (18,18,'tarjeta',43.50,NULL,'2026-07-09 09:41:00','2026-07-09 09:41:00','2026-07-09 09:41:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (19,19,'yapeplin',54.00,NULL,'2026-07-09 14:19:00','2026-07-09 14:19:00','2026-07-09 14:19:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (20,20,'transferencia',28.00,NULL,'2026-07-10 18:45:00','2026-07-10 18:45:00','2026-07-10 18:45:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (21,21,'tarjeta',38.50,NULL,'2026-07-10 12:45:00','2026-07-10 12:45:00','2026-07-10 12:45:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (22,22,'yapeplin',44.50,NULL,'2026-07-11 16:23:00','2026-07-11 16:23:00','2026-07-11 16:23:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (23,23,'tarjeta',74.00,NULL,'2026-07-11 17:50:00','2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (24,24,'yapeplin',133.00,NULL,'2026-07-11 14:03:00','2026-07-11 14:03:00','2026-07-11 14:03:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (25,25,'yapeplin',81.00,NULL,'2026-07-11 12:30:00','2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (26,26,'efectivo',67.50,NULL,'2026-07-11 10:14:00','2026-07-11 10:14:00','2026-07-11 10:14:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (27,27,'efectivo',14.00,NULL,'2026-07-11 10:17:00','2026-07-11 10:17:00','2026-07-11 10:17:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (28,28,'tarjeta',144.50,NULL,'2026-07-13 18:41:00','2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (29,29,'tarjeta',187.50,NULL,'2026-07-13 15:29:00','2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (30,30,'tarjeta',94.00,NULL,'2026-07-13 17:23:00','2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (31,31,'tarjeta',77.00,NULL,'2026-07-13 09:00:00','2026-07-13 09:00:00','2026-07-13 09:00:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (32,32,'efectivo',42.00,NULL,'2026-07-16 16:59:00','2026-07-16 16:59:00','2026-07-16 16:59:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (33,33,'efectivo',30.00,NULL,'2026-07-16 14:58:00','2026-07-16 14:58:00','2026-07-16 14:58:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (34,34,'yapeplin',105.00,NULL,'2026-07-17 14:11:00','2026-07-17 14:11:00','2026-07-17 14:11:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (35,35,'efectivo',129.50,NULL,'2026-07-17 14:42:00','2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (36,36,'transferencia',138.00,NULL,'2026-07-17 10:09:00','2026-07-17 10:09:00','2026-07-17 10:09:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (37,37,'efectivo',157.00,NULL,'2026-07-17 15:25:00','2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (38,38,'tarjeta',44.00,NULL,'2026-07-17 17:06:00','2026-07-17 17:06:00','2026-07-17 17:06:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (39,39,'efectivo',47.00,NULL,'2026-07-18 15:44:00','2026-07-18 15:44:00','2026-07-18 15:44:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (40,40,'yapeplin',19.50,NULL,'2026-07-18 19:07:00','2026-07-18 19:07:00','2026-07-18 19:07:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (41,41,'transferencia',101.00,NULL,'2026-07-20 17:29:00','2026-07-20 17:29:00','2026-07-20 17:29:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (42,42,'efectivo',18.00,NULL,'2026-07-20 15:56:00','2026-07-20 15:56:00','2026-07-20 15:56:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (43,43,'yapeplin',125.00,NULL,'2026-07-20 09:59:00','2026-07-20 09:59:00','2026-07-20 09:59:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (44,44,'efectivo',67.00,NULL,'2026-07-20 17:38:00','2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (45,45,'tarjeta',95.50,NULL,'2026-07-21 11:27:00','2026-07-21 11:27:00','2026-07-21 11:27:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (46,46,'efectivo',44.00,NULL,'2026-07-21 17:39:00','2026-07-21 17:39:00','2026-07-21 17:39:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (47,47,'efectivo',101.00,NULL,'2026-07-21 09:37:00','2026-07-21 09:37:00','2026-07-21 09:37:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (48,48,'yapeplin',107.00,NULL,'2026-07-21 19:56:00','2026-07-21 19:56:00','2026-07-21 19:56:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (49,49,'tarjeta',25.00,NULL,'2026-07-21 14:40:00','2026-07-21 14:40:00','2026-07-21 14:40:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (50,50,'tarjeta',14.00,NULL,'2026-07-22 09:17:00','2026-07-22 09:17:00','2026-07-22 09:17:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (51,51,'tarjeta',28.00,NULL,'2026-07-22 14:51:00','2026-07-22 14:51:00','2026-07-22 14:51:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (52,52,'tarjeta',143.50,NULL,'2026-07-22 19:13:00','2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (53,53,'efectivo',140.00,NULL,'2026-07-22 13:40:00','2026-07-22 13:40:00','2026-07-22 13:40:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (54,54,'tarjeta',30.00,NULL,'2026-07-23 14:18:00','2026-07-23 14:18:00','2026-07-23 14:18:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (55,55,'yapeplin',24.50,NULL,'2026-07-23 15:45:00','2026-07-23 15:45:00','2026-07-23 15:45:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (56,56,'tarjeta',229.00,NULL,'2026-07-23 11:54:00','2026-07-23 11:54:00','2026-07-23 11:54:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (57,57,'efectivo',32.50,NULL,'2026-07-23 16:48:00','2026-07-23 16:48:00','2026-07-23 16:48:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (58,58,'efectivo',42.00,NULL,'2026-07-23 13:33:00','2026-07-23 13:33:00','2026-07-23 13:33:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (59,59,'transferencia',175.00,NULL,'2026-07-23 13:30:00','2026-07-23 13:30:00','2026-07-23 13:30:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (60,60,'transferencia',47.50,NULL,'2026-07-24 09:30:00','2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (61,61,'efectivo',110.50,NULL,'2026-07-24 15:56:00','2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (62,62,'efectivo',113.00,NULL,'2026-07-24 13:14:00','2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (63,63,'tarjeta',138.00,NULL,'2026-07-25 12:29:00','2026-07-25 12:29:00','2026-07-25 12:29:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (64,64,'efectivo',69.00,NULL,'2026-07-25 19:00:00','2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (65,65,'tarjeta',28.00,NULL,'2026-07-27 18:47:00','2026-07-27 18:47:00','2026-07-27 18:47:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (66,66,'efectivo',32.50,NULL,'2026-07-27 14:29:00','2026-07-27 14:29:00','2026-07-27 14:29:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (67,67,'efectivo',12.00,NULL,'2026-07-27 16:31:00','2026-07-27 16:31:00','2026-07-27 16:31:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (68,68,'transferencia',14.00,NULL,'2026-07-27 16:45:00','2026-07-27 16:45:00','2026-07-27 16:45:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (69,69,'tarjeta',18.00,NULL,'2026-07-27 19:08:00','2026-07-27 19:08:00','2026-07-27 19:08:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (70,70,'tarjeta',150.00,NULL,'2026-07-28 18:43:00','2026-07-28 18:43:00','2026-07-28 18:43:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (71,71,'yapeplin',64.00,NULL,'2026-07-28 13:12:00','2026-07-28 13:12:00','2026-07-28 13:12:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (72,72,'tarjeta',34.00,NULL,'2026-07-28 14:12:00','2026-07-28 14:12:00','2026-07-28 14:12:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (73,73,'tarjeta',26.00,NULL,'2026-07-29 18:32:00','2026-07-29 18:32:00','2026-07-29 18:32:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (74,74,'transferencia',40.00,NULL,'2026-07-29 12:00:00','2026-07-29 12:00:00','2026-07-29 12:00:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (75,75,'transferencia',91.50,NULL,'2026-07-29 12:26:00','2026-07-29 12:26:00','2026-07-29 12:26:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (76,76,'efectivo',11.00,NULL,'2026-07-29 17:11:00','2026-07-29 17:11:00','2026-07-29 17:11:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (77,77,'tarjeta',12.00,NULL,'2026-07-29 16:44:00','2026-07-29 16:44:00','2026-07-29 16:44:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (78,78,'transferencia',37.50,NULL,'2026-07-29 15:46:00','2026-07-29 15:46:00','2026-07-29 15:46:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (79,79,'efectivo',98.50,NULL,'2026-07-29 16:49:00','2026-07-29 16:49:00','2026-07-29 16:49:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (80,80,'tarjeta',85.00,NULL,'2026-07-30 17:05:00','2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (81,81,'efectivo',12.00,NULL,'2026-07-30 14:59:00','2026-07-30 14:59:00','2026-07-30 14:59:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (82,82,'yapeplin',113.00,NULL,'2026-07-30 18:38:00','2026-07-30 18:38:00','2026-07-30 18:38:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (83,83,'transferencia',14.00,NULL,'2026-07-31 10:40:00','2026-07-31 10:40:00','2026-07-31 10:40:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (84,84,'efectivo',132.50,NULL,'2026-07-31 18:19:00','2026-07-31 18:19:00','2026-07-31 18:19:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (85,85,'yapeplin',35.00,NULL,'2026-07-31 18:43:00','2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (86,86,'yapeplin',120.00,NULL,'2026-08-01 14:22:00','2026-08-01 14:22:00','2026-08-01 14:22:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (87,87,'yapeplin',28.00,NULL,'2026-08-01 09:00:00','2026-08-01 09:00:00','2026-08-01 09:00:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (88,88,'transferencia',94.50,NULL,'2026-08-01 17:40:00','2026-08-01 17:40:00','2026-08-01 17:40:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (89,89,'yapeplin',25.00,NULL,'2026-08-03 01:16:10','2026-08-03 01:16:10','2026-08-03 01:16:10');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (90,90,'yapeplin',25.00,NULL,'2026-08-03 01:16:18','2026-08-03 01:16:18','2026-08-03 01:16:18');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (91,91,'yapeplin',25.00,NULL,'2026-08-03 01:16:20','2026-08-03 01:16:20','2026-08-03 01:16:20');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (92,92,'efectivo',25.00,NULL,'2026-08-03 01:16:40','2026-08-03 01:16:40','2026-08-03 01:16:40');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (93,93,'efectivo',25.00,NULL,'2026-08-03 01:16:44','2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (94,94,'efectivo',25.00,NULL,'2026-08-03 01:16:44','2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (95,95,'efectivo',25.00,NULL,'2026-08-03 01:16:55','2026-08-03 01:16:55','2026-08-03 01:16:55');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (96,96,'efectivo',25.00,NULL,'2026-08-03 01:17:05','2026-08-03 01:17:05','2026-08-03 01:17:05');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (97,97,'efectivo',25.00,NULL,'2026-08-03 01:17:07','2026-08-03 01:17:07','2026-08-03 01:17:07');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (98,98,'efectivo',25.00,NULL,'2026-08-03 01:17:08','2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (99,99,'efectivo',25.00,NULL,'2026-08-03 01:17:08','2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (100,100,'efectivo',25.00,NULL,'2026-08-03 01:17:09','2026-08-03 01:17:09','2026-08-03 01:17:09');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (101,101,'efectivo',25.00,NULL,'2026-08-03 01:17:10','2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (102,102,'efectivo',25.00,NULL,'2026-08-03 01:17:10','2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (103,103,'efectivo',25.00,NULL,'2026-08-03 01:17:11','2026-08-03 01:17:11','2026-08-03 01:17:11');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (104,104,'efectivo',25.00,NULL,'2026-08-03 01:17:12','2026-08-03 01:17:12','2026-08-03 01:17:12');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (105,105,'efectivo',25.00,NULL,'2026-08-03 01:17:13','2026-08-03 01:17:13','2026-08-03 01:17:13');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (106,106,'efectivo',25.00,NULL,'2026-08-03 01:17:14','2026-08-03 01:17:14','2026-08-03 01:17:14');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (107,107,'efectivo',25.00,NULL,'2026-08-03 01:17:15','2026-08-03 01:17:15','2026-08-03 01:17:15');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (108,108,'efectivo',25.00,NULL,'2026-08-03 01:17:16','2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (109,109,'efectivo',25.00,NULL,'2026-08-03 01:17:16','2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (110,110,'efectivo',25.00,NULL,'2026-08-03 01:17:17','2026-08-03 01:17:17','2026-08-03 01:17:17');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (111,111,'efectivo',25.00,NULL,'2026-08-03 01:17:18','2026-08-03 01:17:18','2026-08-03 01:17:18');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (112,112,'efectivo',25.00,NULL,'2026-08-03 01:17:51','2026-08-03 01:17:51','2026-08-03 01:17:51');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (113,113,'efectivo',25.00,NULL,'2026-08-03 01:17:52','2026-08-03 01:17:52','2026-08-03 01:17:52');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (114,114,'efectivo',25.00,NULL,'2026-08-03 01:17:53','2026-08-03 01:17:53','2026-08-03 01:17:53');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (115,115,'efectivo',25.00,NULL,'2026-08-03 01:17:54','2026-08-03 01:17:54','2026-08-03 01:17:54');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (116,116,'efectivo',25.00,NULL,'2026-08-03 01:17:55','2026-08-03 01:17:55','2026-08-03 01:17:55');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (117,117,'efectivo',25.00,NULL,'2026-08-03 01:17:56','2026-08-03 01:17:56','2026-08-03 01:17:56');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (118,118,'efectivo',25.00,NULL,'2026-08-03 01:17:57','2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (119,119,'efectivo',25.00,NULL,'2026-08-03 01:17:57','2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (120,120,'efectivo',25.00,NULL,'2026-08-03 01:17:58','2026-08-03 01:17:58','2026-08-03 01:17:58');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (121,121,'efectivo',25.00,NULL,'2026-08-03 01:17:59','2026-08-03 01:17:59','2026-08-03 01:17:59');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (122,122,'efectivo',25.00,NULL,'2026-08-03 01:18:00','2026-08-03 01:18:00','2026-08-03 01:18:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (123,123,'efectivo',25.00,NULL,'2026-08-03 01:18:01','2026-08-03 01:18:01','2026-08-03 01:18:01');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (124,124,'efectivo',25.00,NULL,'2026-08-03 01:18:02','2026-08-03 01:18:02','2026-08-03 01:18:02');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (125,125,'efectivo',25.00,NULL,'2026-08-03 01:18:07','2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (126,126,'efectivo',25.00,NULL,'2026-08-03 01:18:07','2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (127,127,'efectivo',25.00,NULL,'2026-08-03 01:18:08','2026-08-03 01:18:08','2026-08-03 01:18:08');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (128,128,'efectivo',25.00,NULL,'2026-08-03 01:18:09','2026-08-03 01:18:09','2026-08-03 01:18:09');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (129,129,'efectivo',25.00,NULL,'2026-08-03 01:18:12','2026-08-03 01:18:12','2026-08-03 01:18:12');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (130,130,'efectivo',25.00,NULL,'2026-08-03 01:18:13','2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (131,131,'efectivo',25.00,NULL,'2026-08-03 01:18:13','2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (132,132,'efectivo',25.00,NULL,'2026-08-03 01:18:14','2026-08-03 01:18:14','2026-08-03 01:18:14');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (133,133,'efectivo',25.00,NULL,'2026-08-03 01:18:15','2026-08-03 01:18:15','2026-08-03 01:18:15');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (134,134,'efectivo',25.00,NULL,'2026-08-03 01:18:16','2026-08-03 01:18:16','2026-08-03 01:18:16');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (135,135,'efectivo',25.00,NULL,'2026-08-03 01:18:17','2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (136,136,'efectivo',25.00,NULL,'2026-08-03 01:18:17','2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (137,137,'efectivo',25.00,NULL,'2026-08-03 01:18:18','2026-08-03 01:18:18','2026-08-03 01:18:18');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (138,138,'efectivo',25.00,NULL,'2026-08-03 01:18:19','2026-08-03 01:18:19','2026-08-03 01:18:19');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (139,139,'efectivo',25.00,NULL,'2026-08-03 01:18:20','2026-08-03 01:18:20','2026-08-03 01:18:20');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (140,140,'efectivo',25.00,NULL,'2026-08-03 01:18:21','2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (141,141,'efectivo',25.00,NULL,'2026-08-03 01:18:21','2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (142,142,'efectivo',25.00,NULL,'2026-08-03 01:18:22','2026-08-03 01:18:22','2026-08-03 01:18:22');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (143,143,'efectivo',25.00,NULL,'2026-08-03 01:18:23','2026-08-03 01:18:23','2026-08-03 01:18:23');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (144,144,'efectivo',25.00,NULL,'2026-08-03 01:18:24','2026-08-03 01:18:24','2026-08-03 01:18:24');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (145,145,'efectivo',25.00,NULL,'2026-08-03 01:18:25','2026-08-03 01:18:25','2026-08-03 01:18:25');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (146,146,'efectivo',25.00,NULL,'2026-08-03 01:18:26','2026-08-03 01:18:26','2026-08-03 01:18:26');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (147,147,'efectivo',25.00,NULL,'2026-08-03 01:18:27','2026-08-03 01:18:27','2026-08-03 01:18:27');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (148,148,'efectivo',25.00,NULL,'2026-08-03 01:18:28','2026-08-03 01:18:28','2026-08-03 01:18:28');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (149,149,'yapeplin',25.00,NULL,'2026-08-03 01:20:49','2026-08-03 01:20:49','2026-08-03 01:20:49');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (150,150,'efectivo',36.00,NULL,'2026-08-03 01:20:57','2026-08-03 01:20:57','2026-08-03 01:20:57');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (151,151,'yapeplin',25.00,NULL,'2026-08-03 01:20:58','2026-08-03 01:20:58','2026-08-03 01:20:58');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (152,152,'efectivo',25.00,NULL,'2026-08-03 01:22:10','2026-08-03 01:22:10','2026-08-03 01:22:10');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (153,153,'efectivo',25.00,NULL,'2026-08-03 01:23:41','2026-08-03 01:23:41','2026-08-03 01:23:41');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (154,154,'efectivo',43.00,NULL,'2026-08-03 01:26:01','2026-08-03 01:26:01','2026-08-03 01:26:01');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (155,155,'efectivo',25.00,NULL,'2026-08-03 01:28:00','2026-08-03 01:28:00','2026-08-03 01:28:00');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (156,156,'efectivo',25.00,NULL,'2026-08-03 01:28:11','2026-08-03 01:28:11','2026-08-03 01:28:11');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (157,157,'efectivo',25.00,NULL,'2026-08-03 01:28:51','2026-08-03 01:28:51','2026-08-03 01:28:51');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (158,158,'efectivo',25.00,NULL,'2026-08-03 01:31:04','2026-08-03 01:31:04','2026-08-03 01:31:04');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (159,159,'efectivo',18.00,NULL,'2026-08-03 01:31:55','2026-08-03 01:31:55','2026-08-03 01:31:55');
+INSERT INTO `pelu_pagos_ventas` (`id`,`venta_id`,`metodo`,`importe`,`referencia`,`fecha`,`created_at`,`updated_at`) VALUES (160,160,'efectivo',25.00,NULL,'2026-08-03 01:38:30','2026-08-03 01:38:30','2026-08-03 01:38:30');
 
--- Volcando estructura para tabla tpv_peluqueria.password_reset_tokens
-CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
+-- Tabla: pelu_password_reset_tokens
+DROP TABLE IF EXISTS `pelu_password_reset_tokens`;
+CREATE TABLE `pelu_password_reset_tokens` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.password_reset_tokens: ~0 rows (aproximadamente)
-DELETE FROM `password_reset_tokens`;
 
--- Volcando estructura para tabla tpv_peluqueria.productos
-CREATE TABLE IF NOT EXISTS `productos` (
+-- Tabla: pelu_productos
+DROP TABLE IF EXISTS `pelu_productos`;
+CREATE TABLE `pelu_productos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `categoria_id` bigint unsigned DEFAULT NULL,
@@ -1654,7 +1234,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `imagen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `precio_compra` decimal(10,2) NOT NULL DEFAULT '0.00',
   `precio_venta` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `impuesto` decimal(5,2) NOT NULL DEFAULT '21.00',
+  `impuesto` decimal(5,2) NOT NULL DEFAULT '18.00',
   `stock` decimal(10,2) NOT NULL DEFAULT '0.00',
   `stock_minimo` decimal(10,2) NOT NULL DEFAULT '0.00',
   `unidad` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'uds',
@@ -1667,27 +1247,25 @@ CREATE TABLE IF NOT EXISTS `productos` (
   KEY `productos_categoria_id_foreign` (`categoria_id`),
   KEY `productos_empresa_id_codigo_barras_index` (`empresa_id`,`codigo_barras`),
   KEY `productos_empresa_id_nombre_index` (`empresa_id`,`nombre`),
-  CONSTRAINT `productos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias_productos` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `productos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
+  CONSTRAINT `productos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `pelu_categorias_productos` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `productos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.productos: ~11 rows (aproximadamente)
-DELETE FROM `productos`;
-INSERT INTO `productos` (`id`, `empresa_id`, `categoria_id`, `codigo`, `codigo_barras`, `nombre`, `descripcion`, `marca`, `imagen`, `precio_compra`, `precio_venta`, `impuesto`, `stock`, `stock_minimo`, `unidad`, `controlar_stock`, `vendible`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, NULL, NULL, 'Champú hidratante 500ml', NULL, 'Loreal', NULL, 8.50, 18.50, 21.00, 15.00, 3.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, 1, NULL, NULL, 'Acondicionador 500ml', NULL, 'Loreal', NULL, 9.00, 19.50, 21.00, 12.00, 3.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 1, 1, NULL, NULL, 'Mascarilla nutritiva 250ml', NULL, 'Schwarzkopf', NULL, 12.00, 26.00, 21.00, 8.00, 2.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(4, 1, 3, NULL, NULL, 'Spray fijador fuerte', NULL, 'Wella', NULL, 6.50, 14.00, 21.00, 20.00, 5.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(5, 1, 3, NULL, NULL, 'Cera moldeadora 100ml', NULL, 'Redken', NULL, 8.00, 16.50, 21.00, 10.00, 2.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(6, 1, 2, NULL, NULL, 'Tinte rubio platino 60ml', NULL, 'Loreal', NULL, 4.50, 12.00, 21.00, 25.00, 5.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(7, 1, NULL, NULL, NULL, 'Sérum reparador 50ml', NULL, 'Kerastase', NULL, 18.00, 36.00, 21.00, 10.00, 2.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(8, 1, NULL, NULL, NULL, 'Aceite de argán 100ml', NULL, 'Moroccanoil', NULL, 15.00, 30.00, 21.00, 14.00, 3.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(9, 1, NULL, NULL, NULL, 'Champú anticaspa 400ml', NULL, 'Vichy', NULL, 7.50, 15.50, 21.00, 18.00, 4.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(10, 1, NULL, NULL, NULL, 'Spray protector calor', NULL, 'Tresemmé', NULL, 5.50, 12.50, 21.00, 22.00, 5.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(11, 1, NULL, NULL, NULL, 'Crema definidora rizos', NULL, 'Pantene', NULL, 4.80, 11.00, 21.00, 16.00, 4.00, 'uds', 1, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (1,1,1,NULL,NULL,'Champú hidratante 500ml',NULL,'Loreal',NULL,8.50,18.50,18.00,15.00,3.00,'uds',1,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (2,1,1,NULL,NULL,'Acondicionador 500ml',NULL,'Loreal',NULL,9.00,19.50,18.00,12.00,3.00,'uds',1,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (3,1,1,NULL,NULL,'Mascarilla nutritiva 250ml',NULL,'Schwarzkopf',NULL,12.00,26.00,18.00,8.00,2.00,'uds',1,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (4,1,3,NULL,NULL,'Spray fijador fuerte',NULL,'Wella',NULL,6.50,14.00,18.00,20.00,5.00,'uds',1,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (5,1,3,NULL,NULL,'Cera moldeadora 100ml',NULL,'Redken',NULL,8.00,16.50,18.00,10.00,2.00,'uds',1,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (6,1,2,NULL,NULL,'Tinte rubio platino 60ml',NULL,'Loreal',NULL,4.50,12.00,18.00,25.00,5.00,'uds',1,1,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (7,1,NULL,NULL,NULL,'Sérum reparador 50ml',NULL,'Kerastase',NULL,18.00,36.00,18.00,10.00,2.00,'uds',1,1,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (8,1,NULL,NULL,NULL,'Aceite de argán 100ml',NULL,'Moroccanoil',NULL,15.00,30.00,18.00,14.00,3.00,'uds',1,1,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (9,1,NULL,NULL,NULL,'Champú anticaspa 400ml',NULL,'Vichy',NULL,7.50,15.50,18.00,18.00,4.00,'uds',1,1,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (10,1,NULL,NULL,NULL,'Spray protector calor',NULL,'Tresemmé',NULL,5.50,12.50,18.00,22.00,5.00,'uds',1,1,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_productos` (`id`,`empresa_id`,`categoria_id`,`codigo`,`codigo_barras`,`nombre`,`descripcion`,`marca`,`imagen`,`precio_compra`,`precio_venta`,`impuesto`,`stock`,`stock_minimo`,`unidad`,`controlar_stock`,`vendible`,`activo`,`created_at`,`updated_at`) VALUES (11,1,NULL,NULL,NULL,'Crema definidora rizos',NULL,'Pantene',NULL,4.80,11.00,18.00,16.00,4.00,'uds',1,1,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
 
--- Volcando estructura para tabla tpv_peluqueria.servicios
-CREATE TABLE IF NOT EXISTS `servicios` (
+-- Tabla: pelu_servicios
+DROP TABLE IF EXISTS `pelu_servicios`;
+CREATE TABLE `pelu_servicios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `categoria_id` bigint unsigned DEFAULT NULL,
@@ -1696,7 +1274,7 @@ CREATE TABLE IF NOT EXISTS `servicios` (
   `descripcion` text COLLATE utf8mb4_unicode_ci,
   `duracion` int NOT NULL DEFAULT '30',
   `precio` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `impuesto` decimal(5,2) NOT NULL DEFAULT '21.00',
+  `impuesto` decimal(5,2) NOT NULL DEFAULT '18.00',
   `comision` decimal(5,2) NOT NULL DEFAULT '0.00',
   `color` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#a855f7',
   `imagen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1707,31 +1285,29 @@ CREATE TABLE IF NOT EXISTS `servicios` (
   PRIMARY KEY (`id`),
   KEY `servicios_empresa_id_foreign` (`empresa_id`),
   KEY `servicios_categoria_id_foreign` (`categoria_id`),
-  CONSTRAINT `servicios_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias_servicios` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `servicios_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE
+  CONSTRAINT `servicios_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `pelu_categorias_servicios` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `servicios_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.servicios: ~15 rows (aproximadamente)
-DELETE FROM `servicios`;
-INSERT INTO `servicios` (`id`, `empresa_id`, `categoria_id`, `codigo`, `nombre`, `descripcion`, `duracion`, `precio`, `impuesto`, `comision`, `color`, `imagen`, `reservable_online`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, NULL, 'Corte mujer', NULL, 45, 25.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, 1, NULL, 'Corte hombre', NULL, 30, 18.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 1, 1, NULL, 'Corte niño/a', NULL, 30, 14.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(4, 1, 1, NULL, 'Peinado / recogido', NULL, 45, 30.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(5, 1, 1, NULL, 'Brushing', NULL, 30, 20.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(6, 1, 2, NULL, 'Tinte completo', NULL, 90, 55.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(7, 1, 2, NULL, 'Mechas', NULL, 120, 75.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(8, 1, 2, NULL, 'Balayage', NULL, 150, 95.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(9, 1, 2, NULL, 'Decoloración', NULL, 120, 80.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(10, 1, 3, NULL, 'Hidratación profunda', NULL, 45, 35.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(11, 1, 3, NULL, 'Keratina', NULL, 120, 120.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(12, 1, 3, NULL, 'Tratamiento anticaída', NULL, 30, 28.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(13, 1, 4, NULL, 'Manicura', NULL, 45, 22.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(14, 1, 4, NULL, 'Pedicura', NULL, 60, 28.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(15, 1, 4, NULL, 'Diseño de cejas', NULL, 30, 12.00, 21.00, 10.00, '#a855f7', NULL, 1, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (1,1,1,NULL,'Corte mujer',NULL,45,25.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (2,1,1,NULL,'Corte hombre',NULL,30,18.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (3,1,1,NULL,'Corte niño/a',NULL,30,14.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (4,1,1,NULL,'Peinado / recogido',NULL,45,30.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (5,1,1,NULL,'Brushing',NULL,30,20.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (6,1,2,NULL,'Tinte completo',NULL,90,55.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (7,1,2,NULL,'Mechas',NULL,120,75.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (8,1,2,NULL,'Balayage',NULL,150,95.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (9,1,2,NULL,'Decoloración',NULL,120,80.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (10,1,3,NULL,'Hidratación profunda',NULL,45,35.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (11,1,3,NULL,'Keratina',NULL,120,120.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (12,1,3,NULL,'Tratamiento anticaída',NULL,30,28.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (13,1,4,NULL,'Manicura',NULL,45,22.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (14,1,4,NULL,'Pedicura',NULL,60,28.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
+INSERT INTO `pelu_servicios` (`id`,`empresa_id`,`categoria_id`,`codigo`,`nombre`,`descripcion`,`duracion`,`precio`,`impuesto`,`comision`,`color`,`imagen`,`reservable_online`,`activo`,`created_at`,`updated_at`) VALUES (15,1,4,NULL,'Diseño de cejas',NULL,30,12.00,18.00,10.00,'#a855f7',NULL,1,1,'2026-08-03 00:40:22','2026-08-03 00:40:22');
 
--- Volcando estructura para tabla tpv_peluqueria.sessions
-CREATE TABLE IF NOT EXISTS `sessions` (
+-- Tabla: pelu_sessions
+DROP TABLE IF EXISTS `pelu_sessions`;
+CREATE TABLE `pelu_sessions` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1743,11 +1319,10 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.sessions: ~0 rows (aproximadamente)
-DELETE FROM `sessions`;
 
--- Volcando estructura para tabla tpv_peluqueria.tipos_bonos
-CREATE TABLE IF NOT EXISTS `tipos_bonos` (
+-- Tabla: pelu_tipos_bonos
+DROP TABLE IF EXISTS `pelu_tipos_bonos`;
+CREATE TABLE `pelu_tipos_bonos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1763,19 +1338,17 @@ CREATE TABLE IF NOT EXISTS `tipos_bonos` (
   PRIMARY KEY (`id`),
   KEY `tipos_bonos_empresa_id_foreign` (`empresa_id`),
   KEY `tipos_bonos_servicio_id_foreign` (`servicio_id`),
-  CONSTRAINT `tipos_bonos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `tipos_bonos_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE SET NULL
+  CONSTRAINT `tipos_bonos_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `tipos_bonos_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `pelu_servicios` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.tipos_bonos: ~3 rows (aproximadamente)
-DELETE FROM `tipos_bonos`;
-INSERT INTO `tipos_bonos` (`id`, `empresa_id`, `nombre`, `descripcion`, `servicio_id`, `sesiones`, `precio`, `precio_sesion`, `validez_dias`, `activo`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Bono 5 cortes mujer', NULL, NULL, 5, 100.00, 20.00, 365, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, 'Bono 10 brushing', NULL, NULL, 10, 170.00, 17.00, 365, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 1, 'Bono 5 manicuras', NULL, NULL, 5, 95.00, 19.00, 365, 1, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_tipos_bonos` (`id`,`empresa_id`,`nombre`,`descripcion`,`servicio_id`,`sesiones`,`precio`,`precio_sesion`,`validez_dias`,`activo`,`created_at`,`updated_at`) VALUES (1,1,'Bono 5 cortes mujer',NULL,NULL,5,100.00,20.00,365,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_tipos_bonos` (`id`,`empresa_id`,`nombre`,`descripcion`,`servicio_id`,`sesiones`,`precio`,`precio_sesion`,`validez_dias`,`activo`,`created_at`,`updated_at`) VALUES (2,1,'Bono 10 brushing',NULL,NULL,10,170.00,17.00,365,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_tipos_bonos` (`id`,`empresa_id`,`nombre`,`descripcion`,`servicio_id`,`sesiones`,`precio`,`precio_sesion`,`validez_dias`,`activo`,`created_at`,`updated_at`) VALUES (3,1,'Bono 5 manicuras',NULL,NULL,5,95.00,19.00,365,1,'2026-08-03 00:40:23','2026-08-03 00:40:23');
 
--- Volcando estructura para tabla tpv_peluqueria.users
-CREATE TABLE IF NOT EXISTS `users` (
+-- Tabla: pelu_users
+DROP TABLE IF EXISTS `pelu_users`;
+CREATE TABLE `pelu_users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1792,17 +1365,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_empresa_id_foreign` (`empresa_id`),
-  CONSTRAINT `users_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `users_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.users: ~2 rows (aproximadamente)
-DELETE FROM `users`;
-INSERT INTO `users` (`id`, `empresa_id`, `name`, `email`, `email_verified_at`, `password`, `telefono`, `rol`, `avatar`, `activo`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Administrador', 'admin@tpv.com', NULL, '$2y$12$QhesIc1EvsW4tpKBa7BPDu6nmQvQj94CAlirPJXbHTqvVL1PYp0Aa', NULL, 'admin', NULL, 1, NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 1, 'María García', 'empleado@tpv.com', NULL, '$2y$12$oezekBok4JlGXrhkWDWbsuwivMLJp1fuTEzDpTdsvHWMhsT0oBUXa', NULL, 'empleado', NULL, 1, NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09');
+INSERT INTO `pelu_users` (`id`,`empresa_id`,`name`,`email`,`email_verified_at`,`password`,`telefono`,`rol`,`avatar`,`activo`,`remember_token`,`created_at`,`updated_at`) VALUES (1,1,'Administrador','admin@tpv.com',NULL,'$2y$12$vYhiENlp9pkKODTgbLGFHOD/YTbLWx7JWLi5LiqnY85G2unjj1gWq',NULL,'admin',NULL,1,NULL,'2026-08-03 00:40:20','2026-08-03 00:40:20');
+INSERT INTO `pelu_users` (`id`,`empresa_id`,`name`,`email`,`email_verified_at`,`password`,`telefono`,`rol`,`avatar`,`activo`,`remember_token`,`created_at`,`updated_at`) VALUES (2,1,'María García','empleado@tpv.com',NULL,'$2y$12$oZSfqHG0OuN5HSpHyEXncOWhvM0y9w/Rkp3cD2lUfxcCUQL2ADYJa',NULL,'empleado',NULL,1,NULL,'2026-08-03 00:40:21','2026-08-03 00:40:21');
+INSERT INTO `pelu_users` (`id`,`empresa_id`,`name`,`email`,`email_verified_at`,`password`,`telefono`,`rol`,`avatar`,`activo`,`remember_token`,`created_at`,`updated_at`) VALUES (3,1,'demo','demo@demo.com',NULL,'$2y$12$WopfSmO.cj2U/KLLIXolOe60R7zh5TTOSApN.DNbv0lcygJjzlr/u',NULL,'admin',NULL,1,NULL,'2026-08-03 00:40:22','2026-08-03 00:40:22');
 
--- Volcando estructura para tabla tpv_peluqueria.uso_bonos
-CREATE TABLE IF NOT EXISTS `uso_bonos` (
+-- Tabla: pelu_uso_bonos
+DROP TABLE IF EXISTS `pelu_uso_bonos`;
+CREATE TABLE `pelu_uso_bonos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `bono_id` bigint unsigned NOT NULL,
   `cita_id` bigint unsigned DEFAULT NULL,
@@ -1815,83 +1387,57 @@ CREATE TABLE IF NOT EXISTS `uso_bonos` (
   KEY `uso_bonos_bono_id_foreign` (`bono_id`),
   KEY `uso_bonos_cita_id_foreign` (`cita_id`),
   KEY `uso_bonos_empleado_id_foreign` (`empleado_id`),
-  CONSTRAINT `uso_bonos_bono_id_foreign` FOREIGN KEY (`bono_id`) REFERENCES `bonos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `uso_bonos_cita_id_foreign` FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `uso_bonos_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `uso_bonos_bono_id_foreign` FOREIGN KEY (`bono_id`) REFERENCES `pelu_bonos` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `uso_bonos_cita_id_foreign` FOREIGN KEY (`cita_id`) REFERENCES `pelu_citas` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `uso_bonos_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `pelu_empleados` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.uso_bonos: ~66 rows (aproximadamente)
-DELETE FROM `uso_bonos`;
-INSERT INTO `uso_bonos` (`id`, `bono_id`, `cita_id`, `empleado_id`, `fecha`, `notas`, `created_at`, `updated_at`) VALUES
-	(1, 3, NULL, 1, '2026-05-08', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(2, 3, NULL, 7, '2026-04-02', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(3, 3, NULL, 8, '2026-05-14', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(4, 4, NULL, 3, '2026-03-26', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(5, 4, NULL, 10, '2026-02-24', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(6, 4, NULL, 3, '2026-03-24', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(7, 4, NULL, 7, '2026-03-02', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(8, 5, NULL, 9, '2026-03-15', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(9, 5, NULL, 4, '2026-03-11', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(10, 6, NULL, 4, '2026-05-03', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(11, 6, NULL, 8, '2026-03-13', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(12, 6, NULL, 3, '2026-04-14', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(13, 6, NULL, 6, '2026-04-21', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(14, 7, NULL, 9, '2026-04-17', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(15, 7, NULL, 5, '2026-04-16', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(16, 7, NULL, 10, '2026-03-07', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(17, 7, NULL, 3, '2026-03-18', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(18, 7, NULL, 10, '2026-04-04', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(19, 8, NULL, 7, '2026-03-27', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(20, 9, NULL, 9, '2026-03-18', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(21, 9, NULL, 10, '2026-04-08', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(22, 9, NULL, 2, '2026-04-15', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(23, 9, NULL, 6, '2026-03-12', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(24, 9, NULL, 4, '2026-03-05', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(25, 9, NULL, 10, '2026-03-27', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(26, 9, NULL, 1, '2026-02-27', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(27, 10, NULL, 6, '2026-04-21', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(28, 10, NULL, 7, '2026-05-08', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(29, 10, NULL, 6, '2026-04-22', NULL, '2026-05-07 19:21:09', '2026-05-07 19:21:09'),
-	(30, 11, NULL, 1, '2026-03-31', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(31, 11, NULL, 6, '2026-02-16', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(32, 11, NULL, 3, '2026-03-03', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(33, 11, NULL, 7, '2026-03-22', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(34, 11, NULL, 5, '2026-03-24', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(35, 11, NULL, 1, '2026-03-11', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(36, 11, NULL, 5, '2026-03-28', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(37, 11, NULL, 9, '2026-03-28', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(38, 12, NULL, 6, '2026-03-13', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(39, 12, NULL, 2, '2026-04-06', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(40, 13, NULL, 1, '2026-03-24', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(41, 15, NULL, 2, '2026-05-30', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(42, 15, NULL, 1, '2026-05-26', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(43, 15, NULL, 9, '2026-05-17', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(44, 15, NULL, 9, '2026-04-20', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(45, 16, NULL, 7, '2026-05-01', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(46, 16, NULL, 4, '2026-04-03', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(47, 16, NULL, 7, '2026-05-02', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(48, 16, NULL, 9, '2026-05-01', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(49, 16, NULL, 2, '2026-04-11', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(50, 16, NULL, 5, '2026-03-31', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(51, 17, NULL, 5, '2026-05-03', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(52, 17, NULL, 7, '2026-06-15', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(53, 17, NULL, 2, '2026-05-22', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(54, 17, NULL, 4, '2026-06-04', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(55, 17, NULL, 8, '2026-05-09', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(56, 17, NULL, 1, '2026-05-26', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(57, 18, NULL, 1, '2026-05-20', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(58, 18, NULL, 1, '2026-05-15', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(59, 18, NULL, 3, '2026-04-11', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(60, 18, NULL, 7, '2026-03-28', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(61, 18, NULL, 9, '2026-05-05', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(62, 19, NULL, 8, '2026-04-07', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(63, 19, NULL, 4, '2026-04-06', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(64, 20, NULL, 9, '2026-04-10', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(65, 20, NULL, 5, '2026-05-29', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20'),
-	(66, 20, NULL, 4, '2026-05-20', NULL, '2026-05-07 19:21:20', '2026-05-07 19:21:20');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (1,3,NULL,7,'2026-07-04',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (2,3,NULL,1,'2026-05-29',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (3,3,NULL,10,'2026-07-03',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (4,3,NULL,9,'2026-05-18',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (5,3,NULL,4,'2026-06-24',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (6,3,NULL,5,'2026-07-09',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (7,3,NULL,9,'2026-07-14',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (8,3,NULL,10,'2026-07-08',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (9,4,NULL,5,'2026-07-20',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (10,4,NULL,9,'2026-07-03',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (11,4,NULL,4,'2026-06-09',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (12,4,NULL,1,'2026-07-06',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (13,4,NULL,9,'2026-06-20',NULL,'2026-08-03 00:40:23','2026-08-03 00:40:23');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (14,4,NULL,7,'2026-06-17',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (15,4,NULL,3,'2026-06-24',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (16,4,NULL,2,'2026-07-07',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (17,4,NULL,1,'2026-06-04',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (18,4,NULL,6,'2026-07-02',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (19,5,NULL,8,'2026-09-20',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (20,5,NULL,2,'2026-08-16',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (21,5,NULL,7,'2026-08-07',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (22,5,NULL,6,'2026-09-15',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (23,6,NULL,7,'2026-06-04',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (24,6,NULL,4,'2026-06-22',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (25,6,NULL,10,'2026-05-20',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (26,6,NULL,8,'2026-06-22',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (27,6,NULL,5,'2026-07-04',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (28,6,NULL,3,'2026-06-24',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (29,7,NULL,5,'2026-06-01',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (30,7,NULL,8,'2026-05-27',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (31,8,NULL,10,'2026-08-01',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (32,8,NULL,2,'2026-07-19',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (33,8,NULL,3,'2026-07-01',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (34,8,NULL,7,'2026-06-24',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (35,8,NULL,1,'2026-06-25',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (36,8,NULL,2,'2026-07-02',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (37,9,NULL,5,'2026-06-10',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (38,9,NULL,7,'2026-07-02',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (39,9,NULL,4,'2026-06-16',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (40,9,NULL,1,'2026-07-03',NULL,'2026-08-03 00:40:24','2026-08-03 00:40:24');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (41,5,NULL,NULL,'2026-08-03',NULL,'2026-08-03 01:41:50','2026-08-03 01:41:50');
+INSERT INTO `pelu_uso_bonos` (`id`,`bono_id`,`cita_id`,`empleado_id`,`fecha`,`notas`,`created_at`,`updated_at`) VALUES (42,5,NULL,NULL,'2026-08-03',NULL,'2026-08-03 01:41:55','2026-08-03 01:41:55');
 
--- Volcando estructura para tabla tpv_peluqueria.ventas
-CREATE TABLE IF NOT EXISTS `ventas` (
+-- Tabla: pelu_ventas
+DROP TABLE IF EXISTS `pelu_ventas`;
+CREATE TABLE `pelu_ventas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `empresa_id` bigint unsigned NOT NULL,
   `cliente_id` bigint unsigned DEFAULT NULL,
@@ -1905,7 +1451,7 @@ CREATE TABLE IF NOT EXISTS `ventas` (
   `descuento` decimal(10,2) NOT NULL DEFAULT '0.00',
   `impuesto` decimal(10,2) NOT NULL DEFAULT '0.00',
   `total` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `metodo_pago` enum('efectivo','tarjeta','transferencia','bizum','mixto','otro') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'efectivo',
+  `metodo_pago` enum('efectivo','tarjeta','transferencia','yapeplin','mixto','otro') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'efectivo',
   `importe_pagado` decimal(10,2) NOT NULL DEFAULT '0.00',
   `cambio` decimal(10,2) NOT NULL DEFAULT '0.00',
   `estado` enum('pendiente','pagada','parcial','anulada','devuelta') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pagada',
@@ -1920,224 +1466,173 @@ CREATE TABLE IF NOT EXISTS `ventas` (
   KEY `ventas_caja_id_foreign` (`caja_id`),
   KEY `ventas_cita_id_foreign` (`cita_id`),
   KEY `ventas_empresa_id_fecha_index` (`empresa_id`,`fecha`),
-  CONSTRAINT `ventas_caja_id_foreign` FOREIGN KEY (`caja_id`) REFERENCES `cajas` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `ventas_cita_id_foreign` FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `ventas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `ventas_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `ventas_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `ventas_caja_id_foreign` FOREIGN KEY (`caja_id`) REFERENCES `pelu_cajas` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `ventas_cita_id_foreign` FOREIGN KEY (`cita_id`) REFERENCES `pelu_citas` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `ventas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `pelu_clientes` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `ventas_empleado_id_foreign` FOREIGN KEY (`empleado_id`) REFERENCES `pelu_empleados` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `ventas_empresa_id_foreign` FOREIGN KEY (`empresa_id`) REFERENCES `pelu_empresas` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `ventas_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelu_users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla tpv_peluqueria.ventas: ~204 rows (aproximadamente)
-DELETE FROM `ventas`;
-INSERT INTO `ventas` (`id`, `empresa_id`, `cliente_id`, `empleado_id`, `user_id`, `caja_id`, `cita_id`, `numero`, `fecha`, `subtotal`, `descuento`, `impuesto`, `total`, `metodo_pago`, `importe_pagado`, `cambio`, `estado`, `notas`, `created_at`, `updated_at`) VALUES
-	(1, 1, 9, 10, 1, 1, NULL, 'V-20260407-00001', '2026-04-07 15:46:00', 52.89, 0.00, 11.11, 64.00, 'transferencia', 64.00, 0.00, 'pagada', NULL, '2026-04-07 20:46:00', '2026-04-07 20:46:00'),
-	(2, 1, 5, 7, 1, 1, NULL, 'V-20260407-00002', '2026-04-07 19:30:00', 41.32, 0.00, 8.68, 50.00, 'tarjeta', 50.00, 0.00, 'pagada', NULL, '2026-04-08 00:30:00', '2026-04-08 00:30:00'),
-	(3, 1, 4, 4, 1, 1, NULL, 'V-20260407-00003', '2026-04-07 14:04:00', 64.05, 0.00, 13.45, 77.50, 'bizum', 77.50, 0.00, 'pagada', NULL, '2026-04-07 19:04:00', '2026-04-07 19:04:00'),
-	(4, 1, 2, 1, 1, 1, NULL, 'V-20260407-00004', '2026-04-07 18:51:00', 10.33, 0.00, 2.17, 12.50, 'tarjeta', 12.50, 0.00, 'pagada', NULL, '2026-04-07 23:51:00', '2026-04-07 23:51:00'),
-	(5, 1, 4, 1, 1, 1, NULL, 'V-20260407-00005', '2026-04-07 18:07:00', 11.57, 0.00, 2.43, 14.00, 'transferencia', 14.00, 0.00, 'pagada', NULL, '2026-04-07 23:07:00', '2026-04-07 23:07:00'),
-	(6, 1, NULL, 9, 1, 2, NULL, 'V-20260409-00006', '2026-04-09 10:04:00', 88.43, 0.00, 18.57, 107.00, 'transferencia', 107.00, 0.00, 'pagada', NULL, '2026-04-09 15:04:00', '2026-04-09 15:04:00'),
-	(7, 1, 2, 5, 1, 2, NULL, 'V-20260409-00007', '2026-04-09 19:45:00', 25.21, 0.00, 5.29, 30.50, 'transferencia', 30.50, 0.00, 'pagada', NULL, '2026-04-10 00:45:00', '2026-04-10 00:45:00'),
-	(8, 1, 2, 9, 1, 2, NULL, 'V-20260409-00008', '2026-04-09 10:53:00', 19.83, 0.00, 4.17, 24.00, 'tarjeta', 24.00, 0.00, 'pagada', NULL, '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(9, 1, NULL, 5, 1, 2, NULL, 'V-20260409-00009', '2026-04-09 14:00:00', 123.97, 0.00, 26.03, 150.00, 'transferencia', 150.00, 0.00, 'pagada', NULL, '2026-04-09 19:00:00', '2026-04-09 19:00:00'),
-	(10, 1, 9, 6, 1, 3, NULL, 'V-20260410-00010', '2026-04-10 10:33:00', 69.42, 0.00, 14.58, 84.00, 'efectivo', 84.00, 0.00, 'pagada', NULL, '2026-04-10 15:33:00', '2026-04-10 15:33:00'),
-	(11, 1, 6, 2, 1, 3, NULL, 'V-20260410-00011', '2026-04-10 11:39:00', 88.84, 0.00, 18.66, 107.50, 'tarjeta', 107.50, 0.00, 'pagada', NULL, '2026-04-10 16:39:00', '2026-04-10 16:39:00'),
-	(12, 1, 5, 4, 1, 4, NULL, 'V-20260411-00012', '2026-04-11 19:15:00', 16.53, 0.00, 3.47, 20.00, 'tarjeta', 20.00, 0.00, 'pagada', NULL, '2026-04-12 00:15:00', '2026-04-12 00:15:00'),
-	(13, 1, 7, 7, 1, 4, NULL, 'V-20260411-00013', '2026-04-11 19:08:00', 13.64, 0.00, 2.86, 16.50, 'tarjeta', 16.50, 0.00, 'pagada', NULL, '2026-04-12 00:08:00', '2026-04-12 00:08:00'),
-	(14, 1, 3, 10, 1, 4, NULL, 'V-20260411-00014', '2026-04-11 12:11:00', 109.92, 0.00, 23.08, 133.00, 'efectivo', 133.00, 0.00, 'pagada', NULL, '2026-04-11 17:11:00', '2026-04-11 17:11:00'),
-	(15, 1, 5, 1, 1, 4, NULL, 'V-20260411-00015', '2026-04-11 16:03:00', 67.36, 0.00, 14.14, 81.50, 'bizum', 81.50, 0.00, 'pagada', NULL, '2026-04-11 21:03:00', '2026-04-11 21:03:00'),
-	(16, 1, 2, 10, 1, 4, NULL, 'V-20260411-00016', '2026-04-11 17:53:00', 18.18, 0.00, 3.82, 22.00, 'tarjeta', 22.00, 0.00, 'pagada', NULL, '2026-04-11 22:53:00', '2026-04-11 22:53:00'),
-	(17, 1, 10, 10, 1, 4, NULL, 'V-20260411-00017', '2026-04-11 18:40:00', 73.55, 0.00, 15.45, 89.00, 'tarjeta', 89.00, 0.00, 'pagada', NULL, '2026-04-11 23:40:00', '2026-04-11 23:40:00'),
-	(18, 1, NULL, 5, 1, 5, NULL, 'V-20260413-00018', '2026-04-13 11:26:00', 99.17, 0.00, 20.83, 120.00, 'efectivo', 120.00, 0.00, 'pagada', NULL, '2026-04-13 16:26:00', '2026-04-13 16:26:00'),
-	(19, 1, 9, 2, 1, 5, NULL, 'V-20260413-00019', '2026-04-13 17:00:00', 87.19, 0.00, 18.31, 105.50, 'efectivo', 105.50, 0.00, 'pagada', NULL, '2026-04-13 22:00:00', '2026-04-13 22:00:00'),
-	(20, 1, 2, 8, 1, 5, NULL, 'V-20260413-00020', '2026-04-13 12:17:00', 108.26, 0.00, 22.74, 131.00, 'tarjeta', 131.00, 0.00, 'pagada', NULL, '2026-04-13 17:17:00', '2026-04-13 17:17:00'),
-	(21, 1, NULL, 6, 1, 5, NULL, 'V-20260413-00021', '2026-04-13 12:20:00', 12.81, 0.00, 2.69, 15.50, 'tarjeta', 15.50, 0.00, 'pagada', NULL, '2026-04-13 17:20:00', '2026-04-13 17:20:00'),
-	(22, 1, 5, 10, 1, 5, NULL, 'V-20260413-00022', '2026-04-13 12:46:00', 9.92, 0.00, 2.08, 12.00, 'bizum', 12.00, 0.00, 'pagada', NULL, '2026-04-13 17:46:00', '2026-04-13 17:46:00'),
-	(23, 1, 2, 9, 1, 5, NULL, 'V-20260413-00023', '2026-04-13 13:34:00', 19.01, 0.00, 3.99, 23.00, 'bizum', 23.00, 0.00, 'pagada', NULL, '2026-04-13 18:34:00', '2026-04-13 18:34:00'),
-	(24, 1, 4, 5, 1, 5, NULL, 'V-20260413-00024', '2026-04-13 16:26:00', 34.71, 0.00, 7.29, 42.00, 'tarjeta', 42.00, 0.00, 'pagada', NULL, '2026-04-13 21:26:00', '2026-04-13 21:26:00'),
-	(25, 1, 2, 9, 1, 6, NULL, 'V-20260414-00025', '2026-04-14 11:39:00', 51.24, 0.00, 10.76, 62.00, 'bizum', 62.00, 0.00, 'pagada', NULL, '2026-04-14 16:39:00', '2026-04-14 16:39:00'),
-	(26, 1, 6, 2, 1, 6, NULL, 'V-20260414-00026', '2026-04-14 14:53:00', 43.80, 0.00, 9.20, 53.00, 'tarjeta', 53.00, 0.00, 'pagada', NULL, '2026-04-14 19:53:00', '2026-04-14 19:53:00'),
-	(27, 1, 10, 4, 1, 6, NULL, 'V-20260414-00027', '2026-04-14 11:29:00', 111.57, 0.00, 23.43, 135.00, 'efectivo', 135.00, 0.00, 'pagada', NULL, '2026-04-14 16:29:00', '2026-04-14 16:29:00'),
-	(28, 1, NULL, 9, 1, 6, NULL, 'V-20260414-00028', '2026-04-14 18:22:00', 103.72, 0.00, 21.78, 125.50, 'tarjeta', 125.50, 0.00, 'pagada', NULL, '2026-04-14 23:22:00', '2026-04-14 23:22:00'),
-	(29, 1, 2, 10, 1, 7, NULL, 'V-20260415-00029', '2026-04-15 12:00:00', 152.07, 0.00, 31.93, 184.00, 'bizum', 184.00, 0.00, 'pagada', NULL, '2026-04-15 17:00:00', '2026-04-15 17:00:00'),
-	(30, 1, 9, 3, 1, 7, NULL, 'V-20260415-00030', '2026-04-15 15:53:00', 112.81, 0.00, 23.69, 136.50, 'transferencia', 136.50, 0.00, 'pagada', NULL, '2026-04-15 20:53:00', '2026-04-15 20:53:00'),
-	(31, 1, 2, 9, 1, 8, NULL, 'V-20260416-00031', '2026-04-16 19:32:00', 107.44, 0.00, 22.56, 130.00, 'tarjeta', 130.00, 0.00, 'pagada', NULL, '2026-04-17 00:32:00', '2026-04-17 00:32:00'),
-	(32, 1, 4, 7, 1, 8, NULL, 'V-20260416-00032', '2026-04-16 10:12:00', 45.45, 0.00, 9.55, 55.00, 'bizum', 55.00, 0.00, 'pagada', NULL, '2026-04-16 15:12:00', '2026-04-16 15:12:00'),
-	(33, 1, NULL, 7, 1, 8, NULL, 'V-20260416-00033', '2026-04-16 17:31:00', 24.79, 0.00, 5.21, 30.00, 'transferencia', 30.00, 0.00, 'pagada', NULL, '2026-04-16 22:31:00', '2026-04-16 22:31:00'),
-	(34, 1, 10, 3, 1, 8, NULL, 'V-20260416-00034', '2026-04-16 16:55:00', 27.69, 0.00, 5.81, 33.50, 'tarjeta', 33.50, 0.00, 'pagada', NULL, '2026-04-16 21:55:00', '2026-04-16 21:55:00'),
-	(35, 1, NULL, 1, 1, 8, NULL, 'V-20260416-00035', '2026-04-16 15:59:00', 13.64, 0.00, 2.86, 16.50, 'efectivo', 16.50, 0.00, 'pagada', NULL, '2026-04-16 20:59:00', '2026-04-16 20:59:00'),
-	(36, 1, NULL, 4, 1, 8, NULL, 'V-20260416-00036', '2026-04-16 15:28:00', 78.51, 0.00, 16.49, 95.00, 'tarjeta', 95.00, 0.00, 'pagada', NULL, '2026-04-16 20:28:00', '2026-04-16 20:28:00'),
-	(37, 1, 3, 6, 1, 9, NULL, 'V-20260417-00037', '2026-04-17 10:19:00', 26.86, 0.00, 5.64, 32.50, 'bizum', 32.50, 0.00, 'pagada', NULL, '2026-04-17 15:19:00', '2026-04-17 15:19:00'),
-	(38, 1, 10, 2, 1, 9, NULL, 'V-20260417-00038', '2026-04-17 14:27:00', 111.57, 0.00, 23.43, 135.00, 'efectivo', 135.00, 0.00, 'pagada', NULL, '2026-04-17 19:27:00', '2026-04-17 19:27:00'),
-	(39, 1, 5, 2, 1, 9, NULL, 'V-20260417-00039', '2026-04-17 15:11:00', 162.81, 0.00, 34.19, 197.00, 'efectivo', 197.00, 0.00, 'pagada', NULL, '2026-04-17 20:11:00', '2026-04-17 20:11:00'),
-	(40, 1, NULL, 5, 1, 9, NULL, 'V-20260417-00040', '2026-04-17 13:36:00', 11.57, 0.00, 2.43, 14.00, 'transferencia', 14.00, 0.00, 'pagada', NULL, '2026-04-17 18:36:00', '2026-04-17 18:36:00'),
-	(41, 1, 5, 1, 1, 10, NULL, 'V-20260418-00041', '2026-04-18 10:30:00', 13.64, 0.00, 2.86, 16.50, 'tarjeta', 16.50, 0.00, 'pagada', NULL, '2026-04-18 15:30:00', '2026-04-18 15:30:00'),
-	(42, 1, 1, 3, 1, 10, NULL, 'V-20260418-00042', '2026-04-18 16:28:00', 74.38, 0.00, 15.62, 90.00, 'tarjeta', 90.00, 0.00, 'pagada', NULL, '2026-04-18 21:28:00', '2026-04-18 21:28:00'),
-	(43, 1, NULL, 9, 1, 10, NULL, 'V-20260418-00043', '2026-04-18 11:39:00', 167.77, 0.00, 35.23, 203.00, 'transferencia', 203.00, 0.00, 'pagada', NULL, '2026-04-18 16:39:00', '2026-04-18 16:39:00'),
-	(44, 1, NULL, 8, 1, 10, NULL, 'V-20260418-00044', '2026-04-18 11:40:00', 76.45, 0.00, 16.05, 92.50, 'tarjeta', 92.50, 0.00, 'pagada', NULL, '2026-04-18 16:40:00', '2026-04-18 16:40:00'),
-	(45, 1, NULL, 7, 1, 11, NULL, 'V-20260420-00045', '2026-04-20 09:35:00', 38.43, 0.00, 8.07, 46.50, 'bizum', 46.50, 0.00, 'pagada', NULL, '2026-04-20 14:35:00', '2026-04-20 14:35:00'),
-	(46, 1, 6, 9, 1, 11, NULL, 'V-20260420-00046', '2026-04-20 16:53:00', 14.88, 0.00, 3.12, 18.00, 'tarjeta', 18.00, 0.00, 'pagada', NULL, '2026-04-20 21:53:00', '2026-04-20 21:53:00'),
-	(47, 1, 3, 5, 1, 11, NULL, 'V-20260420-00047', '2026-04-20 09:55:00', 9.92, 0.00, 2.08, 12.00, 'efectivo', 12.00, 0.00, 'pagada', NULL, '2026-04-20 14:55:00', '2026-04-20 14:55:00'),
-	(48, 1, 4, 3, 1, 11, NULL, 'V-20260420-00048', '2026-04-20 19:42:00', 33.47, 0.00, 7.03, 40.50, 'tarjeta', 40.50, 0.00, 'pagada', NULL, '2026-04-21 00:42:00', '2026-04-21 00:42:00'),
-	(49, 1, 9, 6, 1, 11, NULL, 'V-20260420-00049', '2026-04-20 19:24:00', 21.49, 0.00, 4.51, 26.00, 'bizum', 26.00, 0.00, 'pagada', NULL, '2026-04-21 00:24:00', '2026-04-21 00:24:00'),
-	(50, 1, 2, 7, 1, 12, NULL, 'V-20260421-00050', '2026-04-21 09:29:00', 113.22, 0.00, 23.78, 137.00, 'tarjeta', 137.00, 0.00, 'pagada', NULL, '2026-04-21 14:29:00', '2026-04-21 14:29:00'),
-	(51, 1, 3, 7, 1, 12, NULL, 'V-20260421-00051', '2026-04-21 11:34:00', 103.31, 0.00, 21.69, 125.00, 'tarjeta', 125.00, 0.00, 'pagada', NULL, '2026-04-21 16:34:00', '2026-04-21 16:34:00'),
-	(52, 1, 1, 8, 1, 12, NULL, 'V-20260421-00052', '2026-04-21 09:00:00', 66.12, 0.00, 13.88, 80.00, 'efectivo', 80.00, 0.00, 'pagada', NULL, '2026-04-21 14:00:00', '2026-04-21 14:00:00'),
-	(53, 1, NULL, 1, 1, 12, NULL, 'V-20260421-00053', '2026-04-21 14:27:00', 36.36, 0.00, 7.64, 44.00, 'transferencia', 44.00, 0.00, 'pagada', NULL, '2026-04-21 19:27:00', '2026-04-21 19:27:00'),
-	(54, 1, NULL, 6, 1, 13, NULL, 'V-20260422-00054', '2026-04-22 19:41:00', 21.49, 0.00, 4.51, 26.00, 'efectivo', 26.00, 0.00, 'pagada', NULL, '2026-04-23 00:41:00', '2026-04-23 00:41:00'),
-	(55, 1, NULL, 10, 1, 13, NULL, 'V-20260422-00055', '2026-04-22 09:07:00', 120.25, 0.00, 25.25, 145.50, 'efectivo', 145.50, 0.00, 'pagada', NULL, '2026-04-22 14:07:00', '2026-04-22 14:07:00'),
-	(56, 1, NULL, 3, 1, 14, NULL, 'V-20260423-00056', '2026-04-23 09:27:00', 34.30, 0.00, 7.20, 41.50, 'efectivo', 41.50, 0.00, 'pagada', NULL, '2026-04-23 14:27:00', '2026-04-23 14:27:00'),
-	(57, 1, 10, 9, 1, 14, NULL, 'V-20260423-00057', '2026-04-23 10:30:00', 115.70, 0.00, 24.30, 140.00, 'efectivo', 140.00, 0.00, 'pagada', NULL, '2026-04-23 15:30:00', '2026-04-23 15:30:00'),
-	(58, 1, 10, 8, 1, 15, NULL, 'V-20260424-00058', '2026-04-24 18:23:00', 23.14, 0.00, 4.86, 28.00, 'efectivo', 28.00, 0.00, 'pagada', NULL, '2026-04-24 23:23:00', '2026-04-24 23:23:00'),
-	(59, 1, NULL, 1, 1, 15, NULL, 'V-20260424-00059', '2026-04-24 16:13:00', 47.52, 0.00, 9.98, 57.50, 'tarjeta', 57.50, 0.00, 'pagada', NULL, '2026-04-24 21:13:00', '2026-04-24 21:13:00'),
-	(60, 1, 5, 5, 1, 15, NULL, 'V-20260424-00060', '2026-04-24 10:54:00', 127.27, 0.00, 26.73, 154.00, 'transferencia', 154.00, 0.00, 'pagada', NULL, '2026-04-24 15:54:00', '2026-04-24 15:54:00'),
-	(61, 1, 8, 3, 1, 15, NULL, 'V-20260424-00061', '2026-04-24 12:33:00', 167.77, 0.00, 35.23, 203.00, 'tarjeta', 203.00, 0.00, 'pagada', NULL, '2026-04-24 17:33:00', '2026-04-24 17:33:00'),
-	(62, 1, 8, 7, 1, 16, NULL, 'V-20260425-00062', '2026-04-25 17:43:00', 126.03, 0.00, 26.47, 152.50, 'efectivo', 152.50, 0.00, 'pagada', NULL, '2026-04-25 22:43:00', '2026-04-25 22:43:00'),
-	(63, 1, 1, 10, 1, 16, NULL, 'V-20260425-00063', '2026-04-25 10:17:00', 9.92, 0.00, 2.08, 12.00, 'tarjeta', 12.00, 0.00, 'pagada', NULL, '2026-04-25 15:17:00', '2026-04-25 15:17:00'),
-	(64, 1, 8, 8, 1, 16, NULL, 'V-20260425-00064', '2026-04-25 16:05:00', 101.65, 0.00, 21.35, 123.00, 'tarjeta', 123.00, 0.00, 'pagada', NULL, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(65, 1, NULL, 9, 1, 16, NULL, 'V-20260425-00065', '2026-04-25 17:36:00', 39.26, 0.00, 8.24, 47.50, 'tarjeta', 47.50, 0.00, 'pagada', NULL, '2026-04-25 22:36:00', '2026-04-25 22:36:00'),
-	(66, 1, 4, 6, 1, 16, NULL, 'V-20260425-00066', '2026-04-25 09:38:00', 66.12, 0.00, 13.88, 80.00, 'tarjeta', 80.00, 0.00, 'pagada', NULL, '2026-04-25 14:38:00', '2026-04-25 14:38:00'),
-	(67, 1, 3, 1, 1, 16, NULL, 'V-20260425-00067', '2026-04-25 09:23:00', 99.17, 0.00, 20.83, 120.00, 'transferencia', 120.00, 0.00, 'pagada', NULL, '2026-04-25 14:23:00', '2026-04-25 14:23:00'),
-	(68, 1, 2, 3, 1, 16, NULL, 'V-20260425-00068', '2026-04-25 13:36:00', 37.60, 0.00, 7.90, 45.50, 'efectivo', 45.50, 0.00, 'pagada', NULL, '2026-04-25 18:36:00', '2026-04-25 18:36:00'),
-	(69, 1, NULL, 4, 1, 17, NULL, 'V-20260427-00069', '2026-04-27 13:38:00', 37.60, 0.00, 7.90, 45.50, 'bizum', 45.50, 0.00, 'pagada', NULL, '2026-04-27 18:38:00', '2026-04-27 18:38:00'),
-	(70, 1, 6, 4, 1, 17, NULL, 'V-20260427-00070', '2026-04-27 13:56:00', 99.17, 0.00, 20.83, 120.00, 'efectivo', 120.00, 0.00, 'pagada', NULL, '2026-04-27 18:56:00', '2026-04-27 18:56:00'),
-	(71, 1, 3, 2, 1, 17, NULL, 'V-20260427-00071', '2026-04-27 19:31:00', 13.64, 0.00, 2.86, 16.50, 'tarjeta', 16.50, 0.00, 'pagada', NULL, '2026-04-28 00:31:00', '2026-04-28 00:31:00'),
-	(72, 1, 6, 7, 1, 17, NULL, 'V-20260427-00072', '2026-04-27 14:00:00', 11.57, 0.00, 2.43, 14.00, 'efectivo', 14.00, 0.00, 'pagada', NULL, '2026-04-27 19:00:00', '2026-04-27 19:00:00'),
-	(73, 1, NULL, 7, 1, 18, NULL, 'V-20260428-00073', '2026-04-28 18:46:00', 57.85, 0.00, 12.15, 70.00, 'tarjeta', 70.00, 0.00, 'pagada', NULL, '2026-04-28 23:46:00', '2026-04-28 23:46:00'),
-	(74, 1, NULL, 2, 1, 18, NULL, 'V-20260428-00074', '2026-04-28 09:12:00', 45.04, 0.00, 9.46, 54.50, 'bizum', 54.50, 0.00, 'pagada', NULL, '2026-04-28 14:12:00', '2026-04-28 14:12:00'),
-	(75, 1, 3, 7, 1, 18, NULL, 'V-20260428-00075', '2026-04-28 09:17:00', 56.61, 0.00, 11.89, 68.50, 'tarjeta', 68.50, 0.00, 'pagada', NULL, '2026-04-28 14:17:00', '2026-04-28 14:17:00'),
-	(76, 1, NULL, 1, 1, 18, NULL, 'V-20260428-00076', '2026-04-28 09:54:00', 29.75, 0.00, 6.25, 36.00, 'tarjeta', 36.00, 0.00, 'pagada', NULL, '2026-04-28 14:54:00', '2026-04-28 14:54:00'),
-	(77, 1, 6, 3, 1, 19, NULL, 'V-20260429-00077', '2026-04-29 14:13:00', 83.47, 0.00, 17.53, 101.00, 'tarjeta', 101.00, 0.00, 'pagada', NULL, '2026-04-29 19:13:00', '2026-04-29 19:13:00'),
-	(78, 1, NULL, 5, 1, 19, NULL, 'V-20260429-00078', '2026-04-29 19:28:00', 21.49, 0.00, 4.51, 26.00, 'tarjeta', 26.00, 0.00, 'pagada', NULL, '2026-04-30 00:28:00', '2026-04-30 00:28:00'),
-	(79, 1, 6, 4, 1, 20, NULL, 'V-20260430-00079', '2026-04-30 18:55:00', 11.57, 0.00, 2.43, 14.00, 'tarjeta', 14.00, 0.00, 'pagada', NULL, '2026-04-30 23:55:00', '2026-04-30 23:55:00'),
-	(80, 1, NULL, 1, 1, 20, NULL, 'V-20260430-00080', '2026-04-30 12:33:00', 78.51, 0.00, 16.49, 95.00, 'bizum', 95.00, 0.00, 'pagada', NULL, '2026-04-30 17:33:00', '2026-04-30 17:33:00'),
-	(81, 1, 8, 7, 1, 21, NULL, 'V-20260501-00081', '2026-05-01 17:04:00', 47.93, 0.00, 10.07, 58.00, 'tarjeta', 58.00, 0.00, 'pagada', NULL, '2026-05-01 22:04:00', '2026-05-01 22:04:00'),
-	(82, 1, 1, 8, 1, 21, NULL, 'V-20260501-00082', '2026-05-01 18:04:00', 157.02, 0.00, 32.98, 190.00, 'efectivo', 190.00, 0.00, 'pagada', NULL, '2026-05-01 23:04:00', '2026-05-01 23:04:00'),
-	(83, 1, 10, 6, 1, 21, NULL, 'V-20260501-00083', '2026-05-01 13:13:00', 88.43, 0.00, 18.57, 107.00, 'tarjeta', 107.00, 0.00, 'pagada', NULL, '2026-05-01 18:13:00', '2026-05-01 18:13:00'),
-	(84, 1, NULL, 7, 1, 21, NULL, 'V-20260501-00084', '2026-05-01 16:56:00', 31.40, 0.00, 6.60, 38.00, 'tarjeta', 38.00, 0.00, 'pagada', NULL, '2026-05-01 21:56:00', '2026-05-01 21:56:00'),
-	(85, 1, 3, 10, 1, 22, NULL, 'V-20260502-00085', '2026-05-02 11:54:00', 24.79, 0.00, 5.21, 30.00, 'tarjeta', 30.00, 0.00, 'pagada', NULL, '2026-05-02 16:54:00', '2026-05-02 16:54:00'),
-	(86, 1, NULL, 5, 1, 22, NULL, 'V-20260502-00086', '2026-05-02 19:35:00', 36.36, 0.00, 7.64, 44.00, 'efectivo', 44.00, 0.00, 'pagada', NULL, '2026-05-03 00:35:00', '2026-05-03 00:35:00'),
-	(87, 1, 6, 3, 1, 22, NULL, 'V-20260502-00087', '2026-05-02 12:50:00', 57.44, 0.00, 12.06, 69.50, 'efectivo', 69.50, 0.00, 'pagada', NULL, '2026-05-02 17:50:00', '2026-05-02 17:50:00'),
-	(88, 1, 2, 2, 1, 22, NULL, 'V-20260502-00088', '2026-05-02 13:53:00', 119.83, 0.00, 25.17, 145.00, 'tarjeta', 145.00, 0.00, 'pagada', NULL, '2026-05-02 18:53:00', '2026-05-02 18:53:00'),
-	(89, 1, 4, 9, 1, 22, NULL, 'V-20260502-00089', '2026-05-02 10:01:00', 11.57, 0.00, 2.43, 14.00, 'tarjeta', 14.00, 0.00, 'pagada', NULL, '2026-05-02 15:01:00', '2026-05-02 15:01:00'),
-	(90, 1, 9, 2, 1, 22, NULL, 'V-20260502-00090', '2026-05-02 16:20:00', 16.53, 0.00, 3.47, 20.00, 'tarjeta', 20.00, 0.00, 'pagada', NULL, '2026-05-02 21:20:00', '2026-05-02 21:20:00'),
-	(91, 1, 1, 7, 1, 22, NULL, 'V-20260502-00091', '2026-05-02 19:18:00', 11.57, 0.00, 2.43, 14.00, 'bizum', 14.00, 0.00, 'pagada', NULL, '2026-05-03 00:18:00', '2026-05-03 00:18:00'),
-	(92, 1, NULL, 2, 1, 23, NULL, 'V-20260504-00092', '2026-05-04 17:52:00', 9.92, 0.00, 2.08, 12.00, 'tarjeta', 12.00, 0.00, 'pagada', NULL, '2026-05-04 22:52:00', '2026-05-04 22:52:00'),
-	(93, 1, 1, 8, 1, 23, NULL, 'V-20260504-00093', '2026-05-04 13:16:00', 101.65, 0.00, 21.35, 123.00, 'efectivo', 123.00, 0.00, 'pagada', NULL, '2026-05-04 18:16:00', '2026-05-04 18:16:00'),
-	(94, 1, 1, 10, 1, 23, NULL, 'V-20260504-00094', '2026-05-04 10:44:00', 37.60, 0.00, 7.90, 45.50, 'efectivo', 45.50, 0.00, 'pagada', NULL, '2026-05-04 15:44:00', '2026-05-04 15:44:00'),
-	(95, 1, 4, 1, 1, 23, NULL, 'V-20260504-00095', '2026-05-04 18:56:00', 120.66, 0.00, 25.34, 146.00, 'bizum', 146.00, 0.00, 'pagada', NULL, '2026-05-04 23:56:00', '2026-05-04 23:56:00'),
-	(96, 1, 3, 3, 1, 23, NULL, 'V-20260504-00096', '2026-05-04 10:30:00', 101.65, 0.00, 21.35, 123.00, 'transferencia', 123.00, 0.00, 'pagada', NULL, '2026-05-04 15:30:00', '2026-05-04 15:30:00'),
-	(97, 1, 2, 6, 1, 24, NULL, 'V-20260505-00097', '2026-05-05 18:30:00', 58.68, 0.00, 12.32, 71.00, 'bizum', 71.00, 0.00, 'pagada', NULL, '2026-05-05 23:30:00', '2026-05-05 23:30:00'),
-	(98, 1, 5, 1, 1, 24, NULL, 'V-20260505-00098', '2026-05-05 13:37:00', 119.83, 0.00, 25.17, 145.00, 'efectivo', 145.00, 0.00, 'pagada', NULL, '2026-05-05 18:37:00', '2026-05-05 18:37:00'),
-	(99, 1, 2, 9, 1, 24, NULL, 'V-20260505-00099', '2026-05-05 13:02:00', 9.09, 0.00, 1.91, 11.00, 'efectivo', 11.00, 0.00, 'pagada', NULL, '2026-05-05 18:02:00', '2026-05-05 18:02:00'),
-	(100, 1, NULL, 3, 1, 24, NULL, 'V-20260505-00100', '2026-05-05 12:21:00', 22.73, 0.00, 4.77, 27.50, 'efectivo', 27.50, 0.00, 'pagada', NULL, '2026-05-05 17:21:00', '2026-05-05 17:21:00'),
-	(101, 1, 8, 6, 1, 25, NULL, 'V-20260506-00101', '2026-05-06 13:21:00', 72.31, 0.00, 15.19, 87.50, 'efectivo', 87.50, 0.00, 'pagada', NULL, '2026-05-06 18:21:00', '2026-05-06 18:21:00'),
-	(102, 1, 3, 9, 1, 25, NULL, 'V-20260506-00102', '2026-05-06 16:43:00', 66.12, 0.00, 13.88, 80.00, 'transferencia', 80.00, 0.00, 'pagada', NULL, '2026-05-06 21:43:00', '2026-05-06 21:43:00'),
-	(103, 1, NULL, 10, 1, 25, NULL, 'V-20260506-00103', '2026-05-06 13:28:00', 11.57, 0.00, 2.43, 14.00, 'transferencia', 14.00, 0.00, 'pagada', NULL, '2026-05-06 18:28:00', '2026-05-06 18:28:00'),
-	(104, 1, NULL, 3, 1, 25, NULL, 'V-20260506-00104', '2026-05-06 09:17:00', 52.89, 0.00, 11.11, 64.00, 'tarjeta', 64.00, 0.00, 'pagada', NULL, '2026-05-06 14:17:00', '2026-05-06 14:17:00'),
-	(105, 1, 4, 2, 1, 25, NULL, 'V-20260506-00105', '2026-05-06 11:55:00', 14.88, 0.00, 3.12, 18.00, 'tarjeta', 18.00, 0.00, 'pagada', NULL, '2026-05-06 16:55:00', '2026-05-06 16:55:00'),
-	(106, 1, 10, 1, 1, 25, NULL, 'V-20260506-00106', '2026-05-06 16:40:00', 85.12, 0.00, 17.88, 103.00, 'efectivo', 103.00, 0.00, 'pagada', NULL, '2026-05-06 21:40:00', '2026-05-06 21:40:00'),
-	(107, 1, NULL, 2, 1, 25, NULL, 'V-20260506-00107', '2026-05-06 15:54:00', 68.60, 0.00, 14.40, 83.00, 'tarjeta', 83.00, 0.00, 'pagada', NULL, '2026-05-06 20:54:00', '2026-05-06 20:54:00'),
-	(108, 1, 6, 9, 1, 26, NULL, 'V-20260507-00108', '2026-05-07 11:58:00', 28.93, 0.00, 6.07, 35.00, 'bizum', 35.00, 0.00, 'pagada', NULL, '2026-05-07 16:58:00', '2026-05-07 16:58:00'),
-	(109, 1, 10, 3, 1, 26, NULL, 'V-20260507-00109', '2026-05-07 12:09:00', 16.53, 0.00, 3.47, 20.00, 'tarjeta', 20.00, 0.00, 'pagada', NULL, '2026-05-07 17:09:00', '2026-05-07 17:09:00'),
-	(110, 1, 10, 4, 1, 26, NULL, 'V-20260507-00110', '2026-05-07 10:30:00', 18.18, 0.00, 3.82, 22.00, 'efectivo', 22.00, 0.00, 'pagada', NULL, '2026-05-07 15:30:00', '2026-05-07 15:30:00'),
-	(111, 1, 10, 8, 1, 26, NULL, 'V-20260507-00111', '2026-05-07 10:51:00', 23.14, 0.00, 4.86, 28.00, 'tarjeta', 28.00, 0.00, 'pagada', NULL, '2026-05-07 15:51:00', '2026-05-07 15:51:00'),
-	(112, 1, NULL, 3, 1, 27, NULL, 'V-20260407-00112', '2026-04-07 14:52:00', 118.60, 0.00, 24.90, 143.50, 'bizum', 143.50, 0.00, 'pagada', NULL, '2026-04-07 19:52:00', '2026-04-07 19:52:00'),
-	(113, 1, 9, 2, 1, 27, NULL, 'V-20260407-00113', '2026-04-07 18:53:00', 23.14, 0.00, 4.86, 28.00, 'tarjeta', 28.00, 0.00, 'pagada', NULL, '2026-04-07 23:53:00', '2026-04-07 23:53:00'),
-	(114, 1, 7, 2, 1, 27, NULL, 'V-20260407-00114', '2026-04-07 18:17:00', 9.09, 0.00, 1.91, 11.00, 'bizum', 11.00, 0.00, 'pagada', NULL, '2026-04-07 23:17:00', '2026-04-07 23:17:00'),
-	(115, 1, 9, 6, 1, 28, NULL, 'V-20260409-00115', '2026-04-09 10:44:00', 23.97, 0.00, 5.03, 29.00, 'bizum', 29.00, 0.00, 'pagada', NULL, '2026-04-09 15:44:00', '2026-04-09 15:44:00'),
-	(116, 1, 6, 9, 1, 28, NULL, 'V-20260409-00116', '2026-04-09 12:09:00', 55.37, 0.00, 11.63, 67.00, 'efectivo', 67.00, 0.00, 'pagada', NULL, '2026-04-09 17:09:00', '2026-04-09 17:09:00'),
-	(117, 1, 7, 9, 1, 28, NULL, 'V-20260409-00117', '2026-04-09 12:07:00', 9.92, 0.00, 2.08, 12.00, 'tarjeta', 12.00, 0.00, 'pagada', NULL, '2026-04-09 17:07:00', '2026-04-09 17:07:00'),
-	(118, 1, 3, 9, 1, 28, NULL, 'V-20260409-00118', '2026-04-09 10:53:00', 29.75, 0.00, 6.25, 36.00, 'tarjeta', 36.00, 0.00, 'pagada', NULL, '2026-04-09 15:53:00', '2026-04-09 15:53:00'),
-	(119, 1, 8, 10, 1, 28, NULL, 'V-20260409-00119', '2026-04-09 11:17:00', 35.12, 0.00, 7.38, 42.50, 'tarjeta', 42.50, 0.00, 'pagada', NULL, '2026-04-09 16:17:00', '2026-04-09 16:17:00'),
-	(120, 1, NULL, 3, 1, 28, NULL, 'V-20260409-00120', '2026-04-09 14:13:00', 95.04, 0.00, 19.96, 115.00, 'efectivo', 115.00, 0.00, 'pagada', NULL, '2026-04-09 19:13:00', '2026-04-09 19:13:00'),
-	(121, 1, 5, 5, 1, 29, NULL, 'V-20260410-00121', '2026-04-10 14:47:00', 52.07, 0.00, 10.93, 63.00, 'transferencia', 63.00, 0.00, 'pagada', NULL, '2026-04-10 19:47:00', '2026-04-10 19:47:00'),
-	(122, 1, 5, 6, 1, 29, NULL, 'V-20260410-00122', '2026-04-10 15:17:00', 190.08, 0.00, 39.92, 230.00, 'tarjeta', 230.00, 0.00, 'pagada', NULL, '2026-04-10 20:17:00', '2026-04-10 20:17:00'),
-	(123, 1, 8, 4, 1, 29, NULL, 'V-20260410-00123', '2026-04-10 09:52:00', 34.71, 0.00, 7.29, 42.00, 'tarjeta', 42.00, 0.00, 'pagada', NULL, '2026-04-10 14:52:00', '2026-04-10 14:52:00'),
-	(124, 1, 8, 6, 1, 29, NULL, 'V-20260410-00124', '2026-04-10 15:47:00', 13.64, 0.00, 2.86, 16.50, 'efectivo', 16.50, 0.00, 'pagada', NULL, '2026-04-10 20:47:00', '2026-04-10 20:47:00'),
-	(125, 1, 4, 9, 1, 30, NULL, 'V-20260413-00125', '2026-04-13 18:32:00', 45.45, 0.00, 9.55, 55.00, 'transferencia', 55.00, 0.00, 'pagada', NULL, '2026-04-13 23:32:00', '2026-04-13 23:32:00'),
-	(126, 1, NULL, 3, 1, 30, NULL, 'V-20260413-00126', '2026-04-13 12:00:00', 57.02, 0.00, 11.98, 69.00, 'tarjeta', 69.00, 0.00, 'pagada', NULL, '2026-04-13 17:00:00', '2026-04-13 17:00:00'),
-	(127, 1, 1, 6, 1, 30, NULL, 'V-20260413-00127', '2026-04-13 09:40:00', 11.57, 0.00, 2.43, 14.00, 'efectivo', 14.00, 0.00, 'pagada', NULL, '2026-04-13 14:40:00', '2026-04-13 14:40:00'),
-	(128, 1, 8, 6, 1, 30, NULL, 'V-20260413-00128', '2026-04-13 13:47:00', 26.45, 0.00, 5.55, 32.00, 'bizum', 32.00, 0.00, 'pagada', NULL, '2026-04-13 18:47:00', '2026-04-13 18:47:00'),
-	(129, 1, 8, 8, 1, 30, NULL, 'V-20260413-00129', '2026-04-13 09:24:00', 39.67, 0.00, 8.33, 48.00, 'bizum', 48.00, 0.00, 'pagada', NULL, '2026-04-13 14:24:00', '2026-04-13 14:24:00'),
-	(130, 1, 7, 7, 1, 31, NULL, 'V-20260415-00130', '2026-04-15 09:47:00', 10.33, 0.00, 2.17, 12.50, 'transferencia', 12.50, 0.00, 'pagada', NULL, '2026-04-15 14:47:00', '2026-04-15 14:47:00'),
-	(131, 1, NULL, 9, 1, 31, NULL, 'V-20260415-00131', '2026-04-15 09:45:00', 105.79, 0.00, 22.21, 128.00, 'efectivo', 128.00, 0.00, 'pagada', NULL, '2026-04-15 14:45:00', '2026-04-15 14:45:00'),
-	(132, 1, NULL, 1, 1, 31, NULL, 'V-20260415-00132', '2026-04-15 14:33:00', 134.71, 0.00, 28.29, 163.00, 'tarjeta', 163.00, 0.00, 'pagada', NULL, '2026-04-15 19:33:00', '2026-04-15 19:33:00'),
-	(133, 1, 9, 5, 1, 31, NULL, 'V-20260415-00133', '2026-04-15 15:22:00', 16.12, 0.00, 3.38, 19.50, 'efectivo', 19.50, 0.00, 'pagada', NULL, '2026-04-15 20:22:00', '2026-04-15 20:22:00'),
-	(134, 1, NULL, 2, 1, 32, NULL, 'V-20260416-00134', '2026-04-16 19:25:00', 68.60, 0.00, 14.40, 83.00, 'tarjeta', 83.00, 0.00, 'pagada', NULL, '2026-04-17 00:25:00', '2026-04-17 00:25:00'),
-	(135, 1, NULL, 3, 1, 32, NULL, 'V-20260416-00135', '2026-04-16 19:18:00', 23.14, 0.00, 4.86, 28.00, 'efectivo', 28.00, 0.00, 'pagada', NULL, '2026-04-17 00:18:00', '2026-04-17 00:18:00'),
-	(136, 1, 3, 3, 1, 32, NULL, 'V-20260416-00136', '2026-04-16 11:12:00', 11.57, 0.00, 2.43, 14.00, 'tarjeta', 14.00, 0.00, 'pagada', NULL, '2026-04-16 16:12:00', '2026-04-16 16:12:00'),
-	(137, 1, 3, 1, 1, 33, NULL, 'V-20260417-00137', '2026-04-17 11:39:00', 35.54, 0.00, 7.46, 43.00, 'bizum', 43.00, 0.00, 'pagada', NULL, '2026-04-17 16:39:00', '2026-04-17 16:39:00'),
-	(138, 1, NULL, 9, 1, 33, NULL, 'V-20260417-00138', '2026-04-17 13:30:00', 180.58, 0.00, 37.92, 218.50, 'tarjeta', 218.50, 0.00, 'pagada', NULL, '2026-04-17 18:30:00', '2026-04-17 18:30:00'),
-	(139, 1, 6, 8, 1, 34, NULL, 'V-20260420-00139', '2026-04-20 14:31:00', 140.50, 0.00, 29.50, 170.00, 'tarjeta', 170.00, 0.00, 'pagada', NULL, '2026-04-20 19:31:00', '2026-04-20 19:31:00'),
-	(140, 1, 4, 3, 1, 34, NULL, 'V-20260420-00140', '2026-04-20 10:36:00', 99.17, 0.00, 20.83, 120.00, 'tarjeta', 120.00, 0.00, 'pagada', NULL, '2026-04-20 15:36:00', '2026-04-20 15:36:00'),
-	(141, 1, NULL, 7, 1, 34, NULL, 'V-20260420-00141', '2026-04-20 17:52:00', 75.21, 0.00, 15.79, 91.00, 'efectivo', 91.00, 0.00, 'pagada', NULL, '2026-04-20 22:52:00', '2026-04-20 22:52:00'),
-	(142, 1, 4, 9, 1, 34, NULL, 'V-20260420-00142', '2026-04-20 09:49:00', 94.21, 0.00, 19.79, 114.00, 'tarjeta', 114.00, 0.00, 'pagada', NULL, '2026-04-20 14:49:00', '2026-04-20 14:49:00'),
-	(143, 1, 5, 6, 1, 34, NULL, 'V-20260420-00143', '2026-04-20 19:00:00', 38.43, 0.00, 8.07, 46.50, 'tarjeta', 46.50, 0.00, 'pagada', NULL, '2026-04-21 00:00:00', '2026-04-21 00:00:00'),
-	(144, 1, 8, 8, 1, 34, NULL, 'V-20260420-00144', '2026-04-20 13:14:00', 87.60, 0.00, 18.40, 106.00, 'tarjeta', 106.00, 0.00, 'pagada', NULL, '2026-04-20 18:14:00', '2026-04-20 18:14:00'),
-	(145, 1, 1, 2, 1, 35, NULL, 'V-20260421-00145', '2026-04-21 10:01:00', 99.17, 0.00, 20.83, 120.00, 'bizum', 120.00, 0.00, 'pagada', NULL, '2026-04-21 15:01:00', '2026-04-21 15:01:00'),
-	(146, 1, 9, 7, 1, 35, NULL, 'V-20260421-00146', '2026-04-21 16:01:00', 47.93, 0.00, 10.07, 58.00, 'efectivo', 58.00, 0.00, 'pagada', NULL, '2026-04-21 21:01:00', '2026-04-21 21:01:00'),
-	(147, 1, NULL, 8, 1, 35, NULL, 'V-20260421-00147', '2026-04-21 18:16:00', 36.36, 0.00, 7.64, 44.00, 'tarjeta', 44.00, 0.00, 'pagada', NULL, '2026-04-21 23:16:00', '2026-04-21 23:16:00'),
-	(148, 1, 5, 6, 1, 36, NULL, 'V-20260422-00148', '2026-04-22 14:20:00', 18.18, 0.00, 3.82, 22.00, 'transferencia', 22.00, 0.00, 'pagada', NULL, '2026-04-22 19:20:00', '2026-04-22 19:20:00'),
-	(149, 1, NULL, 4, 1, 36, NULL, 'V-20260422-00149', '2026-04-22 11:07:00', 71.07, 0.00, 14.93, 86.00, 'tarjeta', 86.00, 0.00, 'pagada', NULL, '2026-04-22 16:07:00', '2026-04-22 16:07:00'),
-	(150, 1, NULL, 4, 1, 36, NULL, 'V-20260422-00150', '2026-04-22 14:06:00', 76.86, 0.00, 16.14, 93.00, 'tarjeta', 93.00, 0.00, 'pagada', NULL, '2026-04-22 19:06:00', '2026-04-22 19:06:00'),
-	(151, 1, 7, 7, 1, 37, NULL, 'V-20260423-00151', '2026-04-23 13:53:00', 23.14, 0.00, 4.86, 28.00, 'efectivo', 28.00, 0.00, 'pagada', NULL, '2026-04-23 18:53:00', '2026-04-23 18:53:00'),
-	(152, 1, 7, 4, 1, 37, NULL, 'V-20260423-00152', '2026-04-23 18:32:00', 99.17, 0.00, 20.83, 120.00, 'tarjeta', 120.00, 0.00, 'pagada', NULL, '2026-04-23 23:32:00', '2026-04-23 23:32:00'),
-	(153, 1, 2, 2, 1, 38, NULL, 'V-20260424-00153', '2026-04-24 13:22:00', 16.12, 0.00, 3.38, 19.50, 'bizum', 19.50, 0.00, 'pagada', NULL, '2026-04-24 18:22:00', '2026-04-24 18:22:00'),
-	(154, 1, NULL, 10, 1, 38, NULL, 'V-20260424-00154', '2026-04-24 09:42:00', 95.04, 0.00, 19.96, 115.00, 'transferencia', 115.00, 0.00, 'pagada', NULL, '2026-04-24 14:42:00', '2026-04-24 14:42:00'),
-	(155, 1, 8, 3, 1, 38, NULL, 'V-20260424-00155', '2026-04-24 19:59:00', 95.87, 0.00, 20.13, 116.00, 'tarjeta', 116.00, 0.00, 'pagada', NULL, '2026-04-25 00:59:00', '2026-04-25 00:59:00'),
-	(156, 1, 10, 8, 1, 38, NULL, 'V-20260424-00156', '2026-04-24 11:45:00', 142.98, 0.00, 30.02, 173.00, 'efectivo', 173.00, 0.00, 'pagada', NULL, '2026-04-24 16:45:00', '2026-04-24 16:45:00'),
-	(157, 1, 9, 6, 1, 38, NULL, 'V-20260424-00157', '2026-04-24 17:33:00', 45.45, 0.00, 9.55, 55.00, 'efectivo', 55.00, 0.00, 'pagada', NULL, '2026-04-24 22:33:00', '2026-04-24 22:33:00'),
-	(158, 1, 10, 9, 1, 38, NULL, 'V-20260424-00158', '2026-04-24 15:50:00', 31.40, 0.00, 6.60, 38.00, 'bizum', 38.00, 0.00, 'pagada', NULL, '2026-04-24 20:50:00', '2026-04-24 20:50:00'),
-	(159, 1, 5, 10, 1, 38, NULL, 'V-20260424-00159', '2026-04-24 17:46:00', 70.66, 0.00, 14.84, 85.50, 'bizum', 85.50, 0.00, 'pagada', NULL, '2026-04-24 22:46:00', '2026-04-24 22:46:00'),
-	(160, 1, 3, 10, 1, 39, NULL, 'V-20260425-00160', '2026-04-25 16:05:00', 60.33, 0.00, 12.67, 73.00, 'tarjeta', 73.00, 0.00, 'pagada', NULL, '2026-04-25 21:05:00', '2026-04-25 21:05:00'),
-	(161, 1, 2, 6, 1, 39, NULL, 'V-20260425-00161', '2026-04-25 09:17:00', 66.12, 0.00, 13.88, 80.00, 'transferencia', 80.00, 0.00, 'pagada', NULL, '2026-04-25 14:17:00', '2026-04-25 14:17:00'),
-	(162, 1, 2, 5, 1, 39, NULL, 'V-20260425-00162', '2026-04-25 10:35:00', 52.07, 0.00, 10.93, 63.00, 'tarjeta', 63.00, 0.00, 'pagada', NULL, '2026-04-25 15:35:00', '2026-04-25 15:35:00'),
-	(163, 1, 8, 2, 1, 39, NULL, 'V-20260425-00163', '2026-04-25 19:58:00', 61.98, 0.00, 13.02, 75.00, 'tarjeta', 75.00, 0.00, 'pagada', NULL, '2026-04-26 00:58:00', '2026-04-26 00:58:00'),
-	(164, 1, 5, 9, 1, 40, NULL, 'V-20260427-00164', '2026-04-27 13:14:00', 94.63, 0.00, 19.87, 114.50, 'efectivo', 114.50, 0.00, 'pagada', NULL, '2026-04-27 18:14:00', '2026-04-27 18:14:00'),
-	(165, 1, NULL, 6, 1, 40, NULL, 'V-20260427-00165', '2026-04-27 11:43:00', 101.65, 0.00, 21.35, 123.00, 'tarjeta', 123.00, 0.00, 'pagada', NULL, '2026-04-27 16:43:00', '2026-04-27 16:43:00'),
-	(166, 1, NULL, 3, 1, 40, NULL, 'V-20260427-00166', '2026-04-27 12:36:00', 57.02, 0.00, 11.98, 69.00, 'efectivo', 69.00, 0.00, 'pagada', NULL, '2026-04-27 17:36:00', '2026-04-27 17:36:00'),
-	(167, 1, NULL, 4, 1, 40, NULL, 'V-20260427-00167', '2026-04-27 15:22:00', 176.45, 0.00, 37.05, 213.50, 'tarjeta', 213.50, 0.00, 'pagada', NULL, '2026-04-27 20:22:00', '2026-04-27 20:22:00'),
-	(168, 1, NULL, 2, 1, 40, NULL, 'V-20260427-00168', '2026-04-27 09:32:00', 28.93, 0.00, 6.07, 35.00, 'tarjeta', 35.00, 0.00, 'pagada', NULL, '2026-04-27 14:32:00', '2026-04-27 14:32:00'),
-	(169, 1, 7, 3, 1, 40, NULL, 'V-20260427-00169', '2026-04-27 11:44:00', 62.40, 0.00, 13.10, 75.50, 'bizum', 75.50, 0.00, 'pagada', NULL, '2026-04-27 16:44:00', '2026-04-27 16:44:00'),
-	(170, 1, 6, 5, 1, 40, NULL, 'V-20260427-00170', '2026-04-27 16:07:00', 48.35, 0.00, 10.15, 58.50, 'bizum', 58.50, 0.00, 'pagada', NULL, '2026-04-27 21:07:00', '2026-04-27 21:07:00'),
-	(171, 1, NULL, 4, 1, 41, NULL, 'V-20260428-00171', '2026-04-28 17:58:00', 152.07, 0.00, 31.93, 184.00, 'efectivo', 184.00, 0.00, 'pagada', NULL, '2026-04-28 22:58:00', '2026-04-28 22:58:00'),
-	(172, 1, 1, 8, 1, 41, NULL, 'V-20260428-00172', '2026-04-28 09:20:00', 16.12, 0.00, 3.38, 19.50, 'tarjeta', 19.50, 0.00, 'pagada', NULL, '2026-04-28 14:20:00', '2026-04-28 14:20:00'),
-	(173, 1, 3, 7, 1, 41, NULL, 'V-20260428-00173', '2026-04-28 11:44:00', 97.52, 0.00, 20.48, 118.00, 'efectivo', 118.00, 0.00, 'pagada', NULL, '2026-04-28 16:44:00', '2026-04-28 16:44:00'),
-	(174, 1, 2, 5, 1, 42, NULL, 'V-20260429-00174', '2026-04-29 15:26:00', 93.39, 0.00, 19.61, 113.00, 'tarjeta', 113.00, 0.00, 'pagada', NULL, '2026-04-29 20:26:00', '2026-04-29 20:26:00'),
-	(175, 1, 2, 9, 1, 42, NULL, 'V-20260429-00175', '2026-04-29 13:59:00', 14.88, 0.00, 3.12, 18.00, 'tarjeta', 18.00, 0.00, 'pagada', NULL, '2026-04-29 18:59:00', '2026-04-29 18:59:00'),
-	(176, 1, 9, 1, 1, 42, NULL, 'V-20260429-00176', '2026-04-29 15:36:00', 99.17, 0.00, 20.83, 120.00, 'efectivo', 120.00, 0.00, 'pagada', NULL, '2026-04-29 20:36:00', '2026-04-29 20:36:00'),
-	(177, 1, NULL, 8, 1, 42, NULL, 'V-20260429-00177', '2026-04-29 17:36:00', 9.92, 0.00, 2.08, 12.00, 'tarjeta', 12.00, 0.00, 'pagada', NULL, '2026-04-29 22:36:00', '2026-04-29 22:36:00'),
-	(178, 1, NULL, 9, 1, 42, NULL, 'V-20260429-00178', '2026-04-29 17:49:00', 47.93, 0.00, 10.07, 58.00, 'efectivo', 58.00, 0.00, 'pagada', NULL, '2026-04-29 22:49:00', '2026-04-29 22:49:00'),
-	(179, 1, 2, 6, 1, 42, NULL, 'V-20260429-00179', '2026-04-29 18:24:00', 26.03, 0.00, 5.47, 31.50, 'tarjeta', 31.50, 0.00, 'pagada', NULL, '2026-04-29 23:24:00', '2026-04-29 23:24:00'),
-	(180, 1, 10, 3, 1, 42, NULL, 'V-20260429-00180', '2026-04-29 19:35:00', 76.86, 0.00, 16.14, 93.00, 'bizum', 93.00, 0.00, 'pagada', NULL, '2026-04-30 00:35:00', '2026-04-30 00:35:00'),
-	(181, 1, 6, 5, 1, 43, NULL, 'V-20260430-00181', '2026-04-30 15:22:00', 23.14, 0.00, 4.86, 28.00, 'tarjeta', 28.00, 0.00, 'pagada', NULL, '2026-04-30 20:22:00', '2026-04-30 20:22:00'),
-	(182, 1, 8, 9, 1, 43, NULL, 'V-20260430-00182', '2026-04-30 16:05:00', 16.12, 0.00, 3.38, 19.50, 'efectivo', 19.50, 0.00, 'pagada', NULL, '2026-04-30 21:05:00', '2026-04-30 21:05:00'),
-	(183, 1, 1, 8, 1, 44, NULL, 'V-20260501-00183', '2026-05-01 16:02:00', 38.02, 0.00, 7.98, 46.00, 'tarjeta', 46.00, 0.00, 'pagada', NULL, '2026-05-01 21:02:00', '2026-05-01 21:02:00'),
-	(184, 1, NULL, 9, 1, 44, NULL, 'V-20260501-00184', '2026-05-01 15:47:00', 35.12, 0.00, 7.38, 42.50, 'tarjeta', 42.50, 0.00, 'pagada', NULL, '2026-05-01 20:47:00', '2026-05-01 20:47:00'),
-	(185, 1, 2, 9, 1, 44, NULL, 'V-20260501-00185', '2026-05-01 10:22:00', 14.88, 0.00, 3.12, 18.00, 'tarjeta', 18.00, 0.00, 'pagada', NULL, '2026-05-01 15:22:00', '2026-05-01 15:22:00'),
-	(186, 1, 5, 9, 1, 44, NULL, 'V-20260501-00186', '2026-05-01 14:21:00', 20.66, 0.00, 4.34, 25.00, 'tarjeta', 25.00, 0.00, 'pagada', NULL, '2026-05-01 19:21:00', '2026-05-01 19:21:00'),
-	(187, 1, 7, 10, 1, 44, NULL, 'V-20260501-00187', '2026-05-01 13:17:00', 20.66, 0.00, 4.34, 25.00, 'tarjeta', 25.00, 0.00, 'pagada', NULL, '2026-05-01 18:17:00', '2026-05-01 18:17:00'),
-	(188, 1, 4, 7, 1, 44, NULL, 'V-20260501-00188', '2026-05-01 16:20:00', 99.17, 0.00, 20.83, 120.00, 'transferencia', 120.00, 0.00, 'pagada', NULL, '2026-05-01 21:20:00', '2026-05-01 21:20:00'),
-	(189, 1, NULL, 3, 1, 44, NULL, 'V-20260501-00189', '2026-05-01 18:13:00', 50.41, 0.00, 10.59, 61.00, 'efectivo', 61.00, 0.00, 'pagada', NULL, '2026-05-01 23:13:00', '2026-05-01 23:13:00'),
-	(190, 1, 6, 6, 1, 45, NULL, 'V-20260502-00190', '2026-05-02 14:30:00', 46.28, 0.00, 9.72, 56.00, 'tarjeta', 56.00, 0.00, 'pagada', NULL, '2026-05-02 19:30:00', '2026-05-02 19:30:00'),
-	(191, 1, 3, 2, 1, 45, NULL, 'V-20260502-00191', '2026-05-02 15:24:00', 12.81, 0.00, 2.69, 15.50, 'transferencia', 15.50, 0.00, 'pagada', NULL, '2026-05-02 20:24:00', '2026-05-02 20:24:00'),
-	(192, 1, 5, 8, 1, 45, NULL, 'V-20260502-00192', '2026-05-02 19:38:00', 94.21, 0.00, 19.79, 114.00, 'tarjeta', 114.00, 0.00, 'pagada', NULL, '2026-05-03 00:38:00', '2026-05-03 00:38:00'),
-	(193, 1, NULL, 9, 1, 45, NULL, 'V-20260502-00193', '2026-05-02 10:47:00', 24.79, 0.00, 5.21, 30.00, 'transferencia', 30.00, 0.00, 'pagada', NULL, '2026-05-02 15:47:00', '2026-05-02 15:47:00'),
-	(194, 1, 4, 3, 1, 46, NULL, 'V-20260504-00194', '2026-05-04 17:14:00', 36.78, 0.00, 7.72, 44.50, 'efectivo', 44.50, 0.00, 'pagada', NULL, '2026-05-04 22:14:00', '2026-05-04 22:14:00'),
-	(195, 1, 10, 7, 1, 46, NULL, 'V-20260504-00195', '2026-05-04 12:28:00', 29.75, 0.00, 6.25, 36.00, 'efectivo', 36.00, 0.00, 'pagada', NULL, '2026-05-04 17:28:00', '2026-05-04 17:28:00'),
-	(196, 1, 8, 6, 1, 47, NULL, 'V-20260506-00196', '2026-05-06 13:48:00', 9.92, 0.00, 2.08, 12.00, 'bizum', 12.00, 0.00, 'pagada', NULL, '2026-05-06 18:48:00', '2026-05-06 18:48:00'),
-	(197, 1, NULL, 9, 1, 47, NULL, 'V-20260506-00197', '2026-05-06 14:24:00', 111.57, 0.00, 23.43, 135.00, 'bizum', 135.00, 0.00, 'pagada', NULL, '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(198, 1, 2, 4, 1, 47, NULL, 'V-20260506-00198', '2026-05-06 19:37:00', 9.92, 0.00, 2.08, 12.00, 'efectivo', 12.00, 0.00, 'pagada', NULL, '2026-05-07 00:37:00', '2026-05-07 00:37:00'),
-	(199, 1, 1, 6, 1, 47, NULL, 'V-20260506-00199', '2026-05-06 15:53:00', 39.26, 0.00, 8.24, 47.50, 'tarjeta', 47.50, 0.00, 'pagada', NULL, '2026-05-06 20:53:00', '2026-05-06 20:53:00'),
-	(200, 1, 2, 6, 1, 47, NULL, 'V-20260506-00200', '2026-05-06 14:24:00', 74.79, 0.00, 15.71, 90.50, 'tarjeta', 90.50, 0.00, 'pagada', NULL, '2026-05-06 19:24:00', '2026-05-06 19:24:00'),
-	(201, 1, 3, 5, 1, 47, NULL, 'V-20260506-00201', '2026-05-06 10:33:00', 99.17, 0.00, 20.83, 120.00, 'bizum', 120.00, 0.00, 'pagada', NULL, '2026-05-06 15:33:00', '2026-05-06 15:33:00'),
-	(202, 1, NULL, 10, 1, 48, NULL, 'V-20260507-00202', '2026-05-07 13:51:00', 99.17, 0.00, 20.83, 120.00, 'efectivo', 120.00, 0.00, 'pagada', NULL, '2026-05-07 18:51:00', '2026-05-07 18:51:00'),
-	(203, 1, 7, 5, 1, 48, NULL, 'V-20260507-00203', '2026-05-07 10:09:00', 78.51, 0.00, 16.49, 95.00, 'tarjeta', 95.00, 0.00, 'pagada', NULL, '2026-05-07 15:09:00', '2026-05-07 15:09:00'),
-	(204, 1, 10, 6, 1, 48, NULL, 'V-20260507-00204', '2026-05-07 10:00:00', 28.93, 0.00, 6.07, 35.00, 'tarjeta', 35.00, 0.00, 'pagada', NULL, '2026-05-07 15:00:00', '2026-05-07 15:00:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (1,1,5,6,1,1,NULL,'V-20260704-00001','2026-07-04 18:52:00',10.59,'0.00',1.91,12.50,'efectivo',12.50,'0.00','pagada',NULL,'2026-07-04 18:52:00','2026-07-04 18:52:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (2,1,8,4,1,1,NULL,'V-20260704-00002','2026-07-04 10:29:00',118.22,'0.00',21.28,139.50,'tarjeta',139.50,'0.00','pagada',NULL,'2026-07-04 10:29:00','2026-07-04 10:29:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (3,1,3,8,1,1,NULL,'V-20260704-00003','2026-07-04 13:35:00',30.51,'0.00',5.49,36.00,'tarjeta',36.00,'0.00','pagada',NULL,'2026-07-04 13:35:00','2026-07-04 13:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (4,1,7,7,1,1,NULL,'V-20260704-00004','2026-07-04 19:03:00',16.95,'0.00',3.05,20.00,'tarjeta',20.00,'0.00','pagada',NULL,'2026-07-04 19:03:00','2026-07-04 19:03:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (5,1,NULL,1,1,2,NULL,'V-20260706-00005','2026-07-06 19:41:00',122.88,'0.00',22.12,145.00,'tarjeta',145.00,'0.00','pagada',NULL,'2026-07-06 19:41:00','2026-07-06 19:41:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (6,1,4,6,1,2,NULL,'V-20260706-00006','2026-07-06 15:24:00',100.85,'0.00',18.15,119.00,'transferencia',119.00,'0.00','pagada',NULL,'2026-07-06 15:24:00','2026-07-06 15:24:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (7,1,1,5,1,2,NULL,'V-20260706-00007','2026-07-06 18:49:00',122.88,'0.00',22.12,145.00,'tarjeta',145.00,'0.00','pagada',NULL,'2026-07-06 18:49:00','2026-07-06 18:49:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (8,1,1,9,1,2,NULL,'V-20260706-00008','2026-07-06 16:06:00',11.86,'0.00',2.14,14.00,'tarjeta',14.00,'0.00','pagada',NULL,'2026-07-06 16:06:00','2026-07-06 16:06:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (9,1,NULL,2,1,2,NULL,'V-20260706-00009','2026-07-06 12:24:00',33.05,'0.00',5.95,39.00,'tarjeta',39.00,'0.00','pagada',NULL,'2026-07-06 12:24:00','2026-07-06 12:24:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (10,1,9,6,1,2,NULL,'V-20260706-00010','2026-07-06 10:48:00',36.86,'0.00',6.64,43.50,'tarjeta',43.50,'0.00','pagada',NULL,'2026-07-06 10:48:00','2026-07-06 10:48:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (11,1,1,8,1,3,NULL,'V-20260707-00011','2026-07-07 18:30:00',30.51,'0.00',5.49,36.00,'tarjeta',36.00,'0.00','pagada',NULL,'2026-07-07 18:30:00','2026-07-07 18:30:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (12,1,5,6,1,3,NULL,'V-20260707-00012','2026-07-07 19:31:00',88.98,'0.00',16.02,105.00,'tarjeta',105.00,'0.00','pagada',NULL,'2026-07-07 19:31:00','2026-07-07 19:31:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (13,1,1,5,1,3,NULL,'V-20260707-00013','2026-07-07 12:35:00',120.76,'0.00',21.74,142.50,'yapeplin',142.50,'0.00','pagada',NULL,'2026-07-07 12:35:00','2026-07-07 12:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (14,1,NULL,10,1,4,NULL,'V-20260708-00014','2026-07-08 19:12:00',25.42,'0.00',4.58,30.00,'tarjeta',30.00,'0.00','pagada',NULL,'2026-07-08 19:12:00','2026-07-08 19:12:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (15,1,9,7,1,4,NULL,'V-20260708-00015','2026-07-08 12:37:00',199.15,'0.00',35.85,235.00,'transferencia',235.00,'0.00','pagada',NULL,'2026-07-08 12:37:00','2026-07-08 12:37:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (16,1,9,2,1,5,NULL,'V-20260709-00016','2026-07-09 09:38:00',93.22,'0.00',16.78,110.00,'efectivo',110.00,'0.00','pagada',NULL,'2026-07-09 09:38:00','2026-07-09 09:38:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (17,1,6,5,1,5,NULL,'V-20260709-00017','2026-07-09 12:36:00',97.46,'0.00',17.54,115.00,'tarjeta',115.00,'0.00','pagada',NULL,'2026-07-09 12:36:00','2026-07-09 12:36:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (18,1,3,6,1,5,NULL,'V-20260709-00018','2026-07-09 09:41:00',36.86,'0.00',6.64,43.50,'tarjeta',43.50,'0.00','pagada',NULL,'2026-07-09 09:41:00','2026-07-09 09:41:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (19,1,NULL,5,1,5,NULL,'V-20260709-00019','2026-07-09 14:19:00',45.76,'0.00',8.24,54.00,'yapeplin',54.00,'0.00','pagada',NULL,'2026-07-09 14:19:00','2026-07-09 14:19:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (20,1,10,7,1,6,NULL,'V-20260710-00020','2026-07-10 18:45:00',23.73,'0.00',4.27,28.00,'transferencia',28.00,'0.00','pagada',NULL,'2026-07-10 18:45:00','2026-07-10 18:45:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (21,1,10,3,1,6,NULL,'V-20260710-00021','2026-07-10 12:45:00',32.63,'0.00',5.87,38.50,'tarjeta',38.50,'0.00','pagada',NULL,'2026-07-10 12:45:00','2026-07-10 12:45:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (22,1,6,1,1,7,NULL,'V-20260711-00022','2026-07-11 16:23:00',37.71,'0.00',6.79,44.50,'yapeplin',44.50,'0.00','pagada',NULL,'2026-07-11 16:23:00','2026-07-11 16:23:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (23,1,1,7,1,7,NULL,'V-20260711-00023','2026-07-11 17:50:00',62.71,'0.00',11.29,74.00,'tarjeta',74.00,'0.00','pagada',NULL,'2026-07-11 17:50:00','2026-07-11 17:50:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (24,1,3,5,1,7,NULL,'V-20260711-00024','2026-07-11 14:03:00',112.71,'0.00',20.29,133.00,'yapeplin',133.00,'0.00','pagada',NULL,'2026-07-11 14:03:00','2026-07-11 14:03:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (25,1,2,6,1,7,NULL,'V-20260711-00025','2026-07-11 12:30:00',68.64,'0.00',12.36,81.00,'yapeplin',81.00,'0.00','pagada',NULL,'2026-07-11 12:30:00','2026-07-11 12:30:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (26,1,3,10,1,7,NULL,'V-20260711-00026','2026-07-11 10:14:00',57.20,'0.00',10.30,67.50,'efectivo',67.50,'0.00','pagada',NULL,'2026-07-11 10:14:00','2026-07-11 10:14:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (27,1,7,10,1,7,NULL,'V-20260711-00027','2026-07-11 10:17:00',11.86,'0.00',2.14,14.00,'efectivo',14.00,'0.00','pagada',NULL,'2026-07-11 10:17:00','2026-07-11 10:17:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (28,1,NULL,9,1,8,NULL,'V-20260713-00028','2026-07-13 18:41:00',122.46,'0.00',22.04,144.50,'tarjeta',144.50,'0.00','pagada',NULL,'2026-07-13 18:41:00','2026-07-13 18:41:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (29,1,NULL,7,1,8,NULL,'V-20260713-00029','2026-07-13 15:29:00',158.90,'0.00',28.60,187.50,'tarjeta',187.50,'0.00','pagada',NULL,'2026-07-13 15:29:00','2026-07-13 15:29:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (30,1,6,5,1,8,NULL,'V-20260713-00030','2026-07-13 17:23:00',79.66,'0.00',14.34,94.00,'tarjeta',94.00,'0.00','pagada',NULL,'2026-07-13 17:23:00','2026-07-13 17:23:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (31,1,10,8,1,8,NULL,'V-20260713-00031','2026-07-13 09:00:00',65.25,'0.00',11.75,77.00,'tarjeta',77.00,'0.00','pagada',NULL,'2026-07-13 09:00:00','2026-07-13 09:00:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (32,1,4,7,1,9,NULL,'V-20260716-00032','2026-07-16 16:59:00',35.59,'0.00',6.41,42.00,'efectivo',42.00,'0.00','pagada',NULL,'2026-07-16 16:59:00','2026-07-16 16:59:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (33,1,NULL,3,1,9,NULL,'V-20260716-00033','2026-07-16 14:58:00',25.42,'0.00',4.58,30.00,'efectivo',30.00,'0.00','pagada',NULL,'2026-07-16 14:58:00','2026-07-16 14:58:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (34,1,7,6,1,10,NULL,'V-20260717-00034','2026-07-17 14:11:00',88.98,'0.00',16.02,105.00,'yapeplin',105.00,'0.00','pagada',NULL,'2026-07-17 14:11:00','2026-07-17 14:11:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (35,1,NULL,10,1,10,NULL,'V-20260717-00035','2026-07-17 14:42:00',109.75,'0.00',19.75,129.50,'efectivo',129.50,'0.00','pagada',NULL,'2026-07-17 14:42:00','2026-07-17 14:42:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (36,1,10,10,1,10,NULL,'V-20260717-00036','2026-07-17 10:09:00',116.95,'0.00',21.05,138.00,'transferencia',138.00,'0.00','pagada',NULL,'2026-07-17 10:09:00','2026-07-17 10:09:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (37,1,8,3,1,10,NULL,'V-20260717-00037','2026-07-17 15:25:00',133.05,'0.00',23.95,157.00,'efectivo',157.00,'0.00','pagada',NULL,'2026-07-17 15:25:00','2026-07-17 15:25:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (38,1,7,5,1,10,NULL,'V-20260717-00038','2026-07-17 17:06:00',37.29,'0.00',6.71,44.00,'tarjeta',44.00,'0.00','pagada',NULL,'2026-07-17 17:06:00','2026-07-17 17:06:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (39,1,10,7,1,11,NULL,'V-20260718-00039','2026-07-18 15:44:00',39.83,'0.00',7.17,47.00,'efectivo',47.00,'0.00','pagada',NULL,'2026-07-18 15:44:00','2026-07-18 15:44:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (40,1,9,10,1,11,NULL,'V-20260718-00040','2026-07-18 19:07:00',16.53,'0.00',2.97,19.50,'yapeplin',19.50,'0.00','pagada',NULL,'2026-07-18 19:07:00','2026-07-18 19:07:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (41,1,NULL,8,1,12,NULL,'V-20260720-00041','2026-07-20 17:29:00',85.59,'0.00',15.41,101.00,'transferencia',101.00,'0.00','pagada',NULL,'2026-07-20 17:29:00','2026-07-20 17:29:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (42,1,10,2,1,12,NULL,'V-20260720-00042','2026-07-20 15:56:00',15.25,'0.00',2.75,18.00,'efectivo',18.00,'0.00','pagada',NULL,'2026-07-20 15:56:00','2026-07-20 15:56:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (43,1,5,4,1,12,NULL,'V-20260720-00043','2026-07-20 09:59:00',105.93,'0.00',19.07,125.00,'yapeplin',125.00,'0.00','pagada',NULL,'2026-07-20 09:59:00','2026-07-20 09:59:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (44,1,6,1,1,12,NULL,'V-20260720-00044','2026-07-20 17:38:00',56.78,'0.00',10.22,67.00,'efectivo',67.00,'0.00','pagada',NULL,'2026-07-20 17:38:00','2026-07-20 17:38:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (45,1,1,6,1,13,NULL,'V-20260721-00045','2026-07-21 11:27:00',80.93,'0.00',14.57,95.50,'tarjeta',95.50,'0.00','pagada',NULL,'2026-07-21 11:27:00','2026-07-21 11:27:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (46,1,1,8,1,13,NULL,'V-20260721-00046','2026-07-21 17:39:00',37.29,'0.00',6.71,44.00,'efectivo',44.00,'0.00','pagada',NULL,'2026-07-21 17:39:00','2026-07-21 17:39:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (47,1,6,2,1,13,NULL,'V-20260721-00047','2026-07-21 09:37:00',85.59,'0.00',15.41,101.00,'efectivo',101.00,'0.00','pagada',NULL,'2026-07-21 09:37:00','2026-07-21 09:37:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (48,1,NULL,7,1,13,NULL,'V-20260721-00048','2026-07-21 19:56:00',90.68,'0.00',16.32,107.00,'yapeplin',107.00,'0.00','pagada',NULL,'2026-07-21 19:56:00','2026-07-21 19:56:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (49,1,3,8,1,13,NULL,'V-20260721-00049','2026-07-21 14:40:00',21.19,'0.00',3.81,25.00,'tarjeta',25.00,'0.00','pagada',NULL,'2026-07-21 14:40:00','2026-07-21 14:40:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (50,1,9,9,1,14,NULL,'V-20260722-00050','2026-07-22 09:17:00',11.86,'0.00',2.14,14.00,'tarjeta',14.00,'0.00','pagada',NULL,'2026-07-22 09:17:00','2026-07-22 09:17:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (51,1,NULL,7,1,14,NULL,'V-20260722-00051','2026-07-22 14:51:00',23.73,'0.00',4.27,28.00,'tarjeta',28.00,'0.00','pagada',NULL,'2026-07-22 14:51:00','2026-07-22 14:51:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (52,1,8,7,1,14,NULL,'V-20260722-00052','2026-07-22 19:13:00',121.61,'0.00',21.89,143.50,'tarjeta',143.50,'0.00','pagada',NULL,'2026-07-22 19:13:00','2026-07-22 19:13:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (53,1,8,5,1,14,NULL,'V-20260722-00053','2026-07-22 13:40:00',118.64,'0.00',21.36,140.00,'efectivo',140.00,'0.00','pagada',NULL,'2026-07-22 13:40:00','2026-07-22 13:40:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (54,1,2,3,1,15,NULL,'V-20260723-00054','2026-07-23 14:18:00',25.42,'0.00',4.58,30.00,'tarjeta',30.00,'0.00','pagada',NULL,'2026-07-23 14:18:00','2026-07-23 14:18:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (55,1,3,8,1,15,NULL,'V-20260723-00055','2026-07-23 15:45:00',20.76,'0.00',3.74,24.50,'yapeplin',24.50,'0.00','pagada',NULL,'2026-07-23 15:45:00','2026-07-23 15:45:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (56,1,4,7,1,15,NULL,'V-20260723-00056','2026-07-23 11:54:00',194.07,'0.00',34.93,229.00,'tarjeta',229.00,'0.00','pagada',NULL,'2026-07-23 11:54:00','2026-07-23 11:54:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (57,1,6,8,1,15,NULL,'V-20260723-00057','2026-07-23 16:48:00',27.54,'0.00',4.96,32.50,'efectivo',32.50,'0.00','pagada',NULL,'2026-07-23 16:48:00','2026-07-23 16:48:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (58,1,7,7,1,15,NULL,'V-20260723-00058','2026-07-23 13:33:00',35.59,'0.00',6.41,42.00,'efectivo',42.00,'0.00','pagada',NULL,'2026-07-23 13:33:00','2026-07-23 13:33:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (59,1,4,6,1,15,NULL,'V-20260723-00059','2026-07-23 13:30:00',148.31,'0.00',26.69,175.00,'transferencia',175.00,'0.00','pagada',NULL,'2026-07-23 13:30:00','2026-07-23 13:30:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (60,1,6,5,1,16,NULL,'V-20260724-00060','2026-07-24 09:30:00',40.25,'0.00',7.25,47.50,'transferencia',47.50,'0.00','pagada',NULL,'2026-07-24 09:30:00','2026-07-24 09:30:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (61,1,NULL,9,1,16,NULL,'V-20260724-00061','2026-07-24 15:56:00',93.64,'0.00',16.86,110.50,'efectivo',110.50,'0.00','pagada',NULL,'2026-07-24 15:56:00','2026-07-24 15:56:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (62,1,5,2,1,16,NULL,'V-20260724-00062','2026-07-24 13:14:00',95.76,'0.00',17.24,113.00,'efectivo',113.00,'0.00','pagada',NULL,'2026-07-24 13:14:00','2026-07-24 13:14:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (63,1,NULL,9,1,17,NULL,'V-20260725-00063','2026-07-25 12:29:00',116.95,'0.00',21.05,138.00,'tarjeta',138.00,'0.00','pagada',NULL,'2026-07-25 12:29:00','2026-07-25 12:29:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (64,1,NULL,1,1,17,NULL,'V-20260725-00064','2026-07-25 19:00:00',58.47,'0.00',10.53,69.00,'efectivo',69.00,'0.00','pagada',NULL,'2026-07-25 19:00:00','2026-07-25 19:00:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (65,1,7,3,1,18,NULL,'V-20260727-00065','2026-07-27 18:47:00',23.73,'0.00',4.27,28.00,'tarjeta',28.00,'0.00','pagada',NULL,'2026-07-27 18:47:00','2026-07-27 18:47:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (66,1,1,10,1,18,NULL,'V-20260727-00066','2026-07-27 14:29:00',27.54,'0.00',4.96,32.50,'efectivo',32.50,'0.00','pagada',NULL,'2026-07-27 14:29:00','2026-07-27 14:29:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (67,1,9,5,1,18,NULL,'V-20260727-00067','2026-07-27 16:31:00',10.17,'0.00',1.83,12.00,'efectivo',12.00,'0.00','pagada',NULL,'2026-07-27 16:31:00','2026-07-27 16:31:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (68,1,9,3,1,18,NULL,'V-20260727-00068','2026-07-27 16:45:00',11.86,'0.00',2.14,14.00,'transferencia',14.00,'0.00','pagada',NULL,'2026-07-27 16:45:00','2026-07-27 16:45:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (69,1,4,6,1,18,NULL,'V-20260727-00069','2026-07-27 19:08:00',15.25,'0.00',2.75,18.00,'tarjeta',18.00,'0.00','pagada',NULL,'2026-07-27 19:08:00','2026-07-27 19:08:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (70,1,1,7,1,19,NULL,'V-20260728-00070','2026-07-28 18:43:00',127.12,'0.00',22.88,150.00,'tarjeta',150.00,'0.00','pagada',NULL,'2026-07-28 18:43:00','2026-07-28 18:43:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (71,1,10,1,1,19,NULL,'V-20260728-00071','2026-07-28 13:12:00',54.24,'0.00',9.76,64.00,'yapeplin',64.00,'0.00','pagada',NULL,'2026-07-28 13:12:00','2026-07-28 13:12:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (72,1,1,3,1,19,NULL,'V-20260728-00072','2026-07-28 14:12:00',28.81,'0.00',5.19,34.00,'tarjeta',34.00,'0.00','pagada',NULL,'2026-07-28 14:12:00','2026-07-28 14:12:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (73,1,10,8,1,20,NULL,'V-20260729-00073','2026-07-29 18:32:00',22.03,'0.00',3.97,26.00,'tarjeta',26.00,'0.00','pagada',NULL,'2026-07-29 18:32:00','2026-07-29 18:32:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (74,1,NULL,1,1,20,NULL,'V-20260729-00074','2026-07-29 12:00:00',33.90,'0.00',6.10,40.00,'transferencia',40.00,'0.00','pagada',NULL,'2026-07-29 12:00:00','2026-07-29 12:00:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (75,1,9,7,1,20,NULL,'V-20260729-00075','2026-07-29 12:26:00',77.54,'0.00',13.96,91.50,'transferencia',91.50,'0.00','pagada',NULL,'2026-07-29 12:26:00','2026-07-29 12:26:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (76,1,4,3,1,20,NULL,'V-20260729-00076','2026-07-29 17:11:00',9.32,'0.00',1.68,11.00,'efectivo',11.00,'0.00','pagada',NULL,'2026-07-29 17:11:00','2026-07-29 17:11:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (77,1,NULL,5,1,20,NULL,'V-20260729-00077','2026-07-29 16:44:00',10.17,'0.00',1.83,12.00,'tarjeta',12.00,'0.00','pagada',NULL,'2026-07-29 16:44:00','2026-07-29 16:44:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (78,1,4,8,1,20,NULL,'V-20260729-00078','2026-07-29 15:46:00',31.78,'0.00',5.72,37.50,'transferencia',37.50,'0.00','pagada',NULL,'2026-07-29 15:46:00','2026-07-29 15:46:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (79,1,8,8,1,20,NULL,'V-20260729-00079','2026-07-29 16:49:00',83.47,'0.00',15.03,98.50,'efectivo',98.50,'0.00','pagada',NULL,'2026-07-29 16:49:00','2026-07-29 16:49:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (80,1,10,8,1,21,NULL,'V-20260730-00080','2026-07-30 17:05:00',72.03,'0.00',12.97,85.00,'tarjeta',85.00,'0.00','pagada',NULL,'2026-07-30 17:05:00','2026-07-30 17:05:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (81,1,9,6,1,21,NULL,'V-20260730-00081','2026-07-30 14:59:00',10.17,'0.00',1.83,12.00,'efectivo',12.00,'0.00','pagada',NULL,'2026-07-30 14:59:00','2026-07-30 14:59:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (82,1,8,9,1,21,NULL,'V-20260730-00082','2026-07-30 18:38:00',95.76,'0.00',17.24,113.00,'yapeplin',113.00,'0.00','pagada',NULL,'2026-07-30 18:38:00','2026-07-30 18:38:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (83,1,8,1,1,22,NULL,'V-20260731-00083','2026-07-31 10:40:00',11.86,'0.00',2.14,14.00,'transferencia',14.00,'0.00','pagada',NULL,'2026-07-31 10:40:00','2026-07-31 10:40:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (84,1,NULL,2,1,22,NULL,'V-20260731-00084','2026-07-31 18:19:00',112.29,'0.00',20.21,132.50,'efectivo',132.50,'0.00','pagada',NULL,'2026-07-31 18:19:00','2026-07-31 18:19:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (85,1,2,5,1,22,NULL,'V-20260731-00085','2026-07-31 18:43:00',29.66,'0.00',5.34,35.00,'yapeplin',35.00,'0.00','pagada',NULL,'2026-07-31 18:43:00','2026-07-31 18:43:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (86,1,7,10,1,23,NULL,'V-20260801-00086','2026-08-01 14:22:00',101.69,'0.00',18.31,120.00,'yapeplin',120.00,'0.00','pagada',NULL,'2026-08-01 14:22:00','2026-08-01 14:22:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (87,1,1,10,1,23,NULL,'V-20260801-00087','2026-08-01 09:00:00',23.73,'0.00',4.27,28.00,'yapeplin',28.00,'0.00','pagada',NULL,'2026-08-01 09:00:00','2026-08-01 09:00:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (88,1,5,9,1,23,NULL,'V-20260801-00088','2026-08-01 17:40:00',80.08,'0.00',14.42,94.50,'transferencia',94.50,'0.00','pagada',NULL,'2026-08-01 17:40:00','2026-08-01 17:40:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (89,1,NULL,4,3,24,NULL,'V-20260803011610-19AD','2026-08-03 01:16:10',21.19,'0.00',3.81,25.00,'yapeplin',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:10','2026-08-03 01:16:10');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (90,1,NULL,4,3,24,NULL,'V-20260803011618-3B45','2026-08-03 01:16:18',21.19,'0.00',3.81,25.00,'yapeplin',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:18','2026-08-03 01:16:18');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (91,1,NULL,4,3,24,NULL,'V-20260803011620-8E46','2026-08-03 01:16:20',21.19,'0.00',3.81,25.00,'yapeplin',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:20','2026-08-03 01:16:20');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (92,1,NULL,4,3,24,NULL,'V-20260803011640-8A6F','2026-08-03 01:16:40',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:40','2026-08-03 01:16:40');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (93,1,NULL,4,3,24,NULL,'V-20260803011644-48F1','2026-08-03 01:16:44',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (94,1,NULL,4,3,24,NULL,'V-20260803011644-CA11','2026-08-03 01:16:44',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:44','2026-08-03 01:16:44');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (95,1,NULL,4,3,24,NULL,'V-20260803011655-6509','2026-08-03 01:16:55',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:16:55','2026-08-03 01:16:55');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (96,1,NULL,4,3,24,NULL,'V-20260803011705-EB66','2026-08-03 01:17:05',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:05','2026-08-03 01:17:05');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (97,1,NULL,4,3,24,NULL,'V-20260803011707-3EED','2026-08-03 01:17:07',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:07','2026-08-03 01:17:07');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (98,1,NULL,4,3,24,NULL,'V-20260803011708-9314','2026-08-03 01:17:08',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (99,1,NULL,4,3,24,NULL,'V-20260803011708-EC41','2026-08-03 01:17:08',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:08','2026-08-03 01:17:08');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (100,1,NULL,4,3,24,NULL,'V-20260803011709-6550','2026-08-03 01:17:09',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:09','2026-08-03 01:17:09');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (101,1,NULL,4,3,24,NULL,'V-20260803011710-48E7','2026-08-03 01:17:10',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (102,1,NULL,4,3,24,NULL,'V-20260803011710-ACF1','2026-08-03 01:17:10',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:10','2026-08-03 01:17:10');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (103,1,NULL,4,3,24,NULL,'V-20260803011711-2904','2026-08-03 01:17:11',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:11','2026-08-03 01:17:11');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (104,1,NULL,4,3,24,NULL,'V-20260803011712-DD0A','2026-08-03 01:17:12',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:12','2026-08-03 01:17:12');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (105,1,NULL,4,3,24,NULL,'V-20260803011713-FCB1','2026-08-03 01:17:13',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:13','2026-08-03 01:17:13');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (106,1,NULL,4,3,24,NULL,'V-20260803011714-3AAD','2026-08-03 01:17:14',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:14','2026-08-03 01:17:14');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (107,1,NULL,4,3,24,NULL,'V-20260803011715-901D','2026-08-03 01:17:15',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:15','2026-08-03 01:17:15');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (108,1,NULL,4,3,24,NULL,'V-20260803011716-CDBC','2026-08-03 01:17:16',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (109,1,NULL,4,3,24,NULL,'V-20260803011716-21FD','2026-08-03 01:17:16',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:16','2026-08-03 01:17:16');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (110,1,NULL,4,3,24,NULL,'V-20260803011717-F077','2026-08-03 01:17:17',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:17','2026-08-03 01:17:17');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (111,1,NULL,4,3,24,NULL,'V-20260803011718-807A','2026-08-03 01:17:18',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:18','2026-08-03 01:17:18');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (112,1,NULL,4,3,24,NULL,'V-20260803011751-97E6','2026-08-03 01:17:51',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:51','2026-08-03 01:17:51');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (113,1,NULL,4,3,24,NULL,'V-20260803011752-3196','2026-08-03 01:17:52',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:52','2026-08-03 01:17:52');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (114,1,NULL,4,3,24,NULL,'V-20260803011753-E8F4','2026-08-03 01:17:53',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:53','2026-08-03 01:17:53');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (115,1,NULL,4,3,24,NULL,'V-20260803011754-276F','2026-08-03 01:17:54',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:54','2026-08-03 01:17:54');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (116,1,NULL,4,3,24,NULL,'V-20260803011755-E876','2026-08-03 01:17:55',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:55','2026-08-03 01:17:55');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (117,1,NULL,4,3,24,NULL,'V-20260803011756-56E5','2026-08-03 01:17:56',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:56','2026-08-03 01:17:56');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (118,1,NULL,4,3,24,NULL,'V-20260803011757-73EB','2026-08-03 01:17:57',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (119,1,NULL,4,3,24,NULL,'V-20260803011757-58E0','2026-08-03 01:17:57',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:57','2026-08-03 01:17:57');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (120,1,NULL,4,3,24,NULL,'V-20260803011758-0317','2026-08-03 01:17:58',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:58','2026-08-03 01:17:58');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (121,1,NULL,4,3,24,NULL,'V-20260803011759-6844','2026-08-03 01:17:59',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:17:59','2026-08-03 01:17:59');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (122,1,NULL,4,3,24,NULL,'V-20260803011800-302B','2026-08-03 01:18:00',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:00','2026-08-03 01:18:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (123,1,NULL,4,3,24,NULL,'V-20260803011801-1814','2026-08-03 01:18:01',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:01','2026-08-03 01:18:01');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (124,1,NULL,4,3,24,NULL,'V-20260803011802-4B9F','2026-08-03 01:18:02',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:02','2026-08-03 01:18:02');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (125,1,NULL,4,3,24,NULL,'V-20260803011807-E612','2026-08-03 01:18:07',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (126,1,NULL,4,3,24,NULL,'V-20260803011807-5A9A','2026-08-03 01:18:07',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:07','2026-08-03 01:18:07');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (127,1,NULL,4,3,24,NULL,'V-20260803011808-A7E6','2026-08-03 01:18:08',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:08','2026-08-03 01:18:08');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (128,1,NULL,4,3,24,NULL,'V-20260803011809-6944','2026-08-03 01:18:09',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:09','2026-08-03 01:18:09');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (129,1,NULL,4,3,24,NULL,'V-20260803011812-C179','2026-08-03 01:18:12',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:12','2026-08-03 01:18:12');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (130,1,NULL,4,3,24,NULL,'V-20260803011813-6ED9','2026-08-03 01:18:13',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (131,1,NULL,4,3,24,NULL,'V-20260803011813-C0AF','2026-08-03 01:18:13',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:13','2026-08-03 01:18:13');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (132,1,NULL,4,3,24,NULL,'V-20260803011814-DAA7','2026-08-03 01:18:14',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:14','2026-08-03 01:18:14');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (133,1,NULL,4,3,24,NULL,'V-20260803011815-FCDF','2026-08-03 01:18:15',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:15','2026-08-03 01:18:15');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (134,1,NULL,4,3,24,NULL,'V-20260803011816-E73F','2026-08-03 01:18:16',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:16','2026-08-03 01:18:16');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (135,1,NULL,4,3,24,NULL,'V-20260803011817-E0AA','2026-08-03 01:18:17',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (136,1,NULL,4,3,24,NULL,'V-20260803011817-CA8C','2026-08-03 01:18:17',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:17','2026-08-03 01:18:17');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (137,1,NULL,4,3,24,NULL,'V-20260803011818-4BA6','2026-08-03 01:18:18',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:18','2026-08-03 01:18:18');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (138,1,NULL,4,3,24,NULL,'V-20260803011819-B817','2026-08-03 01:18:19',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:19','2026-08-03 01:18:19');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (139,1,NULL,4,3,24,NULL,'V-20260803011820-30AE','2026-08-03 01:18:20',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:20','2026-08-03 01:18:20');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (140,1,NULL,4,3,24,NULL,'V-20260803011821-6108','2026-08-03 01:18:21',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (141,1,NULL,4,3,24,NULL,'V-20260803011821-6C78','2026-08-03 01:18:21',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:21','2026-08-03 01:18:21');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (142,1,NULL,4,3,24,NULL,'V-20260803011822-997C','2026-08-03 01:18:22',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:22','2026-08-03 01:18:22');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (143,1,NULL,4,3,24,NULL,'V-20260803011823-6B78','2026-08-03 01:18:23',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:23','2026-08-03 01:18:23');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (144,1,NULL,4,3,24,NULL,'V-20260803011824-4216','2026-08-03 01:18:24',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:24','2026-08-03 01:18:24');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (145,1,NULL,4,3,24,NULL,'V-20260803011825-6585','2026-08-03 01:18:25',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:25','2026-08-03 01:18:25');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (146,1,NULL,4,3,24,NULL,'V-20260803011826-0E52','2026-08-03 01:18:26',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:26','2026-08-03 01:18:26');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (147,1,NULL,4,3,24,NULL,'V-20260803011827-9C41','2026-08-03 01:18:27',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:27','2026-08-03 01:18:27');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (148,1,NULL,4,3,24,NULL,'V-20260803011828-F826','2026-08-03 01:18:28',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'pagada',NULL,'2026-08-03 01:18:28','2026-08-03 01:18:28');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (149,1,NULL,5,3,24,NULL,'V-20260803012049-68E6','2026-08-03 01:20:49',21.19,'0.00',3.81,25.00,'yapeplin',30.00,5.00,'anulada',NULL,'2026-08-03 01:20:49','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (150,1,NULL,NULL,1,24,NULL,'V-20260803012057-8C05','2026-08-03 01:20:57',30.51,'0.00',5.49,36.00,'efectivo',36.00,'0.00','pagada',NULL,'2026-08-03 01:20:57','2026-08-03 01:20:57');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (151,1,NULL,5,3,24,NULL,'V-20260803012058-668D','2026-08-03 01:20:58',21.19,'0.00',3.81,25.00,'yapeplin',30.00,5.00,'anulada',NULL,'2026-08-03 01:20:58','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (152,1,NULL,4,3,24,NULL,'V-20260803012210-5270','2026-08-03 01:22:10',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'anulada',NULL,'2026-08-03 01:22:10','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (153,1,NULL,NULL,3,24,NULL,'V-20260803012341-DA73','2026-08-03 01:23:41',21.19,'0.00',3.81,25.00,'efectivo',50.00,25.00,'anulada',NULL,'2026-08-03 01:23:41','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (154,1,NULL,NULL,3,24,NULL,'V-20260803012601-B971','2026-08-03 01:26:01',36.44,'0.00',6.56,43.00,'efectivo',50.00,7.00,'anulada',NULL,'2026-08-03 01:26:01','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (155,1,NULL,NULL,3,24,NULL,'V-20260803012800-FE8B','2026-08-03 01:28:00',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'anulada',NULL,'2026-08-03 01:28:00','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (156,1,NULL,2,3,24,NULL,'V-20260803012811-8D51','2026-08-03 01:28:11',21.19,'0.00',3.81,25.00,'efectivo',30.00,5.00,'anulada',NULL,'2026-08-03 01:28:11','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (157,1,NULL,6,3,24,NULL,'V-20260803012851-39EE','2026-08-03 01:28:51',21.19,'0.00',3.81,25.00,'efectivo',50.00,25.00,'anulada',NULL,'2026-08-03 01:28:51','2026-08-03 01:35:00');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (158,1,NULL,6,3,24,NULL,'V-20260803013104-860C','2026-08-03 01:31:04',21.19,'0.00',3.81,25.00,'efectivo',50.00,25.00,'pagada',NULL,'2026-08-03 01:31:04','2026-08-03 01:31:04');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (159,1,NULL,6,3,24,NULL,'V-20260803013155-3A82','2026-08-03 01:31:55',15.25,'0.00',2.75,18.00,'efectivo',50.00,32.00,'pagada',NULL,'2026-08-03 01:31:55','2026-08-03 01:31:55');
+INSERT INTO `pelu_ventas` (`id`,`empresa_id`,`cliente_id`,`empleado_id`,`user_id`,`caja_id`,`cita_id`,`numero`,`fecha`,`subtotal`,`descuento`,`impuesto`,`total`,`metodo_pago`,`importe_pagado`,`cambio`,`estado`,`notas`,`created_at`,`updated_at`) VALUES (160,1,NULL,NULL,3,24,NULL,'V-20260803013830-26C1','2026-08-03 01:38:30',21.19,'0.00',3.81,25.00,'efectivo',50.00,25.00,'pagada',NULL,'2026-08-03 01:38:30','2026-08-03 01:38:30');
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+SET FOREIGN_KEY_CHECKS=1;

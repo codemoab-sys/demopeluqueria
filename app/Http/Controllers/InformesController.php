@@ -81,6 +81,7 @@ class InformesController extends Controller
         $desde = Carbon::parse($request->input('desde', now()->startOfMonth()));
         $hasta = Carbon::parse($request->input('hasta', now()->endOfMonth()));
 
+        $p = DB::getTablePrefix();
         $top = DB::table('detalle_ventas')
             ->join('ventas', 'ventas.id', '=', 'detalle_ventas.venta_id')
             ->where('ventas.empresa_id', $empresaId)
@@ -88,8 +89,8 @@ class InformesController extends Controller
             ->where('detalle_ventas.tipo', 'servicio')
             ->whereNotIn('ventas.estado', ['anulada', 'devuelta'])
             ->select('detalle_ventas.concepto',
-                DB::raw('SUM(detalle_ventas.cantidad) as cantidad'),
-                DB::raw('SUM(detalle_ventas.total) as total'))
+                DB::raw("SUM({$p}detalle_ventas.cantidad) as cantidad"),
+                DB::raw("SUM({$p}detalle_ventas.total) as total"))
             ->groupBy('detalle_ventas.concepto')
             ->orderByDesc('total')
             ->get();

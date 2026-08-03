@@ -164,10 +164,10 @@ class BackupController extends Controller
             $sql .= "DROP TABLE IF EXISTS `{$tabla}`;\n";
             $sql .= $createSql . ";\n\n";
 
-            $rows = DB::table($tabla)->get();
-            if ($rows->isEmpty()) continue;
+            $rows = DB::select("SELECT * FROM `{$tabla}`");
+            if (empty($rows)) continue;
 
-            $columnas = array_keys((array) $rows->first());
+            $columnas = array_keys((array) $rows[0]);
             $columnasSql = '`' . implode('`,`', $columnas) . '`';
 
             foreach ($rows as $row) {
