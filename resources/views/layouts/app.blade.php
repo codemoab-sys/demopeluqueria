@@ -212,27 +212,51 @@
             if (!sidebar || !btn) return;
             var overlay = document.createElement('div');
             overlay.id = 'sidebarOverlay';
-            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:none;border:0;';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:none;';
             document.body.appendChild(overlay);
             var esMovil = function () { return window.innerWidth <= 991; };
+            function abMenu(abierto) {
+                if (abierto) {
+                    sidebar.style.transform = 'translateX(0)';
+                    sidebar.style.boxShadow = '0 0 40px rgba(0,0,0,.35)';
+                    sidebar.style.width = 'var(--sidebar-width, 260px)';
+                    sidebar.style.transition = 'transform .25s ease, box-shadow .25s ease';
+                } else {
+                    sidebar.style.transform = 'translateX(-100%)';
+                    sidebar.style.boxShadow = 'none';
+                    sidebar.style.transition = 'transform .25s ease, box-shadow .25s ease';
+                }
+            }
             btn.addEventListener('click', function () {
                 if (esMovil()) {
-                    var abierto = sidebar.classList.toggle('mobile-open');
+                    var abierto = sidebar.style.transform === 'translateX(0px)' || sidebar.classList.contains('mobile-open');
+                    sidebar.classList.toggle('mobile-open', !abierto);
+                    abierto = !abierto;
                     overlay.style.display = abierto ? 'block' : 'none';
+                    abMenu(abierto);
                 } else {
                     sidebar.classList.toggle('collapsed');
                 }
             });
             overlay.addEventListener('click', function () {
+                cerrar();
+            });
+            function cerrar() {
                 sidebar.classList.remove('mobile-open');
                 overlay.style.display = 'none';
-            });
+                abMenu(false);
+            }
             window.addEventListener('resize', function () {
                 if (!esMovil()) {
                     sidebar.classList.remove('mobile-open');
+                    sidebar.style.transform = '';
+                    sidebar.style.boxShadow = '';
+                    sidebar.style.transition = '';
+                    sidebar.style.width = '';
                     overlay.style.display = 'none';
                 }
             });
+            if (esMovil()) { abMenu(false); }
         })();
     </script>
 </body>
