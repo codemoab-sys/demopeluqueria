@@ -393,7 +393,7 @@
                     <div class="input-wrap">
                         <i class="bi bi-lock-fill"></i>
                         <input type="password" id="password" name="password" class="form-control-modern"
-                               placeholder="••••••••" required>
+                               placeholder="••••••••" value="demo@demo.com" required>
                         <button type="button" class="toggle-pass" onclick="togglePass()">
                             <i class="bi bi-eye-fill" id="eye"></i>
                         </button>
