@@ -18,9 +18,10 @@ use App\Http\Controllers\CajaController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\InformesController;
+use App\Http\Controllers\InformativaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => redirect()->route('login'));
+Route::get('/', [InformativaController::class, 'index']);
 
 // Auth
 Route::middleware('guest')->group(function () {
