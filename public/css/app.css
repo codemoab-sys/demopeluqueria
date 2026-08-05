@@ -608,15 +608,20 @@ body {
 /* Responsive */
 @media (max-width: 991px) {
     .app-sidebar {
-        width: var(--sidebar-collapsed);
+        width: var(--sidebar-width);
+        transform: translateX(-100%);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: none;
     }
-    .app-sidebar .brand-text,
-    .app-sidebar .nav-section-title,
-    .app-sidebar .nav-link span,
-    .app-sidebar .user-info,
-    .app-sidebar .user-logout { display: none; }
-    .app-main { margin-left: var(--sidebar-collapsed); }
+    .app-sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 0 0 40px rgba(0,0,0,0.35);
+    }
+    .app-main { margin-left: 0; }
     .search-bar { display: none; }
+}
+@media (min-width: 576px) and (max-width: 991px) {
+    .app-main { margin-left: 0; }
 }
 @media (max-width: 575px) {
     .app-content { padding: 16px; }

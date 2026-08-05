@@ -128,7 +128,7 @@
     <!-- Main -->
     <div class="app-main">
         <header class="app-topbar">
-            <button class="btn-toggle-sidebar" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">
+            <button class="btn-toggle-sidebar" id="btnToggleSidebar" aria-label="Menú">
                 <i class="bi bi-list"></i>
             </button>
             <h1 class="page-title">@yield('page-title', 'Dashboard')</h1>
@@ -204,6 +204,35 @@
         });
         actualizarIcono();
     })();
-</script>
+<script>
+        (function () {
+            var sidebar = document.getElementById('sidebar');
+            var btn = document.getElementById('btnToggleSidebar');
+            if (!sidebar || !btn) return;
+            var overlay = document.createElement('div');
+            overlay.id = 'sidebarOverlay';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:none;border:0;';
+            document.body.appendChild(overlay);
+            var esMovil = function () { return window.innerWidth <= 991; };
+            btn.addEventListener('click', function () {
+                if (esMovil()) {
+                    var abierto = sidebar.classList.toggle('mobile-open');
+                    overlay.style.display = abierto ? 'block' : 'none';
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+            overlay.addEventListener('click', function () {
+                sidebar.classList.remove('mobile-open');
+                overlay.style.display = 'none';
+            });
+            window.addEventListener('resize', function () {
+                if (!esMovil()) {
+                    sidebar.classList.remove('mobile-open');
+                    overlay.style.display = 'none';
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
