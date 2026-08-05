@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Empresa;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,28 +34,9 @@ class DatabaseSeeder extends Seeder
             'activo' => true,
         ]);
 
-        // Usuario admin
-        User::firstOrCreate(['email' => 'admin@tpv.com'], [
-            'name' => 'Administrador',
-            'password' => Hash::make('admin1234'),
-            'rol' => 'admin',
-            'empresa_id' => $empresa->id,
-            'activo' => true,
-        ]);
-
-        // Usuario empleado de ejemplo
-        User::firstOrCreate(['email' => 'empleado@tpv.com'], [
-            'name' => 'María García',
-            'password' => Hash::make('empleado1234'),
-            'rol' => 'empleado',
-            'empresa_id' => $empresa->id,
-            'activo' => true,
-        ]);
-
         $this->call([
             DemoLoginSeeder::class,
             CatalogoSeeder::class,
-            DemoDataSeeder::class,
         ]);
     }
 }
