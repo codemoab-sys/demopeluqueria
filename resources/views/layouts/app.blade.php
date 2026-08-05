@@ -204,6 +204,7 @@
         });
         actualizarIcono();
     })();
+</script>
 <script>
         (function () {
             var sidebar = document.getElementById('sidebar');
