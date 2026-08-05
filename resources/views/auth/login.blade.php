@@ -18,16 +18,16 @@
             background: linear-gradient(135deg, #2a1c4a 0%, #4c1d95 50%, #831843 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            padding: 24px 16px;
             color: #1f2937;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
         }
         body::before, body::after {
             content: '';
-            position: absolute;
+            position: fixed;
+            z-index: 0;
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.5;
@@ -55,6 +55,7 @@
             grid-template-columns: 1.1fr 1fr;
             max-width: 1100px;
             width: 100%;
+            margin: auto;
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(20px);
             border-radius: 28px;
