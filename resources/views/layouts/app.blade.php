@@ -209,6 +209,7 @@
         (function () {
             var sidebar = document.getElementById('sidebar');
             var btn = document.getElementById('btnToggleSidebar');
+            var appMain = document.querySelector('.app-main');
             if (!sidebar || !btn) return;
             var overlay = document.createElement('div');
             overlay.id = 'sidebarOverlay';
@@ -254,9 +255,12 @@
                     sidebar.style.transition = '';
                     sidebar.style.width = '';
                     overlay.style.display = 'none';
+                    if (appMain) appMain.style.marginLeft = '';
+                } else {
+                    if (appMain) appMain.style.marginLeft = '0';
                 }
             });
-            if (esMovil()) { abMenu(false); }
+            if (esMovil()) { abMenu(false); if (appMain) appMain.style.marginLeft = '0'; }
         })();
     </script>
 </body>
