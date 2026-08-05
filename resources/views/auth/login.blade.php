@@ -323,6 +323,7 @@
 
         @media (max-width: 900px) {
             .login-wrapper { grid-template-columns: 1fr; max-width: 480px; }
+            .login-form { order: -1; }
             .login-side { padding: 40px 32px; }
             .login-hero { margin: 30px 0; }
             .login-hero h1 { font-size: 26px; }
