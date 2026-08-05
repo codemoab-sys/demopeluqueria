@@ -23,6 +23,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <style>
+        @media (max-width: 991px) {
+            .app-sidebar .brand-text { display: inline-flex !important; }
+            .app-sidebar .nav-section-title { display: inline-block !important; }
+            .app-sidebar .nav-link span { display: inline !important; }
+            .app-sidebar .user-info { display: flex !important; }
+            .app-sidebar .user-logout { display: inline-flex !important; }
+        }
+    </style>
 
     @stack('styles')
 </head>
