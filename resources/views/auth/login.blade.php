@@ -184,7 +184,7 @@
         .input-wrap {
             position: relative;
         }
-        .input-wrap i {
+        .input-wrap > i {
             position: absolute;
             left: 16px; top: 50%;
             transform: translateY(-50%);
